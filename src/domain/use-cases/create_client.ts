@@ -1,10 +1,5 @@
-import { SituationRepository } from "../repositories/situation_repository"
-import { Situation } from "../entities/situation"
-import { UniqueEntityID } from "@/core/entities/unique-entity-id"
-import { OrderRepository } from "../repositories/order_repository"
-import { Order } from "../entities/order"
-import { ClientRepository } from "../repositories/client_repository"
-import { Client } from "../entities/client"
+import { ClientRepository } from "../control/application/repositories/client_repository"
+import { Client } from "../control/enterprise/entities/client"
 
 interface CreateClientRequest {
     name: string

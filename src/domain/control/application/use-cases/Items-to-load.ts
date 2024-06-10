@@ -1,5 +1,6 @@
-import { ItemRepository } from "../control/application/repositories/item_repository";
-import { Item } from "../control/enterprise/entities/item";
+import { Either, right } from "@/core/either";
+import { Item } from "../../enterprise/entities/item";
+import { ItemRepository } from "../repositories/item_repository";
 
 interface ItemsToLoadRequest {
     name: string
@@ -8,6 +9,13 @@ interface ItemsToLoadRequest {
     type: string
     amount: number
 }
+
+type ItemsToLoadResposne = Either<
+    null,
+    {
+        item: Item
+    } 
+    > 
 
 export class ItemsToLoadUseCase {
     constructor(
@@ -20,7 +28,7 @@ export class ItemsToLoadUseCase {
         quantity,
         type,
         amount,
-    }:ItemsToLoadRequest ){
+    }:ItemsToLoadRequest ): Promise<ItemsToLoadResposne>{
         const item = Item.create({
             name,
             description,
@@ -31,6 +39,8 @@ export class ItemsToLoadUseCase {
 
         this.itemsRepository.create(item)
 
-        return item
+        return right({
+            item,
+        })
     }
 }

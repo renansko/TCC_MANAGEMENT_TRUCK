@@ -1,6 +1,6 @@
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
-import { Load } from "../entities/load"
-import { LoadRepository } from "../repositories/load_repository"
+import { Load } from "../control/enterprise/entities/load"
+import { LoadRepository } from "../control/application/repositories/load_repository"
 
 interface LoadGoodsRequest {
     type: string

@@ -1,5 +1,5 @@
-import { SituationRepository } from "../repositories/situation_repository"
-import { Situation } from "../entities/situation"
+import { SituationRepository } from "../control/application/repositories/situation_repository"
+import { Situation } from "../control/enterprise/entities/situation"
 
 interface SituationRequest {
     description: string

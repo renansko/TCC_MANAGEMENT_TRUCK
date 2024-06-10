@@ -1,6 +1,7 @@
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
-import { Maintainable } from "../control/enterprise/entities/maintainable"
-import { MaintainableRepository } from "../control/application/repositories/maintainable_repository"
+import { Maintainable } from "../../enterprise/entities/maintainable"
+import { MaintainableRepository } from "../repositories/maintainable_repository"
+import { Either, right } from "@/core/either"
 
 interface TruckMaintainableRequest {
     situationId: string
@@ -10,7 +11,14 @@ interface TruckMaintainableRequest {
     startDate: Date
 }
 
-export class TruckMaintainableUseCase {
+type TruckMaintainableResponse = Either<
+null,
+    {
+        maintainable: Maintainable
+    }   
+>
+
+export class TruckItensMaintainableUseCase {
     constructor(
         private maintainableRepository: MaintainableRepository
     ) {}
@@ -21,8 +29,8 @@ export class TruckMaintainableUseCase {
         type,
         timeForMaintenance,
         startDate,
-    }:TruckMaintainableRequest){
-        const truckMaintainables = Maintainable.create({
+    }:TruckMaintainableRequest): Promise<TruckMaintainableResponse>{
+        const maintainable = Maintainable.create({
             situationId: new UniqueEntityID(situationId),
             name,
             type,
@@ -30,8 +38,10 @@ export class TruckMaintainableUseCase {
             startDate,
         })
 
-        this.maintainableRepository.create(truckMaintainables)
+        this.maintainableRepository.create(maintainable)
 
-        return truckMaintainables
+        return right({
+            maintainable
+        })
     }
 }
