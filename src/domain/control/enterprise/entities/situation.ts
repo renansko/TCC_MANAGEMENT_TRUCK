@@ -11,7 +11,7 @@ import { Optional } from "@/core/types/optionals"
      * @param createdAt (Date) "Data da criação do objeto virtual"
      * @param updatedAt (Date) "Mudança de informação do objeto"
      */
-interface SituationProps{
+export interface SituationProps{
     description: string // descrição da ultima situação
     exchangeRequired: string
     createdAt: Date

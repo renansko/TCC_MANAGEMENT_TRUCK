@@ -14,7 +14,7 @@ import { Optional } from "@/core/types/optionals"
      * @param createdAt (Date) "Data da criação do objeto virtual"
      * @param updatedAt (Date) "Mudança de informação do objeto"
      */
-interface maintainableProps{
+export interface maintainableProps{
     situationId: UniqueEntityID
     name: string // pneu
     type: string // Sensor - 

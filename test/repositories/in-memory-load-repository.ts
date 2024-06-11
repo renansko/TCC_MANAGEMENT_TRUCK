@@ -8,4 +8,20 @@ export class InMemoryLoadRepository implements LoadRepository{
         this.items.push(load)
     }
 
+    async findById(id: string) {
+        const load = this.items.find((item) => item.id.toString() === id)
+
+        if(!load){
+            return null
+        }
+
+        return load
+    }
+
+    async delete(load: Load) {
+        const loadIndex = this.items.findIndex(
+            (item) => item.id === load.id)
+
+            this.items.splice(loadIndex, 1)
+    }
 }

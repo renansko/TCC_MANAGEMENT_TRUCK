@@ -16,7 +16,7 @@ import { Optional } from "@/core/types/optionals"
      * @param createdAt (Date) "Data da criação do objeto virtual"
      * @param updatedAt (Date) "Mudança de informação do objeto"
      */
-interface TruckProps{
+export interface TruckProps{
     name: string
     company: string
     model: string

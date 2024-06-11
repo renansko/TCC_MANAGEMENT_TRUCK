@@ -16,7 +16,8 @@ import { Optional } from "@/core/types/optionals"
      * @param createdAt (Date) "Data da criação do objeto virtual"
      * @param updatedAt (Date) "Mudança de informação do objeto"
      */
-interface OrderProps{
+
+export interface OrderProps{
     loadId: UniqueEntityID
     clientId: UniqueEntityID
     dateRequested: Date

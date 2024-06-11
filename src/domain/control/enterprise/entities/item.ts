@@ -13,7 +13,7 @@ import { Optional } from "@/core/types/optionals"
      * @param amount (number) preço do item.
      */
 
-interface ItemProps{
+export interface ItemProps{
     name: string
     description: string
     quantity: number

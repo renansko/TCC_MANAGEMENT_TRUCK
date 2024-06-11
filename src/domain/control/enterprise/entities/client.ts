@@ -12,7 +12,7 @@ import { Optional } from "@/core/types/optionals"
      * @param phone (string) telefone do cliente
      */
 
-interface ClientProps{
+export interface ClientProps{
     name: string
     address: string
     email: string

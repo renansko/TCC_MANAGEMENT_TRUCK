@@ -8,4 +8,21 @@ export class InMemoryClientRepository implements ClientRepository{
         this.items.push(client)
     }
 
+    async findById(id: string) {
+        const client = this.items.find((item) => item.id.toString() === id)
+
+        if(!client){
+            return null
+        }
+
+        return client
+    }
+
+    async delete(client: Client) {
+        const clientIndex = this.items.findIndex(
+            (item) => item.id === client.id)
+
+            this.items.splice(clientIndex, 1)
+    }
+
 }

@@ -12,7 +12,7 @@ import { Optional } from "@/core/types/optionals"
      * 
      */
 
-interface LoadProps{
+export interface LoadProps{
     type: string
     weight: number
     itemsId: UniqueEntityID
