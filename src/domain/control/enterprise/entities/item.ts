@@ -7,7 +7,7 @@ import { Optional } from "@/core/types/optionals"
      * 
      * 
      * @param name (string) nome do item
-     * @param description (number) descrição do item.
+     * @param description (string) descrição do item.
      * @param quantity (number) quantidade do item: identificar se o item é unitario ou não
      * @param type (number) tipo do item, 'liquido'/'solido'/'gasoso'.
      * @param amount (number) preço do item.
@@ -39,6 +39,28 @@ export class Item extends Entity<ItemProps>{
     get amount(){
         return this.props.amount
     }
+
+    set description(description: string){
+        this.props.description = description
+        this.touch()
+    }
+    set name(name: string){
+       this.props.name = name
+       this.touch()
+    }
+    set quantity(quantity: number){
+        this.props.quantity = quantity 
+        this.touch() 
+    }
+    set type(type: string){
+        this.props.type = type
+        this.touch() 
+    }
+    set amount(amount: number){
+        this.props.amount = amount
+        this.touch() 
+    }
+
 
     private touch(){
         this.props.updatedAt = new Date()

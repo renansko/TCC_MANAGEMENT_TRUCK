@@ -1,6 +1,6 @@
 import { Either, right } from "@/core/either";
 import { Item } from "../../enterprise/entities/item";
-import { ItemRepository } from "../repositories/item_repository";
+import { ItemRepository } from "../repositories/item-repository";
 
 interface ItemsToLoadRequest {
     name: string

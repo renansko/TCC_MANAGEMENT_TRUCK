@@ -9,6 +9,7 @@ import { Optional } from "@/core/types/optionals"
      * @param type (string) O tipo de carga/ 'explosivo'/'quimico'
      * @param weight (number) peso total da carga.
      * @param itemsId (UniqueEntityID) Lista dos itens na entrega
+     * @param truckId (UniqueEntityID) Caminhão associado
      * 
      */
 

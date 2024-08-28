@@ -1,5 +1,5 @@
 import { InMemoryTruckRepository } from "test/repositories/in-memory-truck-repository";
-import { TruckAvaiableUseCase } from "./truck-avaiable";
+import { TruckAvaiableUseCase } from "./create-truck";
 
 let inMemoryTruckRepository: InMemoryTruckRepository
 let sut: TruckAvaiableUseCase
@@ -16,7 +16,8 @@ describe('Create avaiable truck', () => {
             model: "LoaderBasic",
             fuel: 50,
             situation: "1",
-            orderId: "1"
+            orderId: "3",
+            telemetryId: "2"
         })
     
         expect(result.value?.truck.name).toEqual("TruckChypherOne")

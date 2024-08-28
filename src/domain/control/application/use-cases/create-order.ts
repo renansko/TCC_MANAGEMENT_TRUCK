@@ -1,13 +1,13 @@
-import { SituationRepository } from "../repositories/situation_repository"
+import { SituationRepository } from "../repositories/situation-repository"
 import { Situation } from "../../enterprise/entities/situation"
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
-import { OrderRepository } from "../repositories/order_repository"
+import { OrderRepository } from "../repositories/order-repository"
 import { Order } from "../../enterprise/entities/order"
 import { Either, right } from "@/core/either"
 
 interface CreateOrderRequest {
     loadId: string
-    clientId: string
+    userId: string
     dateRequested: Date
     dateDelivery: Date
     deliveryAddress: string
@@ -28,7 +28,7 @@ export class CreateOrderUseCase {
 
     async execute({
         loadId,
-        clientId,
+        userId,
         dateDelivery,
         dateRequested,
         deliveryAddress,
@@ -36,7 +36,7 @@ export class CreateOrderUseCase {
     }:CreateOrderRequest): Promise<CreateOrderResponse>{
         const order = Order.create({
             loadId: new UniqueEntityID(loadId),
-            clientId: new UniqueEntityID(clientId),
+            userId: new UniqueEntityID(userId),
             dateRequested,
             dateDelivery,
             deliveryAddress,

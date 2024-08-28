@@ -8,7 +8,7 @@ import { Optional } from "@/core/types/optionals"
      * 
      * 
      * @param loadId (UniqueEntityID) Id da carga a ser carregada no caminhão
-     * @param clientId (UniqueEntityID) Informação do cliente contratante
+     * @param userId (UniqueEntityID) Informação do usere contratante
      * @param dateRequested (number) Data que foi realizada a pedido no sistema
      * @param dateDelivery (UniqueEntityID) Data que foi requisitada a entrega
      * @param deliveryAddress (UniqueEntityID) local de entrega
@@ -19,7 +19,7 @@ import { Optional } from "@/core/types/optionals"
 
 export interface OrderProps{
     loadId: UniqueEntityID
-    clientId: UniqueEntityID
+    userId: UniqueEntityID
     dateRequested: Date
     dateDelivery: Date
     deliveryAddress: string
@@ -32,8 +32,8 @@ export class Order extends Entity<OrderProps>{
     get loadId(){
         return this.props.loadId
     }
-    get clientId(){
-        return this.props.clientId
+    get userId(){
+        return this.props.userId
     }
     get dateRequested(){
         return this.props.dateRequested

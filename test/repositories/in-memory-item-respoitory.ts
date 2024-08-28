@@ -1,7 +1,9 @@
-import { ItemRepository } from "@/domain/control/application/repositories/item_repository"
+import { PaginationParams } from "@/core/repositories/pagination-params"
+import { ItemRepository } from "@/domain/control/application/repositories/item-repository"
 import { Item } from "@/domain/control/enterprise/entities/item"
 
 export class InMemoryItemRepository implements ItemRepository{
+  
     public items: Item[] = []
     
     async create(item: Item) {
@@ -24,5 +26,21 @@ export class InMemoryItemRepository implements ItemRepository{
 
             this.items.splice(itemIndex, 1)
     }
+
+    async findManyByName(name: string, { page }: PaginationParams) {
+        const itemComment = this.items
+          .filter((item) => item.name.toString() === name)
+          .splice((page - 1) * 20, page * 20)
+    
+        return itemComment
+      }
+
+    async save(item: Item) {
+        const itemIndex = this.items.findIndex((content) => content.id === item.id)
+    
+        this.items[itemIndex] = item
+      }
+
+
 
 }

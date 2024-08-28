@@ -1,16 +1,17 @@
 import { faker } from '@faker-js/faker'
 
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { Client, ClientProps } from '@/domain/control/enterprise/entities/client'
+import { User, userProps } from '@/domain/control/enterprise/entities/user'
 
-export function makeClient(
-  override: Partial<ClientProps> = {},
+export function makeUser(
+  override: Partial<userProps> = {},
   id?: UniqueEntityID,
 ) {
-  const client = Client.create(
+  const user = User.create(
     {
       address: 'Rua enjoa',
-      email:'Client@Madeira.com',
+      password: '123456',
+      email:'user@Madeira.com',
       name: 'Madeira Madeira',
       phone: '419902324525',
       ...override,
@@ -18,5 +19,5 @@ export function makeClient(
     id,
   )
 
-  return client
+  return user
 }

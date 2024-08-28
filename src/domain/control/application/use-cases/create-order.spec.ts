@@ -12,7 +12,7 @@ describe('Create Order',() => {
 
     it('Should be able create an order', async () => {
         const result = await sut.execute({
-            clientId:'1',
+            userId:'1',
             dateDelivery: new Date(),
             dateRequested: new Date(),
             deliveryAddress: 'Rua dos advogados 999',

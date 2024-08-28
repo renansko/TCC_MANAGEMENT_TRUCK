@@ -1,29 +1,36 @@
 import { Entity } from "@/core/entities/entity"
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
 import { Optional } from "@/core/types/optionals"
+import { UserCPF } from "./value-objects/UserCPF"
 
     /**
      * Interface explicação de suas propiedades.
      * 
      * 
-     * @param name (string) Nome do cliente
-     * @param address (string) Endereço do cliente
-     * @param email (string) email do cliente
-     * @param phone (string) telefone do cliente
+     * @param name (string) Nome do usuario
+     * @param cpf (string) CPF do usuario
+     * @param address (string) Endereço do usere
+     * @param email (string) email do usere
+     * @param phone (string) telefone do usere
      */
 
-export interface ClientProps{
+export interface userProps{
+    cpf: UserCPF
     name: string
     address: string
+    password: string
     email: string
     phone: string
     createdAt: Date
     updatedAt?: Date
 }
 
-export class Client extends Entity<ClientProps>{
+export class User extends Entity<userProps>{
     get name(){
         return this.props.name
+    }
+    get cpf(){
+        return this.props.cpf
     }
     get address(){
         return this.props.address
@@ -41,14 +48,14 @@ export class Client extends Entity<ClientProps>{
 
 
     static create(
-        props: Optional<ClientProps, 'createdAt'>,
+        props: Optional<userProps, 'createdAt'>,
         id?: UniqueEntityID
     ){
-        const client = new Client({
+        const user = new User({
             ...props,
             createdAt: new Date()
         }, id)
 
-        return client 
+        return user 
     }
 }

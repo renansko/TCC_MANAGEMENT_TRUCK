@@ -21,7 +21,7 @@ export interface TruckProps{
     company: string
     model: string
     fuel: number
-    iaAutonomosId?: UniqueEntityID
+    telemetryId: UniqueEntityID
     orderId: UniqueEntityID
     situationId: UniqueEntityID
     status: boolean
@@ -43,8 +43,8 @@ export class Truck extends Entity<TruckProps>{
         return this.props.fuel
     }
 
-    get iaAutonomosId(){
-        return this.props.iaAutonomosId
+    get telemetryId(){
+        return this.props.telemetryId
     }
 
     get orderId(){
@@ -86,7 +86,7 @@ export class Truck extends Entity<TruckProps>{
 
 
     static create(
-        props: Optional<TruckProps, 'createdAt' | 'iaAutonomosId'>,
+        props: Optional<TruckProps, 'createdAt'>,
         id?: UniqueEntityID
     ){
         const truck = new Truck({

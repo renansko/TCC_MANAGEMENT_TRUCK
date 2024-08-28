@@ -1,4 +1,4 @@
-import { SituationRepository } from "../repositories/situation_repository"
+import { SituationRepository } from "../repositories/situation-repository"
 import { Situation } from "../../enterprise/entities/situation"
 import { Either, right } from "@/core/either"
 

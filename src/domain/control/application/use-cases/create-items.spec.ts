@@ -1,4 +1,4 @@
-import { ItemsToLoadUseCase } from "./Items-to-load";
+import { ItemsToLoadUseCase } from "./create-Items";
 import { InMemoryItemRepository } from "test/repositories/in-memory-item-respoitory";
 
 let inMemoryItemRepository: InMemoryItemRepository
@@ -17,7 +17,6 @@ describe('Create Items', () => {
             description: 'Madeira exportada e condensada',
             quantity: 100,
             type: 'Solido'
-    
         })
 
     expect(result.value?.item.quantity).toEqual(100)

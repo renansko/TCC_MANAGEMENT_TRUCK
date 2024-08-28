@@ -1,4 +1,4 @@
-import { OrderRepository } from "@/domain/control/application/repositories/order_repository"
+import { OrderRepository } from "@/domain/control/application/repositories/order-repository"
 import { Order } from "@/domain/control/enterprise/entities/order"
 
 export class InMemoryOrderRepository implements OrderRepository{

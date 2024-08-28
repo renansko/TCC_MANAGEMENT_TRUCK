@@ -1,27 +1,27 @@
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
 import { Load } from "../../enterprise/entities/load"
-import { LoadRepository } from "../repositories/load_repository"
+import { LoadRepository } from "../repositories/load-repository"
 import { Either, right } from "@/core/either"
 
-interface LoadGoodsRequest {
+interface LoadRequest {
     type: string
     weight: number
     itemsId: string
 }
 
-type LoadGoodsResponse = Either<
+type LoadResponse = Either<
 null,
     {
         load: Load
     }   
 >
 
-export class LoadGoodsUseCase {
+export class LoadUseCase {
     constructor(
         private loadRepository: LoadRepository
     ) {}
 
-    async execute({type, weight, itemsId}: LoadGoodsRequest): Promise<LoadGoodsResponse>{
+    async execute({type, weight, itemsId}: LoadRequest): Promise<LoadResponse>{
         const load = Load.create({
             type,
             weight,

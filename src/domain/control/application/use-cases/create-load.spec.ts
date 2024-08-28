@@ -1,16 +1,16 @@
 import { InMemoryLoadRepository } from "test/repositories/in-memory-load-repository";
-import { LoadGoodsUseCase } from "./load-goods";
+import { LoadUseCase } from "./create-load";
 
 let inMemoryLoadRepository: InMemoryLoadRepository
-let sut: LoadGoodsUseCase
+let sut: LoadUseCase
 
-describe('Create Load goods', () => {
+describe('Create Load ', () => {
     beforeEach(() => {
         inMemoryLoadRepository = new InMemoryLoadRepository
-        sut = new LoadGoodsUseCase(inMemoryLoadRepository)
+        sut = new LoadUseCase(inMemoryLoadRepository)
     })
 
-    it('Should be able to create a goods load', async () => {
+    it('Should be able to create a  load', async () => {
         const result = await sut.execute({
             itemsId: '1',
             type: 'Composto Quimico',

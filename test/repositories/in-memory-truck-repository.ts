@@ -1,4 +1,4 @@
-import { TruckRepository } from "@/domain/control/application/repositories/truck_repository"
+import { TruckRepository } from "@/domain/control/application/repositories/truck-repository"
 import { Truck } from "@/domain/control/enterprise/entities/truck"
 
 export class InMemoryTruckRepository implements TruckRepository{

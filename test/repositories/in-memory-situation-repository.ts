@@ -1,4 +1,4 @@
-import { SituationRepository } from "@/domain/control/application/repositories/situation_repository"
+import { SituationRepository } from "@/domain/control/application/repositories/situation-repository"
 import { Situation } from "@/domain/control/enterprise/entities/situation"
 
 export class InMemorySituationRepository implements SituationRepository{

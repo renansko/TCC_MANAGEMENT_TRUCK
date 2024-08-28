@@ -1,5 +1,5 @@
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { TruckRepository } from "../repositories/truck_repository";
+import { TruckRepository } from "../repositories/truck-repository";
 import { Truck } from "../../enterprise/entities/truck";
 import { Either, right } from "@/core/either";
 
@@ -10,6 +10,7 @@ interface TruckAvaiableRequest {
     fuel: number
     situation: string
     orderId: string
+    telemetryId: string
 }
 
 type TruckAvaiableResponse = Either<
@@ -30,7 +31,8 @@ export class TruckAvaiableUseCase {
         fuel,
         model,
         situation,
-        orderId
+        orderId,
+        telemetryId
     }:TruckAvaiableRequest ): Promise<TruckAvaiableResponse>{
         const truck = Truck.create({
             name,
@@ -40,6 +42,7 @@ export class TruckAvaiableUseCase {
             status: true,
             orderId: new UniqueEntityID(orderId),
             situationId: new UniqueEntityID(situation), 
+            telemetryId: new UniqueEntityID(telemetryId)
         })
 
         this.truckRepository.create(truck)
