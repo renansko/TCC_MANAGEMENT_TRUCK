@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { UserCPF } from './UserCPF'
+import { UserCPF } from './user-cpf'
 
 test('it should be able to create a new usercpf from text', () => {
   const userCpf = UserCPF.createFromText('12345678911')

@@ -1,6 +1,6 @@
 import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository'
 import { CreateUserUseCase } from './create-user'
-import { UserCPF } from '../../enterprise/entities/value-objects/UserCPF'
+import { UserCPF } from '../../enterprise/entities/value-objects/user-cpf'
 
 let inMemoryUserRepository: InMemoryUserRepository
 let sut: CreateUserUseCase

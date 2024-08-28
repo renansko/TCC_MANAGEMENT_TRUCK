@@ -1,4 +1,4 @@
-export class UserCPF {
+export class CompanyCNPJ {
   public value: string
 
   private constructor(value: string) {
@@ -6,7 +6,7 @@ export class UserCPF {
   }
 
   static create(cpf: string) {
-    return new UserCPF(cpf)
+    return new CompanyCNPJ(cpf)
   }
 
   /**
@@ -22,10 +22,8 @@ export class UserCPF {
 
     const cpf = text
       .replace(/\D+/g, '')
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+      .replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5')
 
-    return new UserCPF(cpf)
+    return new CompanyCNPJ(cpf)
   }
 }

@@ -1,6 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '../../../../core/errors/errors/resource-not-foud-error'
 import { LoadRepository } from '../repositories/load-repository'
+import { Injectable } from '@nestjs/common'
 
 interface DeleteRequest {
   loadId: string
@@ -8,6 +9,7 @@ interface DeleteRequest {
 
 type DeleteResponse = Either<ResourceNotFoundError, null>
 
+@Injectable()
 export class DeleteLoadUseCase {
   constructor(private loadRepository: LoadRepository) {}
 

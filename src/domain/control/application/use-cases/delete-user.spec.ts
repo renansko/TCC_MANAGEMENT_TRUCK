@@ -1,7 +1,7 @@
-import { makeUser } from 'test/factories/make-user'
 import { ResourceNotFoundError } from '../../../../core/errors/errors/resource-not-foud-error'
 import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository'
 import { DeleteUserUseCase } from './delete-user'
+import { makeUser } from 'test/factories/make-user'
 
 let inMemoryuserRepository: InMemoryUserRepository
 let sut: DeleteUserUseCase
@@ -13,21 +13,21 @@ describe('Create Order', () => {
   })
 
   it('Should be able delete an user', async () => {
-    const newuser = makeUser()
+    const newUser = makeUser()
 
-    await inMemoryuserRepository.create(newuser)
+    await inMemoryuserRepository.create(newUser)
 
     await sut.execute({
-      userId: newuser.id.toString(),
+      userId: newUser.id.toString(),
     })
 
     expect(inMemoryuserRepository.items).toHaveLength(0)
   })
 
   it('Not should be able delete an inexistent user', async () => {
-    const newuser = makeUser()
+    const newUser = makeUser()
 
-    await inMemoryuserRepository.create(newuser)
+    await inMemoryuserRepository.create(newUser)
 
     const result = await sut.execute({
       userId: '1',

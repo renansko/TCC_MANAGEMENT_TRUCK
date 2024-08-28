@@ -1,6 +1,7 @@
 import { Either, right } from '@/core/either'
 import { Item } from '../../enterprise/entities/item'
 import { ItemRepository } from '../repositories/item-repository'
+import { Injectable } from '@nestjs/common'
 
 interface ItemsToLoadRequest {
   name: string
@@ -17,6 +18,7 @@ type ItemsToLoadResposne = Either<
   }
 >
 
+@Injectable()
 export class ItemsToLoadUseCase {
   constructor(private itemsRepository: ItemRepository) {}
 

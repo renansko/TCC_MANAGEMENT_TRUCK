@@ -19,6 +19,7 @@ type CreateOrderResponse = Either<
   }
 >
 
+@Injectable()
 export class CreateOrderUseCase {
   constructor(private orderRepository: OrderRepository) {}
 

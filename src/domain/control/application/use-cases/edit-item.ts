@@ -3,6 +3,7 @@ import { Item } from '../../enterprise/entities/item'
 import { ItemRepository } from '../repositories/item-repository'
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
+import { Injectable } from '@nestjs/common'
 
 interface EditItemUseCaseRequest {
   itemId: string
@@ -20,6 +21,7 @@ type EditItemUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class EditItemUseCase {
   constructor(private itemRepository: ItemRepository) {}
 

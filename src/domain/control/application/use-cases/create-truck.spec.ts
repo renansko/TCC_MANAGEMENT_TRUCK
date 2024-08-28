@@ -12,10 +12,9 @@ describe('Create avaiable truck', () => {
   it('Should be able create a avaiable truck', async () => {
     const result = await sut.execute({
       name: 'TruckChypherOne',
-      company: 'TruckersIA',
       model: 'LoaderBasic',
-      fuel: 50,
-      situation: '1',
+      companyId: '2',
+      situationId: '1',
       orderId: '3',
       telemetryId: '2',
     })

@@ -1,6 +1,7 @@
 import { SituationRepository } from '../repositories/situation-repository'
 import { Situation } from '../../enterprise/entities/situation'
 import { Either, right } from '@/core/either'
+import { Injectable } from '@nestjs/common'
 
 interface SituationRequest {
   description: string
@@ -14,6 +15,7 @@ type SituationResponse = Either<
   }
 >
 
+@Injectable()
 export class SituationUseCase {
   constructor(private situationRepository: SituationRepository) {}
 

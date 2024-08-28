@@ -1,7 +1,7 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optionals'
-import { UserCPF } from './value-objects/UserCPF'
+import { UserCPF } from './value-objects/user-cpf'
 
 /**
  * Interface explicação de suas propiedades.

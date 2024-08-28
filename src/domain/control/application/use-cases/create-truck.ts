@@ -2,13 +2,13 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { TruckRepository } from '../repositories/truck-repository'
 import { Truck } from '../../enterprise/entities/truck'
 import { Either, right } from '@/core/either'
+import { Injectable } from '@nestjs/common'
 
 interface TruckAvaiableRequest {
   name: string
-  company: string
   model: string
-  fuel: number
-  situation: string
+  situationId: string
+  companyId: string
   orderId: string
   telemetryId: string
 }
@@ -20,27 +20,25 @@ type TruckAvaiableResponse = Either<
   }
 >
 
+@Injectable()
 export class TruckAvaiableUseCase {
   constructor(private truckRepository: TruckRepository) {}
 
   async execute({
     name,
-    company,
-    fuel,
+    companyId,
     model,
-    situation,
+    situationId,
     orderId,
     telemetryId,
   }: TruckAvaiableRequest): Promise<TruckAvaiableResponse> {
     const truck = Truck.create({
       name,
-      company,
-      fuel,
       model,
-      status: true,
       orderId: new UniqueEntityID(orderId),
-      situationId: new UniqueEntityID(situation),
+      situationId: new UniqueEntityID(situationId),
       telemetryId: new UniqueEntityID(telemetryId),
+      companyId: new UniqueEntityID(companyId),
     })
 
     this.truckRepository.create(truck)

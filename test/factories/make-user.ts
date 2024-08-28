@@ -1,6 +1,6 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { User, userProps } from '@/domain/control/enterprise/entities/user'
-import { UserCPF } from '@/domain/control/enterprise/entities/value-objects/UserCPF'
+import { UserCPF } from '@/domain/control/enterprise/entities/value-objects/user-cpf'
 
 export function makeUser(
   override: Partial<userProps> = {},

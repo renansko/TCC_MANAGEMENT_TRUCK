@@ -2,6 +2,7 @@ import { Either, right } from '@/core/either'
 import { LocationTruck } from '../../enterprise/entities/value-objects/locationTruck'
 import { Telemetry } from '../../enterprise/entities/telemetry'
 import { TruckTelemetryRepository } from '../repositories/telemetry-repository'
+import { Injectable } from '@nestjs/common'
 
 interface CreateTelemetryRequest {
   engineTemperature: number
@@ -20,6 +21,7 @@ type CreateTelemetryResponse = Either<
   }
 >
 
+@Injectable()
 export class CreateTelemetryUseCase {
   constructor(private truckTelemetry: TruckTelemetryRepository) {}
 

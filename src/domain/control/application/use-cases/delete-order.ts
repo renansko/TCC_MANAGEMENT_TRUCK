@@ -8,6 +8,7 @@ interface DeleteOrderRequest {
 
 type DeleteOrderResponse = Either<ResourceNotFoundError, null>
 
+@Injectable()
 export class DeleteOrderUseCase {
   constructor(private orderRepository: OrderRepository) {}
 

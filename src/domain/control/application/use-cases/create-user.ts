@@ -1,7 +1,8 @@
 import { Either, right } from '@/core/either'
 import { User } from '../../enterprise/entities/user'
 import { UserRepository } from '../repositories/user-repository'
-import { UserCPF } from '../../enterprise/entities/value-objects/UserCPF'
+import { UserCPF } from '../../enterprise/entities/value-objects/user-cpf'
+import { Injectable } from '@nestjs/common'
 
 interface CreateUserRequest {
   cpf: UserCPF
@@ -19,6 +20,7 @@ type CreateUserResponse = Either<
   }
 >
 
+@Injectable()
 export class CreateUserUseCase {
   constructor(private userRepository: UserRepository) {}
 
