@@ -21,9 +21,7 @@ type EditItemUseCaseResponse = Either<
 >
 
 export class EditItemUseCase {
-  constructor(
-    private itemRepository: ItemRepository,
-  ) {}
+  constructor(private itemRepository: ItemRepository) {}
 
   async execute({
     name,
@@ -31,7 +29,7 @@ export class EditItemUseCase {
     quantity,
     type,
     itemId,
-    amount
+    amount,
   }: EditItemUseCaseRequest): Promise<EditItemUseCaseResponse> {
     const item = await this.itemRepository.findById(itemId)
 

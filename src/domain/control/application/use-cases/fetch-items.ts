@@ -21,13 +21,12 @@ export class FetchItemsUseCase {
     name,
     page,
   }: FetchItemsUseCaseRequest): Promise<FetchItemsUseCaseResponse> {
-    const items =
-      await this.itemRepository.findManyByName(name, {
-        page,
-      })
+    const items = await this.itemRepository.findManyByName(name, {
+      page,
+    })
 
     return right({
-        items,
+      items,
     })
   }
 }

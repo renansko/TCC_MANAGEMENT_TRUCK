@@ -1,41 +1,39 @@
-import { InMemoryLoadRepository } from "test/repositories/in-memory-load-repository";
-import { ResourceNotFoundError } from "../../../../core/errors/errors/resource-not-foud-error";
-import { makeLoad } from "test/factories/make-load";
-import { DeleteLoadUseCase } from "./delete-load";
+import { InMemoryLoadRepository } from 'test/repositories/in-memory-load-repository'
+import { ResourceNotFoundError } from '../../../../core/errors/errors/resource-not-foud-error'
+import { makeLoad } from 'test/factories/make-load'
+import { DeleteLoadUseCase } from './delete-load'
 
 let inMemoryLoadRepository: InMemoryLoadRepository
 let sut: DeleteLoadUseCase
 
-describe('Create Load',() => {
-    beforeEach(() => {
-        inMemoryLoadRepository = new InMemoryLoadRepository()
-        sut = new DeleteLoadUseCase(inMemoryLoadRepository)
+describe('Create Load', () => {
+  beforeEach(() => {
+    inMemoryLoadRepository = new InMemoryLoadRepository()
+    sut = new DeleteLoadUseCase(inMemoryLoadRepository)
+  })
+
+  it('Should be able delete an load', async () => {
+    const newLoad = makeLoad()
+
+    await inMemoryLoadRepository.create(newLoad)
+
+    await sut.execute({
+      loadId: newLoad.id.toString(),
     })
 
-    it('Should be able delete an load', async () => {
-        const newLoad = makeLoad()
+    expect(inMemoryLoadRepository.items).toHaveLength(0)
+  })
 
-        await inMemoryLoadRepository.create(newLoad)
+  it('Not should be able delete an inexistent load', async () => {
+    const newLoad = makeLoad()
 
+    await inMemoryLoadRepository.create(newLoad)
 
-        const result = await sut.execute({
-            loadId: newLoad.id.toString(),
-        })
-    
-        expect(inMemoryLoadRepository.items).toHaveLength(0)
+    const result = await sut.execute({
+      loadId: '1',
     })
 
-    it('Not should be able delete an inexistent load', async () => {
-        const newLoad = makeLoad()
-
-        await inMemoryLoadRepository.create(newLoad)
-
-        const result = await sut.execute({
-            loadId: '1',
-        })
-    
-        expect(result.isLeft()).toBe(true)
-        expect(result.value).toBeInstanceOf(ResourceNotFoundError)
-    })
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+  })
 })
-

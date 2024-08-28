@@ -1,7 +1,7 @@
-import { Load } from "../../enterprise/entities/load";
+import { Load } from '../../enterprise/entities/load'
 
-export interface LoadRepository{
-    create(load: Load): Promise <void>
-    findById(id: string): Promise<Load | null>
-    delete(item: Load): Promise<void>
+export abstract class LoadRepository {
+  abstract create(load: Load): Promise<void>
+  abstract findById(id: string): Promise<Load | null>
+  abstract delete(item: Load): Promise<void>
 }

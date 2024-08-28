@@ -1,28 +1,30 @@
-import { TruckTelemetryRepository } from "@/domain/control/application/repositories/telemetry-repository"
-import { Telemetry } from "@/domain/control/enterprise/entities/telemetry"
+import { TruckTelemetryRepository } from '@/domain/control/application/repositories/telemetry-repository'
+import { Telemetry } from '@/domain/control/enterprise/entities/telemetry'
 
-export class InMemoryTruckTelemetryRepository implements TruckTelemetryRepository{
-    public items: Telemetry[] = []
-    
-    async create(trucktelemetry: Telemetry) {
-        this.items.push(trucktelemetry)
+export class InMemoryTruckTelemetryRepository
+  implements TruckTelemetryRepository
+{
+  public items: Telemetry[] = []
+
+  async create(trucktelemetry: Telemetry) {
+    this.items.push(trucktelemetry)
+  }
+
+  async findById(id: string) {
+    const trucktelemetry = this.items.find((item) => item.id.toString() === id)
+
+    if (!trucktelemetry) {
+      return null
     }
 
-    async findById(id: string) {
-        const trucktelemetry = this.items.find((item) => item.id.toString() === id)
+    return trucktelemetry
+  }
 
-        if(!trucktelemetry){
-            return null
-        }
+  async delete(trucktelemetry: Telemetry) {
+    const trucktelemetryIndex = this.items.findIndex(
+      (item) => item.id === trucktelemetry.id,
+    )
 
-        return trucktelemetry
-    }
-
-    async delete(trucktelemetry: Telemetry) {
-        const trucktelemetryIndex = this.items.findIndex(
-            (item) => item.id === trucktelemetry.id)
-
-            this.items.splice(trucktelemetryIndex, 1)
-    }
-
+    this.items.splice(trucktelemetryIndex, 1)
+  }
 }

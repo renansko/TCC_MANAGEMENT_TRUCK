@@ -1,7 +1,7 @@
-import { Telemetry } from "../../enterprise/entities/telemetry";
+import { Telemetry } from '../../enterprise/entities/telemetry'
 
-export interface TruckTelemetry{
-    create(telemetry: Telemetry): Promise <void>
-    findById(id: string): Promise<Telemetry | null>
-    delete(item: Telemetry): Promise<void>
+export abstract class TruckTelemetryRepository {
+  abstract create(telemetry: Telemetry): Promise<void>
+  abstract findById(id: string): Promise<Telemetry | null>
+  abstract delete(item: Telemetry): Promise<void>
 }

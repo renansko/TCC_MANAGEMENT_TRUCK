@@ -1,35 +1,25 @@
-import { Either, left, right } from "@/core/either"
-import { ResourceNotFoundError } from "../../../../core/errors/errors/resource-not-foud-error"
-import { LoadRepository } from "../repositories/load-repository"
+import { Either, left, right } from '@/core/either'
+import { ResourceNotFoundError } from '../../../../core/errors/errors/resource-not-foud-error'
+import { LoadRepository } from '../repositories/load-repository'
 
 interface DeleteRequest {
-   loadId: string
+  loadId: string
 }
 
-type DeleteResponse = Either<
-    ResourceNotFoundError, 
-    {}
->
+type DeleteResponse = Either<ResourceNotFoundError, null>
 
 export class DeleteLoadUseCase {
-    constructor(
-        private loadRepository: LoadRepository
-    ) {}
+  constructor(private loadRepository: LoadRepository) {}
 
-    async execute({
-        loadId,
-    }:DeleteRequest): Promise<DeleteResponse>{
-        
+  async execute({ loadId }: DeleteRequest): Promise<DeleteResponse> {
+    const load = await this.loadRepository.findById(loadId)
 
-        const load = await this.loadRepository.findById(loadId)
-
-        if(!load){
-            return left(new ResourceNotFoundError())
-        }
-
-        await this.loadRepository.delete(load)
-
-        return right({       
-        })
+    if (!load) {
+      return left(new ResourceNotFoundError())
     }
+
+    await this.loadRepository.delete(load)
+
+    return right(null)
+  }
 }

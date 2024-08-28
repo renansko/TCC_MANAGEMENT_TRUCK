@@ -1,51 +1,48 @@
-
-import { Either, right } from "@/core/either"
-import { User } from "../../enterprise/entities/user"
-import { UserRepository } from "../repositories/user-repository"
-import { UserCPF } from "../../enterprise/entities/value-objects/UserCPF"
+import { Either, right } from '@/core/either'
+import { User } from '../../enterprise/entities/user'
+import { UserRepository } from '../repositories/user-repository'
+import { UserCPF } from '../../enterprise/entities/value-objects/UserCPF'
 
 interface CreateUserRequest {
-    cpf: UserCPF
-    name: string
-    address: string
-    email: string
-    phone: string
-    password: string
+  cpf: UserCPF
+  name: string
+  address: string
+  email: string
+  phone: string
+  password: string
 }
 
 type CreateUserResponse = Either<
-    null, 
-    {
-        user: User
-    }
+  null,
+  {
+    user: User
+  }
 >
 
 export class CreateUserUseCase {
-    constructor(
-        private userRepository: UserRepository
-    ) {}
+  constructor(private userRepository: UserRepository) {}
 
-    async execute({
-        cpf,
-        name,
-        password,
-        address,
-        email,
-        phone,
-    }:CreateUserRequest): Promise<CreateUserResponse>{
-        const user = User.create({
-            cpf,
-            name,
-            password,
-            address,
-            email,
-            phone
-        })
+  async execute({
+    cpf,
+    name,
+    password,
+    address,
+    email,
+    phone,
+  }: CreateUserRequest): Promise<CreateUserResponse> {
+    const user = User.create({
+      cpf,
+      name,
+      password,
+      address,
+      email,
+      phone,
+    })
 
-        await this.userRepository.create(user)
+    await this.userRepository.create(user)
 
-        return right({
-            user
-        })
-    }
+    return right({
+      user,
+    })
+  }
 }

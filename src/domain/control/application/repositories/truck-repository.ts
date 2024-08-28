@@ -1,7 +1,7 @@
-import { Truck } from "../../enterprise/entities/truck";
+import { Truck } from '../../enterprise/entities/truck'
 
-export interface TruckRepository{
-    create(truck: Truck): Promise <void>
-    findById(id: string): Promise<Truck | null>
-    delete(item: Truck): Promise<void>
+export abstract class TruckRepository {
+  abstract create(truck: Truck): Promise<void>
+  abstract findById(id: string): Promise<Truck | null>
+  abstract delete(item: Truck): Promise<void>
 }

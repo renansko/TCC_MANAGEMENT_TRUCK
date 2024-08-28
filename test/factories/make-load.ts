@@ -7,10 +7,10 @@ export function makeLoad(
 ) {
   const load = Load.create(
     {
-    itemsId: new UniqueEntityID(), // Lista de items
-    type: 'dangerous',
-    weight: 120,
-    ...override,
+      itemsId: new UniqueEntityID(), // Lista de items
+      type: 'dangerous',
+      weight: 120,
+      ...override,
     },
     id,
   )

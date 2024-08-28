@@ -1,10 +1,13 @@
-import { PaginationParams } from "@/core/repositories/pagination-params";
-import { Item } from "../../enterprise/entities/item";
+import { PaginationParams } from '@/core/repositories/pagination-params'
+import { Item } from '../../enterprise/entities/item'
 
-export interface ItemRepository{
-    create(item: Item): Promise <void>
-    findById(id: string): Promise<Item | null>
-    delete(item: Item): Promise<void>
-    save(item: Item): Promise<void>
-    findManyByName(name: string, params: PaginationParams): Promise<Item[]>
+export abstract class ItemRepository {
+  abstract create(item: Item): Promise<void>
+  abstract findById(id: string): Promise<Item | null>
+  abstract delete(item: Item): Promise<void>
+  abstract save(item: Item): Promise<void>
+  abstract findManyByName(
+    name: string,
+    params: PaginationParams,
+  ): Promise<Item[]>
 }

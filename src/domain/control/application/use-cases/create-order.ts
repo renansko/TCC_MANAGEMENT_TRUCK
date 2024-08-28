@@ -1,52 +1,48 @@
-import { SituationRepository } from "../repositories/situation-repository"
-import { Situation } from "../../enterprise/entities/situation"
-import { UniqueEntityID } from "@/core/entities/unique-entity-id"
-import { OrderRepository } from "../repositories/order-repository"
-import { Order } from "../../enterprise/entities/order"
-import { Either, right } from "@/core/either"
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { OrderRepository } from '../repositories/order-repository'
+import { Order } from '../../enterprise/entities/order'
+import { Either, right } from '@/core/either'
 
 interface CreateOrderRequest {
-    loadId: string
-    userId: string
-    dateRequested: Date
-    dateDelivery: Date
-    deliveryAddress: string
-    status: string
+  loadId: string
+  userId: string
+  dateRequested: Date
+  dateDelivery: Date
+  deliveryAddress: string
+  status: string
 }
 
 type CreateOrderResponse = Either<
-    null, 
-    {
-        order: Order
-    }
+  null,
+  {
+    order: Order
+  }
 >
 
 export class CreateOrderUseCase {
-    constructor(
-        private orderRepository: OrderRepository
-    ) {}
+  constructor(private orderRepository: OrderRepository) {}
 
-    async execute({
-        loadId,
-        userId,
-        dateDelivery,
-        dateRequested,
-        deliveryAddress,
-        status
-    }:CreateOrderRequest): Promise<CreateOrderResponse>{
-        const order = Order.create({
-            loadId: new UniqueEntityID(loadId),
-            userId: new UniqueEntityID(userId),
-            dateRequested,
-            dateDelivery,
-            deliveryAddress,
-            status,
-        })
+  async execute({
+    loadId,
+    userId,
+    dateDelivery,
+    dateRequested,
+    deliveryAddress,
+    status,
+  }: CreateOrderRequest): Promise<CreateOrderResponse> {
+    const order = Order.create({
+      loadId: new UniqueEntityID(loadId),
+      userId: new UniqueEntityID(userId),
+      dateRequested,
+      dateDelivery,
+      deliveryAddress,
+      status,
+    })
 
-        this.orderRepository.create(order)
+    this.orderRepository.create(order)
 
-        return right({
-            order
-        })
-    }
+    return right({
+      order,
+    })
+  }
 }

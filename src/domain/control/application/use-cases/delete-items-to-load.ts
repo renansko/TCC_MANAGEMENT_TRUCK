@@ -1,35 +1,25 @@
-import { Either, left, right } from "@/core/either"
-import { ResourceNotFoundError } from "../../../../core/errors/errors/resource-not-foud-error"
-import { ItemRepository } from "../repositories/item-repository"
+import { Either, left, right } from '@/core/either'
+import { ResourceNotFoundError } from '../../../../core/errors/errors/resource-not-foud-error'
+import { ItemRepository } from '../repositories/item-repository'
 
 interface DeleteItemsRequest {
-   itemsId: string
+  itemsId: string
 }
 
-type DeleteItemsResponse = Either<
-    ResourceNotFoundError, 
-    {}
->
+type DeleteItemsResponse = Either<ResourceNotFoundError, null>
 
 export class DeleteItemsUseCase {
-    constructor(
-        private itemRepository: ItemRepository
-    ) {}
+  constructor(private itemRepository: ItemRepository) {}
 
-    async execute({
-        itemsId,
-    }:DeleteItemsRequest): Promise<DeleteItemsResponse>{
-        
+  async execute({ itemsId }: DeleteItemsRequest): Promise<DeleteItemsResponse> {
+    const items = await this.itemRepository.findById(itemsId)
 
-        const items = await this.itemRepository.findById(itemsId)
-
-        if(!items){
-            return left(new ResourceNotFoundError())
-        }
-
-        await this.itemRepository.delete(items)
-
-        return right({       
-        })
+    if (!items) {
+      return left(new ResourceNotFoundError())
     }
+
+    await this.itemRepository.delete(items)
+
+    return right(null)
+  }
 }

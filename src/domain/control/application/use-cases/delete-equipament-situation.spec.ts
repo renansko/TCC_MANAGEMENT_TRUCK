@@ -1,41 +1,39 @@
-import { InMemorySituationRepository } from "test/repositories/in-memory-situation-repository";
-import { ResourceNotFoundError } from "../../../../core/errors/errors/resource-not-foud-error";
-import { DeleteSituationUseCase } from "./delete-equipament-situation";
-import { makeSituation } from "test/factories/make-situation";
+import { InMemorySituationRepository } from 'test/repositories/in-memory-situation-repository'
+import { ResourceNotFoundError } from '../../../../core/errors/errors/resource-not-foud-error'
+import { DeleteSituationUseCase } from './delete-equipament-situation'
+import { makeSituation } from 'test/factories/make-situation'
 
 let inMemorySituationRepository: InMemorySituationRepository
 let sut: DeleteSituationUseCase
 
-describe('Create Situation',() => {
-    beforeEach(() => {
-        inMemorySituationRepository = new InMemorySituationRepository()
-        sut = new DeleteSituationUseCase(inMemorySituationRepository)
+describe('Create Situation', () => {
+  beforeEach(() => {
+    inMemorySituationRepository = new InMemorySituationRepository()
+    sut = new DeleteSituationUseCase(inMemorySituationRepository)
+  })
+
+  it('Should be able delete an situation', async () => {
+    const newSituation = makeSituation()
+
+    await inMemorySituationRepository.create(newSituation)
+
+    await sut.execute({
+      situationId: newSituation.id.toString(),
     })
 
-    it('Should be able delete an situation', async () => {
-        const newSituation = makeSituation()
+    expect(inMemorySituationRepository.items).toHaveLength(0)
+  })
 
-        await inMemorySituationRepository.create(newSituation)
+  it('Not should be able delete an inexistent situation', async () => {
+    const newSituation = makeSituation()
 
+    await inMemorySituationRepository.create(newSituation)
 
-        const result = await sut.execute({
-            situationId: newSituation.id.toString(),
-        })
-    
-        expect(inMemorySituationRepository.items).toHaveLength(0)
+    const result = await sut.execute({
+      situationId: '1',
     })
 
-    it('Not should be able delete an inexistent situation', async () => {
-        const newSituation = makeSituation()
-
-        await inMemorySituationRepository.create(newSituation)
-
-        const result = await sut.execute({
-            situationId: '1',
-        })
-    
-        expect(result.isLeft()).toBe(true)
-        expect(result.value).toBeInstanceOf(ResourceNotFoundError)
-    })
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+  })
 })
-
