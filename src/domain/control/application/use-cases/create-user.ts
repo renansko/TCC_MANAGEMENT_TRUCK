@@ -3,6 +3,7 @@ import { User } from '../../enterprise/entities/user'
 import { UserRepository } from '../repositories/user-repository'
 import { UserCPF } from '../../enterprise/entities/value-objects/user-cpf'
 import { Injectable } from '@nestjs/common'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
 interface CreateUserRequest {
   cpf: UserCPF
@@ -11,6 +12,7 @@ interface CreateUserRequest {
   email: string
   phone: string
   password: string
+  companyId?: string
 }
 
 type CreateUserResponse = Either<
@@ -31,6 +33,7 @@ export class CreateUserUseCase {
     address,
     email,
     phone,
+    companyId,
   }: CreateUserRequest): Promise<CreateUserResponse> {
     const user = User.create({
       cpf,
@@ -39,6 +42,7 @@ export class CreateUserUseCase {
       address,
       email,
       phone,
+      companyId: new UniqueEntityID(companyId),
     })
 
     await this.userRepository.create(user)

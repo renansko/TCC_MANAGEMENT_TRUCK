@@ -1,4 +1,4 @@
-import { InMemoryItemRepository } from 'test/repositories/in-memory-item-respoitory'
+import { InMemoryItemRepository } from 'test/repositories/in-memory-item-respository'
 import { ResourceNotFoundError } from '../../../../core/errors/errors/resource-not-foud-error'
 import { DeleteItemsUseCase } from './delete-items-to-load'
 import { makeItem } from 'test/factories/make-item'

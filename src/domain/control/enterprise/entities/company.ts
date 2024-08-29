@@ -13,7 +13,6 @@ import { Optional } from '@/core/types/optionals'
  * @param email (string) email do compania
  * @param phone (string) telefone do compania
  * @param password (string) senha do compania
- * @param userId (UniqueEntity) usuarios da compania
  */
 
 export interface companyProps {
@@ -23,7 +22,6 @@ export interface companyProps {
   email: string
   password: string
   phone: string
-  userId: UniqueEntityID
   createdAt: Date
   updatedAt?: Date
 }
@@ -53,8 +51,8 @@ export class Company extends Entity<companyProps> {
     return this.props.phone
   }
 
-  get userId() {
-    return this.props.phone
+  private touch() {
+    this.props.updatedAt = new Date()
   }
 
   static create(

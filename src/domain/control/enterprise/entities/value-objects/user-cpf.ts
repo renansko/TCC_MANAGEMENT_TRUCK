@@ -19,7 +19,6 @@ export class UserCPF {
 
   static createFromText(text: string) {
     // Tratar localização
-    console.log(text.length)
 
     const cpf = text
       .replace(/\D+/g, '')

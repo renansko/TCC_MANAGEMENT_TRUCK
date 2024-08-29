@@ -12,6 +12,7 @@ import { UserCPF } from './value-objects/user-cpf'
  * @param address (string) Endereço do usere
  * @param email (string) email do usere
  * @param phone (string) telefone do usere
+ * @param companyId (UniqueEntityID) compania que pertence
  */
 
 export interface userProps {
@@ -21,6 +22,7 @@ export interface userProps {
   password: string
   email: string
   phone: string
+  companyId?: UniqueEntityID
   createdAt: Date
   updatedAt?: Date
 }
@@ -28,6 +30,10 @@ export interface userProps {
 export class User extends Entity<userProps> {
   get name() {
     return this.props.name
+  }
+
+  get companyId() {
+    return this.props.companyId
   }
 
   get cpf() {
@@ -50,7 +56,10 @@ export class User extends Entity<userProps> {
     this.props.updatedAt = new Date()
   }
 
-  static create(props: Optional<userProps, 'createdAt'>, id?: UniqueEntityID) {
+  static create(
+    props: Optional<userProps, 'createdAt' | 'companyId'>,
+    id?: UniqueEntityID,
+  ) {
     const user = new User(
       {
         ...props,

@@ -3,8 +3,10 @@ import { LocationTruck } from '../../enterprise/entities/value-objects/locationT
 import { Telemetry } from '../../enterprise/entities/telemetry'
 import { TruckTelemetryRepository } from '../repositories/telemetry-repository'
 import { Injectable } from '@nestjs/common'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
 interface CreateTelemetryRequest {
+  truckId: string
   engineTemperature: number
   location: LocationTruck
   speed: number
@@ -26,6 +28,7 @@ export class CreateTelemetryUseCase {
   constructor(private truckTelemetry: TruckTelemetryRepository) {}
 
   async execute({
+    truckId,
     engineTemperature,
     location,
     speed,
@@ -35,6 +38,7 @@ export class CreateTelemetryUseCase {
     ignition,
   }: CreateTelemetryRequest): Promise<CreateTelemetryResponse> {
     const telemetry = Telemetry.create({
+      truckId: new UniqueEntityID(truckId),
       engineTemperature,
       location,
       speed,

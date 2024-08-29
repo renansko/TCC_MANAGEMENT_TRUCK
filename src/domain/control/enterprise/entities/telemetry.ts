@@ -18,6 +18,7 @@ import { LocationTruck } from './value-objects/locationTruck'
  * @param updatedAt (Date) "Mudança de informação do objeto"
  */
 export interface telemetryProps {
+  truckId: UniqueEntityID
   engineTemperature: number
   location: LocationTruck
   speed: number
@@ -30,6 +31,10 @@ export interface telemetryProps {
 }
 
 export class Telemetry extends Entity<telemetryProps> {
+  get truckId() {
+    return this.props.truckId
+  }
+
   get engineTemperature() {
     return this.props.engineTemperature
   }

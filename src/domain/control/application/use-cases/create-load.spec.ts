@@ -13,6 +13,7 @@ describe('Create Load ', () => {
   it('Should be able to create a  load', async () => {
     const result = await sut.execute({
       itemsId: '1',
+      truckId: '2',
       type: 'Composto Quimico',
       weight: 100,
     })

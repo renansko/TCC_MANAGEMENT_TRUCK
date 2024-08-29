@@ -1,6 +1,6 @@
 import { makeItem } from 'test/factories/make-item'
 import { EditItemUseCase } from './edit-item'
-import { InMemoryItemRepository } from 'test/repositories/in-memory-item-respoitory'
+import { InMemoryItemRepository } from 'test/repositories/in-memory-item-respository'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
 
 let inMemoryItemRepository: InMemoryItemRepository
@@ -25,7 +25,6 @@ describe('Edit Item by id', () => {
       description: 'Madeirinha',
       name: 'madeira',
       quantity: 10,
-      type: 'Tranfer',
     })
 
     expect(inMemoryItemRepository.items[0]).toMatchObject({
@@ -47,7 +46,6 @@ describe('Edit Item by id', () => {
       description: 'Madeira',
       name: 'Mesa',
       quantity: 12,
-      type: 'usual',
     })
 
     expect(result.isLeft()).toBe(true)

@@ -8,9 +8,9 @@ import { Optional } from '@/core/types/optionals'
  *
  * @param loadId (UniqueEntityID) Id da carga a ser carregada no caminhão
  * @param userId (UniqueEntityID) Informação do usere contratante
- * @param dateRequested (number) Data que foi realizada a pedido no sistema
- * @param dateDelivery (UniqueEntityID) Data que foi requisitada a entrega
- * @param deliveryAddress (UniqueEntityID) local de entrega
+ * @param dateRequested (DateTime) Data que foi realizada a pedido no sistema
+ * @param dateDelivery (DateTime) Data que foi requisitada a entrega
+ * @param deliveryAddress (String) local de entrega
  * @param status (string) status para o caminhão está 'pronto' ou não
  * @param createdAt (Date) "Data da criação do objeto virtual"
  * @param updatedAt (Date) "Mudança de informação do objeto"

@@ -9,7 +9,6 @@ import { Optional } from '@/core/types/optionals'
  * @param name (string) nome do item
  * @param description (string) descrição do item.
  * @param quantity (number) quantidade do item: identificar se o item é unitario ou não
- * @param type (number) tipo do item, 'liquido'/'solido'/'gasoso'.
  * @param amount (number) preço do item.
  */
 
@@ -17,7 +16,6 @@ export interface ItemProps {
   name: string
   description: string
   quantity: number
-  type: string
   amount: number
   createdAt: Date
   updatedAt?: Date
@@ -36,10 +34,6 @@ export class Item extends Entity<ItemProps> {
     return this.props.quantity
   }
 
-  get type() {
-    return this.props.type
-  }
-
   get amount() {
     return this.props.amount
   }
@@ -56,11 +50,6 @@ export class Item extends Entity<ItemProps> {
 
   set quantity(quantity: number) {
     this.props.quantity = quantity
-    this.touch()
-  }
-
-  set type(type: string) {
-    this.props.type = type
     this.touch()
   }
 

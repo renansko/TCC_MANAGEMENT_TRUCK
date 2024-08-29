@@ -1,6 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '../../../../core/errors/errors/resource-not-foud-error'
 import { ItemRepository } from '../repositories/item-repository'
+import { Injectable } from '@nestjs/common'
 
 interface DeleteItemsRequest {
   itemsId: string
@@ -8,6 +9,7 @@ interface DeleteItemsRequest {
 
 type DeleteItemsResponse = Either<ResourceNotFoundError, null>
 
+@Injectable()
 export class DeleteItemsUseCase {
   constructor(private itemRepository: ItemRepository) {}
 

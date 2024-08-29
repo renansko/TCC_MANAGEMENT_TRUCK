@@ -1,7 +1,6 @@
 import { Either, right } from '@/core/either'
 import { Company } from '../../enterprise/entities/company'
 import { CompanyCNPJ } from '../../enterprise/entities/value-objects/company-cnpj'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { CompanyRepository } from '../repositories/company-repository'
 import { Injectable } from '@nestjs/common'
 
@@ -12,7 +11,6 @@ interface CreateCompanyRequest {
   email: string
   phone: string
   password: string
-  userId: string
 }
 
 type CreateCompanyResponse = Either<
@@ -33,7 +31,6 @@ export class CreateCompanyUseCase {
     address,
     email,
     phone,
-    userId,
   }: CreateCompanyRequest): Promise<CreateCompanyResponse> {
     const company = Company.create({
       cnpj,
@@ -42,7 +39,6 @@ export class CreateCompanyUseCase {
       address,
       email,
       phone,
-      userId: new UniqueEntityID(userId),
     })
 
     await this.companyRepository.create(company)

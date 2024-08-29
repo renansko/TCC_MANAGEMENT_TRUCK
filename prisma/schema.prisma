@@ -1,0 +1,128 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+    ADMIN
+    CLIENT
+}
+
+model User {
+    id        String   @id @default(uuid())
+    cpf       String   @unique
+    name      String
+    email     String   @unique
+    password  String
+    phone     String
+    role      UserRole @default(CLIENT)
+    companyId String?  @map("company_id")
+
+    createdAt DateTime  @default(now()) @map("created_at")
+    updatedAt DateTime? @updatedAt @map("updated_at")
+
+    company Company? @relation(fields: [companyId], references: [id])
+    order   Order[]
+
+    @@map("users")
+}
+
+model Company {
+    id       String @id @default(uuid())
+    cnpj     String @unique
+    name     String
+    email    String @unique
+    password String
+    phone    String
+
+    createdAt DateTime  @default(now()) @map("created_at")
+    updatedAt DateTime? @updatedAt @map("updated_at")
+
+    role  UserRole @default(CLIENT)
+    truck Truck[]
+    user  User[]
+
+    @@map("companies")
+}
+
+model Truck {
+    id        String @id @default(uuid())
+    name      String
+    model     String
+    companyId String @map("company_id")
+
+    createdAt DateTime  @default(now()) @map("created_at")
+    updatedAt DateTime? @updatedAt @map("updated_at")
+
+    company   Company     @relation(fields: [companyId], references: [id])
+    telemetry Telemetry[]
+    load      Load[]
+
+    @@map("trucks")
+}
+
+model Telemetry {
+    id        String    @id @default(uuid())
+    location  String
+    speed     Decimal
+    braking   Int
+    bends     Int
+    fuel      Decimal
+    ignition  Boolean
+    createdAt DateTime  @default(now()) @map("created_at")
+    updatedAt DateTime? @updatedAt @map("updated_at")
+    truckId   String    @map("truck_id")
+
+    truck Truck @relation(fields: [truckId], references: [id])
+
+    @@map("telemetries")
+}
+
+model Load {
+    id      String @id @default(uuid())
+    type    String
+    itemId  String @map("item_id")
+    truckId String @map("truck_id")
+
+    truck Truck   @relation(fields: [truckId], references: [id])
+    items Item    @relation(fields: [itemId], references: [id])
+    order Order[]
+
+    @@map("loads")
+}
+
+model Item {
+    id          String  @id @default(uuid())
+    name        String
+    description String
+    quantity    Int
+    amount      Decimal
+
+    createdAt DateTime  @default(now()) @map("created_at")
+    updatedAt DateTime? @updatedAt @map("updated_at")
+    load      Load[]
+
+    @@map("items")
+}
+
+model Order {
+    id              String    @id @default(uuid())
+    dateRequested   DateTime  @default(now()) @map("date_requested")
+    dateDelivery    DateTime  @map("date_delivery")
+    deliveryAddress String    @map("delivery_address")
+    status          String
+    createdAt       DateTime  @default(now()) @map("created_at")
+    updatedAt       DateTime? @updatedAt @map("updated_at")
+
+    userId String @map("user_id")
+    loadId String @map("load_id")
+
+    user User @relation(fields: [userId], references: [id])
+    load Load @relation(fields: [loadId], references: [id])
+
+    @@map("orders")
+}

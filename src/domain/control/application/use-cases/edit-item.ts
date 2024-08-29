@@ -10,7 +10,6 @@ interface EditItemUseCaseRequest {
   name: string
   description: string
   quantity: number
-  type: string
   amount: number
 }
 
@@ -29,7 +28,6 @@ export class EditItemUseCase {
     name,
     description,
     quantity,
-    type,
     itemId,
     amount,
   }: EditItemUseCaseRequest): Promise<EditItemUseCaseResponse> {
@@ -43,7 +41,6 @@ export class EditItemUseCase {
     item.description = description
     item.name = name
     item.quantity = quantity
-    item.type = type
 
     await this.itemRepository.save(item)
 

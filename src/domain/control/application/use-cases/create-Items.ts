@@ -7,7 +7,6 @@ interface ItemsToLoadRequest {
   name: string
   description: string
   quantity: number
-  type: string
   amount: number
 }
 
@@ -26,14 +25,12 @@ export class ItemsToLoadUseCase {
     name,
     description,
     quantity,
-    type,
     amount,
   }: ItemsToLoadRequest): Promise<ItemsToLoadResposne> {
     const item = Item.create({
       name,
       description,
       quantity,
-      type,
       amount,
     })
 

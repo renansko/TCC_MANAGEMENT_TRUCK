@@ -1,6 +1,6 @@
 import { makeItem } from 'test/factories/make-item'
 import { FetchItemsUseCase } from './fetch-items'
-import { InMemoryItemRepository } from 'test/repositories/in-memory-item-respoitory'
+import { InMemoryItemRepository } from 'test/repositories/in-memory-item-respository'
 
 let inMemoryItemRepository: InMemoryItemRepository
 let sut: FetchItemsUseCase

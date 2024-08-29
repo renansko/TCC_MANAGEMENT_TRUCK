@@ -1,6 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { OrderRepository } from '../repositories/order-repository'
 import { ResourceNotFoundError } from '../../../../core/errors/errors/resource-not-foud-error'
+import { Injectable } from '@nestjs/common'
 
 interface DeleteOrderRequest {
   orderId: string

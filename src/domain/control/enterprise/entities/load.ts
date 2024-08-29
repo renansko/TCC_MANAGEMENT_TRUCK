@@ -17,6 +17,7 @@ export interface LoadProps {
   type: string
   weight: number
   itemsId: UniqueEntityID
+  truckId: UniqueEntityID
   createdAt: Date
   updatedAt?: Date
 }
@@ -24,6 +25,10 @@ export interface LoadProps {
 export class Load extends Entity<LoadProps> {
   get weight() {
     return this.props.weight
+  }
+
+  get truckId() {
+    return this.props.truckId
   }
 
   get itemsId() {
