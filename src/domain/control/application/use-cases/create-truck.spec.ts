@@ -1,17 +1,18 @@
-import { InMemoryTruckRepository } from 'test/repositories/in-memory-truck-repository'
-import { TruckAvaiableUseCase } from './create-truck'
+import { InMemoryTransferRepository } from 'test/repositories/in-memory-transfer-repository'
+import { TransferAvaiableUseCase } from './create-truck'
 
-let inMemoryTruckRepository: InMemoryTruckRepository
-let sut: TruckAvaiableUseCase
+let inMemoryTransferRepository: InMemoryTransferRepository
+let sut: TransferAvaiableUseCase
 
-describe('Create avaiable truck', () => {
+describe('Create avaiable transfer', () => {
   beforeEach(() => {
-    inMemoryTruckRepository = new InMemoryTruckRepository()
-    sut = new TruckAvaiableUseCase(inMemoryTruckRepository)
+    inMemoryTransferRepository = new InMemoryTransferRepository()
+    sut = new TransferAvaiableUseCase(inMemoryTransferRepository)
   })
-  it('Should be able create a avaiable truck', async () => {
+  it('Should be able create a avaiable transfer', async () => {
     const result = await sut.execute({
-      name: 'TruckChypherOne',
+      name: 'TransferChypherOne',
+      placa: '123-abc',
       model: 'LoaderBasic',
       companyId: '2',
       situationId: '1',
@@ -19,10 +20,10 @@ describe('Create avaiable truck', () => {
       telemetryId: '2',
     })
 
-    expect(result.value?.truck.name).toEqual('TruckChypherOne')
+    expect(result.value?.transfer.name).toEqual('TransferChypherOne')
     expect(result.value).toBeTypeOf('object')
-    expect(result.value?.truck).toBeTruthy()
+    expect(result.value?.transfer).toBeTruthy()
   })
 })
 
-test('create a truck', async () => {})
+test('create a transfer', async () => {})

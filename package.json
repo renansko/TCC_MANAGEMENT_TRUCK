@@ -2,7 +2,6 @@
   "name": "tcc-control-truck",
   "version": "1.0.0",
   "description": "Projeto de conclusao de curso 1.0 parte utilizando design dirigido à dominio",
-
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -20,6 +19,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@mermaid-js/mermaid-cli": "^10.9.1",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
@@ -31,7 +31,10 @@
     "@types/passport-jwt": "^4.0.1",
     "@vitest/coverage-v8": "^2.0.5",
     "eslint": "^8.57.0",
+    "i": "^0.3.7",
+    "npm": "^10.8.3",
     "prisma": "^5.17.0",
+    "prisma-erd-generator": "^1.11.2",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
     "ts-node": "^10.9.1",

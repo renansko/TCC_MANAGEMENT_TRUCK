@@ -4,7 +4,13 @@ generator client {
 
 datasource db {
     provider = "postgresql"
-    url      = env("DATABASE_URL")
+
+    url = env("DATABASE_URL")
+}
+
+generator erd {
+    provider = "prisma-erd-generator"
+    output   = "png"
 }
 
 enum UserRole {
@@ -89,7 +95,7 @@ model Load {
     truckId String @map("truck_id")
 
     truck Truck   @relation(fields: [truckId], references: [id])
-    items Item    @relation(fields: [itemId], references: [id])
+    item  Item[]
     order Order[]
 
     @@map("loads")
@@ -101,10 +107,11 @@ model Item {
     description String
     quantity    Int
     amount      Decimal
+    loadId      String? @map("load_id")
 
     createdAt DateTime  @default(now()) @map("created_at")
     updatedAt DateTime? @updatedAt @map("updated_at")
-    load      Load[]
+    Load      Load?     @relation(fields: [loadId], references: [id])
 
     @@map("items")
 }
