@@ -18,21 +18,33 @@ enum UserRole {
     CLIENT
 }
 
+enum TransferStatus {
+    AVAIABLE
+    BUSY
+    ROUTE
+}
+
 model User {
-    id        String   @id @default(uuid())
-    cpf       String   @unique
-    name      String
-    email     String   @unique
-    password  String
-    phone     String
+    id           String @id @default(uuid())
+    cpf          String @unique
+    name         String
+    email        String @unique
+    password     String
+    phone        String
+    birth        String
+    cep          String
+    attachmentId String @map("attachment_id")
+
     role      UserRole @default(CLIENT)
     companyId String?  @map("company_id")
 
     createdAt DateTime  @default(now()) @map("created_at")
     updatedAt DateTime? @updatedAt @map("updated_at")
 
-    company Company? @relation(fields: [companyId], references: [id])
-    order   Order[]
+    company    Company?     @relation(fields: [companyId], references: [id])
+    order      Order[]
+    transfer   Transfer[]
+    Attachment Attachment[]
 
     @@map("users")
 }
@@ -44,59 +56,67 @@ model Company {
     email    String @unique
     password String
     phone    String
+    cep      String
+    address  String
 
     createdAt DateTime  @default(now()) @map("created_at")
     updatedAt DateTime? @updatedAt @map("updated_at")
 
-    role  UserRole @default(CLIENT)
-    truck Truck[]
-    user  User[]
+    role     UserRole   @default(CLIENT)
+    transfer Transfer[]
+    user     User[]
 
     @@map("companies")
 }
 
-model Truck {
-    id        String @id @default(uuid())
+model Transfer {
+    id        String         @id @default(uuid())
     name      String
     model     String
-    companyId String @map("company_id")
+    plate     String         @unique
+    status    TransferStatus @default(AVAIABLE)
+    companyId String         @map("company_id")
+    driverId  String?        @map("driver_id")
 
     createdAt DateTime  @default(now()) @map("created_at")
     updatedAt DateTime? @updatedAt @map("updated_at")
 
-    company   Company     @relation(fields: [companyId], references: [id])
-    telemetry Telemetry[]
-    load      Load[]
+    userId  User?   @relation(fields: [driverId], references: [id])
+    company Company @relation(fields: [companyId], references: [id])
 
-    @@map("trucks")
+    telemetry  Telemetry[]
+    load       Load[]
+    Attachment Attachment[]
+
+    @@map("transfers")
 }
 
 model Telemetry {
-    id        String    @id @default(uuid())
-    location  String
-    speed     Decimal
-    braking   Int
-    bends     Int
-    fuel      Decimal
-    ignition  Boolean
-    createdAt DateTime  @default(now()) @map("created_at")
-    updatedAt DateTime? @updatedAt @map("updated_at")
-    truckId   String    @map("truck_id")
+    id         String    @id @default(uuid())
+    location   String
+    speed      Decimal
+    braking    Int
+    bends      Int
+    fuel       Decimal
+    ignition   Boolean
+    createdAt  DateTime  @default(now()) @map("created_at")
+    updatedAt  DateTime? @updatedAt @map("updated_at")
+    transferId String    @map("transfer_id")
 
-    truck Truck @relation(fields: [truckId], references: [id])
+    transfer Transfer @relation(fields: [transferId], references: [id])
 
     @@map("telemetries")
 }
 
 model Load {
-    id      String @id @default(uuid())
-    type    String
-    itemId  String @map("item_id")
-    truckId String @map("truck_id")
+    id         String @id @default(uuid())
+    type       String
+    itemId     String @map("item_id")
+    transferId String @map("transfer_id")
 
-    truck Truck   @relation(fields: [truckId], references: [id])
-    item  Item[]
-    order Order[]
+    transfer Transfer @relation(fields: [transferId], references: [id])
+    item     Item[]
+    order    Order[]
 
     @@map("loads")
 }
@@ -111,7 +131,7 @@ model Item {
 
     createdAt DateTime  @default(now()) @map("created_at")
     updatedAt DateTime? @updatedAt @map("updated_at")
-    Load      Load?     @relation(fields: [loadId], references: [id])
+    load      Load?     @relation(fields: [loadId], references: [id])
 
     @@map("items")
 }
@@ -132,4 +152,17 @@ model Order {
     load Load @relation(fields: [loadId], references: [id])
 
     @@map("orders")
+}
+
+model Attachment {
+    id         String  @id @default(uuid())
+    url        String
+    title      String
+    transferId String? @map("transfer_id")
+    userId     String? @map("user_id")
+
+    user     User?     @relation(fields: [userId], references: [id])
+    transfer Transfer? @relation(fields: [transferId], references: [id])
+
+    @@map("attachments")
 }

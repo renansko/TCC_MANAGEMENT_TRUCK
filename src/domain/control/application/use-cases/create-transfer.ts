@@ -3,15 +3,15 @@ import { Transfer } from '../../enterprise/entities/transfer'
 import { Either, right } from '@/core/either'
 import { Injectable } from '@nestjs/common'
 import { TransferRepository } from '../repositories/transfer-repository'
+import { TransferAttachment } from '../../enterprise/entities/transfer-attachment'
+import { TransferAttachmentList } from '../../enterprise/entities/transfer-attachment-list'
 
 interface TransferAvaiableRequest {
   name: string
   model: string
-  placa: string
-  situationId: string
+  plate: string
+  attachmentIds: string[]
   companyId: string
-  orderId: string
-  telemetryId: string
 }
 
 type TransferAvaiableResponse = Either<
@@ -22,29 +22,33 @@ type TransferAvaiableResponse = Either<
 >
 
 @Injectable()
-export class TransferAvaiableUseCase {
+export class CreateTransferUseCase {
   constructor(private transferRepository: TransferRepository) {}
 
   async execute({
     name,
     companyId,
     model,
-    placa,
-    situationId,
-    orderId,
-    telemetryId,
+    plate,
+    attachmentIds,
   }: TransferAvaiableRequest): Promise<TransferAvaiableResponse> {
     const transfer = Transfer.create({
       name,
       model,
-      placa,
-      orderId: new UniqueEntityID(orderId),
-      situationId: new UniqueEntityID(situationId),
-      telemetryId: new UniqueEntityID(telemetryId),
+      plate,
       companyId: new UniqueEntityID(companyId),
     })
 
-    this.transferRepository.create(transfer)
+    const transferAttachment = attachmentIds.map((attachmentId) => {
+      return TransferAttachment.create({
+        attachmentId: new UniqueEntityID(attachmentId),
+        transferId: transfer.id,
+      })
+    })
+
+    transfer.attachments = new TransferAttachmentList(transferAttachment)
+
+    await this.transferRepository.create(transfer)
 
     return right({
       transfer,

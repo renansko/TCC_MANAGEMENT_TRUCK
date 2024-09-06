@@ -6,9 +6,10 @@ import { Injectable } from '@nestjs/common'
 
 interface CreateCompanyRequest {
   name: string
+  email: string
+  cep: string
   cnpj: CompanyCNPJ
   address: string
-  email: string
   phone: string
   password: string
 }
@@ -25,19 +26,21 @@ export class CreateCompanyUseCase {
   constructor(private companyRepository: CompanyRepository) {}
 
   async execute({
-    cnpj,
     name,
+    email,
+    cep,
+    cnpj,
     password,
     address,
-    email,
     phone,
   }: CreateCompanyRequest): Promise<CreateCompanyResponse> {
     const company = Company.create({
-      cnpj,
       name,
+      email,
+      cep,
+      cnpj,
       password,
       address,
-      email,
       phone,
     })
 

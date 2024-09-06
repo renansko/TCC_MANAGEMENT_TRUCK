@@ -18,6 +18,7 @@ export function makeTelemetry(
       engineTemperature: 12,
       braking: 42,
       bends: 2,
+      truckId: new UniqueEntityID('1'),
       ...override,
     },
     id,

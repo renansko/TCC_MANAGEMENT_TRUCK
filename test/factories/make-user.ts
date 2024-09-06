@@ -14,6 +14,8 @@ export function makeUser(
       email: 'user@Madeira.com',
       name: 'Madeira Madeira',
       phone: '419902324525',
+      birth: '16/03/2001',
+      cep: '99999999',
       ...override,
     },
     id,

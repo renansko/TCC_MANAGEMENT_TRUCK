@@ -1,7 +1,7 @@
 export class CompanyCNPJ {
   public value: string
 
-  private constructor(value: string) {
+  public constructor(value: string) {
     this.value = value
   }
 

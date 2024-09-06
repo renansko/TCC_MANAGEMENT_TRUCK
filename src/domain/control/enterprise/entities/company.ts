@@ -8,27 +8,33 @@ import { Optional } from '@/core/types/optionals'
  *
  *
  * @param name (string) Nome do usuario
- * @param cnpj (string) CNPJ da compania
- * @param address (string) Endereço do compania
  * @param email (string) email do compania
+ * @param cnpj (string) CNPJ da compania
+ * @param cep (CEP) CEP da compania
+ * @param address (string) Endereço do compania
  * @param phone (string) telefone do compania
  * @param password (string) senha do compania
  */
 
 export interface companyProps {
-  cnpj: CompanyCNPJ
   name: string
-  address: string
   email: string
+  cnpj: CompanyCNPJ
+  cep: string
+  address: string
   password: string
   phone: string
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
 export class Company extends Entity<companyProps> {
   get name() {
     return this.props.name
+  }
+
+  get cep() {
+    return this.props.cep
   }
 
   get cnpj() {
@@ -47,8 +53,16 @@ export class Company extends Entity<companyProps> {
     return this.props.password
   }
 
+  get createdAt() {
+    return this.props.createdAt
+  }
+
   get phone() {
     return this.props.phone
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
   }
 
   private touch() {

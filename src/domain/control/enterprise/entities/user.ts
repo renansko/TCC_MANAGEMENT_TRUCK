@@ -12,6 +12,8 @@ import { UserCPF } from './value-objects/user-cpf'
  * @param address (string) Endereço do usere
  * @param email (string) email do usere
  * @param phone (string) telefone do usere
+ * @param cep (String) CEP do usuario
+ * @param Birth (string) Data de nascimento
  * @param companyId (UniqueEntityID) compania que pertence
  */
 
@@ -21,6 +23,8 @@ export interface userProps {
   address: string
   password: string
   email: string
+  cep: string
+  birth: string
   phone: string
   companyId?: UniqueEntityID
   createdAt: Date
@@ -38,6 +42,14 @@ export class User extends Entity<userProps> {
 
   get cpf() {
     return this.props.cpf
+  }
+
+  get cep() {
+    return this.props.cep
+  }
+
+  get birth() {
+    return this.props.birth
   }
 
   get address() {

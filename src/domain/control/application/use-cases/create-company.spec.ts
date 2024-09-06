@@ -16,11 +16,12 @@ describe('Create a company', () => {
       cnpj: CompanyCNPJ.createFromText('12345678912242'),
       address: 'Rua enjoa',
       password: '123456',
+      cep: '99999999',
       email: 'company@Madeira.com',
       name: 'Empresa de contas',
       phone: '419902324525',
     })
-
+    expect(inMemoryCompanyRepository.items[0].name).toEqual('Empresa de contas')
     expect(result.value?.company.phone).toEqual('419902324525')
     expect(result.value?.company.cnpj.value).toEqual('12.345.678/9122-42')
   })

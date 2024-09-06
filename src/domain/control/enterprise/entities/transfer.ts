@@ -1,6 +1,7 @@
-import { Entity } from '@/core/entities/entity'
+import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optionals'
+import { TransferAttachmentList } from './transfer-attachment-list'
 
 /**
  * Interface explicação de suas propiedades.
@@ -8,10 +9,9 @@ import { Optional } from '@/core/types/optionals'
  *
  * @param name (string) Nome do caminhão
  * @param model (string) Modelo do caminhão
- * @param placa (string) Placa do carro
+ * @param plate (string) Placa do carro
+ * @param driverId (UniqueEntityID) Id do pedido a ser entregue pelo caminhão
  * @param companyId (uniqueentityID) Empresa do caminhão
- * @param telemetryId (UniqueEntityID) dados em 'tempo real' do caminhão
- * @param orderId (UniqueEntityID) Id do pedido a ser entregue pelo caminhão
  * @param situationId (UniqueEntityID) Id situação
  * @param createdAt (Date) "Data da criação do objeto virtual"
  * @param updatedAt (Date) "Mudança de informação do objeto"
@@ -19,46 +19,45 @@ import { Optional } from '@/core/types/optionals'
 export interface TransferProps {
   name: string
   model: string
-  placa: string
+  plate: string
+  attachments: TransferAttachmentList
   companyId: UniqueEntityID
-  telemetryId: UniqueEntityID
-  orderId: UniqueEntityID
-  situationId: UniqueEntityID
+  driverId?: UniqueEntityID | null
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
-export class Transfer extends Entity<TransferProps> {
+export class Transfer extends AggregateRoot<TransferProps> {
   get name() {
     return this.props.name
-  }
-
-  get companyId() {
-    return this.props.companyId
-  }
-
-  get placa() {
-    return this.props.placa
   }
 
   get model() {
     return this.props.model
   }
 
-  get telemetryId() {
-    return this.props.telemetryId
+  get plate() {
+    return this.props.plate
   }
 
-  get orderId() {
-    return this.props.orderId
+  get companyId() {
+    return this.props.companyId
   }
 
-  get situationId() {
-    return this.props.situationId
+  get attachments() {
+    return this.props.attachments
+  }
+
+  get driverId() {
+    return this.props.driverId
   }
 
   get createdAt() {
     return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
   }
 
   set name(name: string) {
@@ -66,8 +65,13 @@ export class Transfer extends Entity<TransferProps> {
     this.touch()
   }
 
-  set placa(placa: string) {
-    this.props.placa = placa
+  set plate(plate: string) {
+    this.props.plate = plate
+    this.touch()
+  }
+
+  set attachments(attachments: TransferAttachmentList) {
+    this.props.attachments = attachments
     this.touch()
   }
 
@@ -81,12 +85,13 @@ export class Transfer extends Entity<TransferProps> {
   }
 
   static create(
-    props: Optional<TransferProps, 'createdAt'>,
+    props: Optional<TransferProps, 'createdAt' | 'attachments'>,
     id?: UniqueEntityID,
   ) {
     const transfer = new Transfer(
       {
         ...props,
+        attachments: props.attachments ?? new TransferAttachmentList(),
         createdAt: new Date(),
       },
       id,

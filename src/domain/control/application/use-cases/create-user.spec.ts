@@ -14,6 +14,8 @@ describe('Create a user', () => {
   it('Should be able to create an user', async () => {
     const result = await sut.execute({
       cpf: UserCPF.createFromText('12345678912'),
+      cep: '81900350',
+      birth: '16/03/2001',
       address: 'Rua enjoa',
       password: '123456',
       email: 'user@Madeira.com',

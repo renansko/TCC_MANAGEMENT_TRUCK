@@ -1,11 +1,23 @@
+import { DomainEvents } from '@/core/events/domain-events'
+import { TransferAttachmentRepository } from '@/domain/control/application/repositories/transfer-attachment-repository'
 import { TransferRepository } from '@/domain/control/application/repositories/transfer-repository'
 import { Transfer } from '@/domain/control/enterprise/entities/transfer'
 
 export class InMemoryTransferRepository implements TransferRepository {
   public items: Transfer[] = []
 
+  constructor(
+    private transferAttachmentsRepository: TransferAttachmentRepository,
+  ) {}
+
   async create(transfer: Transfer) {
     this.items.push(transfer)
+
+    await this.transferAttachmentsRepository.createMany(
+      transfer.attachments.getItems(),
+    )
+
+    DomainEvents.dispatchEventsForAggregate(transfer.id)
   }
 
   async findById(id: string) {

@@ -10,6 +10,8 @@ interface CreateUserRequest {
   name: string
   address: string
   email: string
+  cep: string
+  birth: string
   phone: string
   password: string
   companyId?: string
@@ -29,6 +31,8 @@ export class CreateUserUseCase {
   async execute({
     cpf,
     name,
+    cep,
+    birth,
     password,
     address,
     email,
@@ -38,6 +42,8 @@ export class CreateUserUseCase {
     const user = User.create({
       cpf,
       name,
+      cep,
+      birth,
       password,
       address,
       email,
