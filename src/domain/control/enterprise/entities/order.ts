@@ -6,7 +6,7 @@ import { Optional } from '@/core/types/optionals'
  * Interface explicação de suas propiedades.
  *
  *
- * @param loadId (UniqueEntityID) Id da carga a ser carregada no caminhão
+ * @param itemId (UniqueEntityID) Id da carga a ser carregada no caminhão
  * @param userId (UniqueEntityID) Informação do usere contratante
  * @param dateRequested (DateTime) Data que foi realizada a pedido no sistema
  * @param dateDelivery (DateTime) Data que foi requisitada a entrega
@@ -17,7 +17,7 @@ import { Optional } from '@/core/types/optionals'
  */
 
 export interface OrderProps {
-  loadId: UniqueEntityID
+  itemId: UniqueEntityID
   userId: UniqueEntityID
   dateRequested: Date
   dateDelivery: Date
@@ -28,8 +28,8 @@ export interface OrderProps {
 }
 
 export class Order extends Entity<OrderProps> {
-  get loadId() {
-    return this.props.loadId
+  get itemId() {
+    return this.props.itemId
   }
 
   get userId() {

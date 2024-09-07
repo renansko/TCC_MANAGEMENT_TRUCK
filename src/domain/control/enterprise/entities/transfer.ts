@@ -60,6 +60,15 @@ export class Transfer extends AggregateRoot<TransferProps> {
     return this.props.updatedAt
   }
 
+  set driverId(driverId: UniqueEntityID | undefined | null) {
+    if (driverId === undefined || driverId === null) {
+      return
+    }
+    this.props.driverId = driverId
+
+    this.touch()
+  }
+
   set name(name: string) {
     this.props.name = name
     this.touch()

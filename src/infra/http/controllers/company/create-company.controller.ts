@@ -1,8 +1,8 @@
 import { BadRequestException, Body, Controller, Post } from '@nestjs/common'
 import { z } from 'zod'
-import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { CreateCompanyUseCase } from '@/domain/control/application/use-cases/create-company'
 import { CompanyCNPJ } from '@/domain/control/enterprise/entities/value-objects/company-cnpj'
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 
 const createCompanyBodySchema = z.object({
   name: z.string(),

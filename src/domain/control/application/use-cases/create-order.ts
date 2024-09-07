@@ -5,7 +5,7 @@ import { Either, right } from '@/core/either'
 import { Injectable } from '@nestjs/common'
 
 interface CreateOrderRequest {
-  loadId: string
+  itemId: string
   userId: string
   dateRequested: Date
   dateDelivery: Date
@@ -25,7 +25,7 @@ export class CreateOrderUseCase {
   constructor(private orderRepository: OrderRepository) {}
 
   async execute({
-    loadId,
+    itemId,
     userId,
     dateDelivery,
     dateRequested,
@@ -33,7 +33,7 @@ export class CreateOrderUseCase {
     status,
   }: CreateOrderRequest): Promise<CreateOrderResponse> {
     const order = Order.create({
-      loadId: new UniqueEntityID(loadId),
+      itemId: new UniqueEntityID(itemId),
       userId: new UniqueEntityID(userId),
       dateRequested,
       dateDelivery,

@@ -17,6 +17,7 @@ export interface ItemProps {
   description: string
   quantity: number
   amount: number
+  weight: number
   createdAt: Date
   updatedAt?: Date
 }

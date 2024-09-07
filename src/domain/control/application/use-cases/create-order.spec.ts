@@ -16,7 +16,7 @@ describe('Create Order', () => {
       dateDelivery: new Date(),
       dateRequested: new Date(),
       deliveryAddress: 'Rua dos advogados 999',
-      loadId: '2',
+      itemId: '2',
       status: 'Caminhão está pronto',
     })
 

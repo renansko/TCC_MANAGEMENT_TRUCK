@@ -8,6 +8,7 @@ interface ItemsToLoadRequest {
   description: string
   quantity: number
   amount: number
+  weight: number
 }
 
 type ItemsToLoadResposne = Either<
@@ -22,12 +23,14 @@ export class ItemsToLoadUseCase {
   constructor(private itemsRepository: ItemRepository) {}
 
   async execute({
+    weight,
     name,
     description,
     quantity,
     amount,
   }: ItemsToLoadRequest): Promise<ItemsToLoadResposne> {
     const item = Item.create({
+      weight,
       name,
       description,
       quantity,

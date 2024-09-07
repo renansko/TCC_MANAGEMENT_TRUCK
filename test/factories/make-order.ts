@@ -8,7 +8,7 @@ export function makeOrder(
   const order = Order.create(
     {
       userId: new UniqueEntityID(),
-      loadId: new UniqueEntityID(),
+      itemId: new UniqueEntityID(),
       dateDelivery: new Date(),
       dateRequested: new Date(),
       deliveryAddress: 'Lodianopolis',

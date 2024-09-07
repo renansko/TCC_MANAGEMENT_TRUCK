@@ -25,14 +25,16 @@ enum TransferStatus {
 }
 
 model User {
-    id           String @id @default(uuid())
-    cpf          String @unique
-    name         String
-    email        String @unique
-    password     String
-    phone        String
-    birth        String
-    cep          String
+    id       String @id @default(uuid())
+    cpf      String @unique
+    name     String
+    email    String @unique
+    password String
+    phone    String
+    birth    String
+    cep      String
+    address  String
+
     attachmentId String @map("attachment_id")
 
     role      UserRole @default(CLIENT)
@@ -85,7 +87,6 @@ model Transfer {
     company Company @relation(fields: [companyId], references: [id])
 
     telemetry  Telemetry[]
-    load       Load[]
     Attachment Attachment[]
 
     @@map("transfers")
@@ -108,30 +109,18 @@ model Telemetry {
     @@map("telemetries")
 }
 
-model Load {
-    id         String @id @default(uuid())
-    type       String
-    itemId     String @map("item_id")
-    transferId String @map("transfer_id")
-
-    transfer Transfer @relation(fields: [transferId], references: [id])
-    item     Item[]
-    order    Order[]
-
-    @@map("loads")
-}
-
 model Item {
     id          String  @id @default(uuid())
     name        String
     description String
-    quantity    Int
+    quantity    Decimal
     amount      Decimal
+    weight      Decimal
     loadId      String? @map("load_id")
 
     createdAt DateTime  @default(now()) @map("created_at")
     updatedAt DateTime? @updatedAt @map("updated_at")
-    load      Load?     @relation(fields: [loadId], references: [id])
+    Order     Order[]
 
     @@map("items")
 }
@@ -144,12 +133,11 @@ model Order {
     status          String
     createdAt       DateTime  @default(now()) @map("created_at")
     updatedAt       DateTime? @updatedAt @map("updated_at")
+    itemId          String    @map("item_id")
+    userId          String    @map("user_id")
 
-    userId String @map("user_id")
-    loadId String @map("load_id")
-
+    item Item @relation(fields: [itemId], references: [id])
     user User @relation(fields: [userId], references: [id])
-    load Load @relation(fields: [loadId], references: [id])
 
     @@map("orders")
 }

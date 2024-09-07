@@ -2,6 +2,7 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optionals'
 import { UserCPF } from './value-objects/user-cpf'
+import { TransferAttachmentList } from './transfer-attachment-list'
 
 /**
  * Interface explicação de suas propiedades.
@@ -26,9 +27,10 @@ export interface userProps {
   cep: string
   birth: string
   phone: string
-  companyId?: UniqueEntityID
+  attachments: TransferAttachmentList
+  companyId?: UniqueEntityID | null
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
 export class User extends Entity<userProps> {
@@ -64,17 +66,71 @@ export class User extends Entity<userProps> {
     return this.props.phone
   }
 
+  get attachments() {
+    return this.props.attachments
+  }
+
+  set name(name: string) {
+    this.props.name = name
+    this.touch()
+  }
+
+  set cep(cep: string) {
+    this.props.cep = cep
+    this.touch()
+  }
+
+  set email(email: string) {
+    this.props.email = email
+    this.touch()
+  }
+
+  set address(address: string) {
+    this.props.address = address
+    this.touch()
+  }
+
+  set birth(birth: string) {
+    this.props.birth = birth
+    this.touch()
+  }
+
+  set phone(phone: string) {
+    this.props.phone = phone
+    this.touch()
+  }
+
+  set cpf(cpf: UserCPF) {
+    this.props.cpf = cpf
+    this.touch()
+  }
+
+  set companyId(companyId: UniqueEntityID | undefined | null) {
+    if (companyId === null) {
+      return
+    }
+
+    this.props.companyId = companyId
+    this.touch()
+  }
+
+  set attachments(attachments: TransferAttachmentList) {
+    this.props.attachments = attachments
+    this.touch()
+  }
+
   private touch() {
     this.props.updatedAt = new Date()
   }
 
   static create(
-    props: Optional<userProps, 'createdAt' | 'companyId'>,
+    props: Optional<userProps, 'createdAt' | 'companyId' | 'attachments'>,
     id?: UniqueEntityID,
   ) {
     const user = new User(
       {
         ...props,
+        attachments: props.attachments ?? new TransferAttachmentList(),
         createdAt: new Date(),
       },
       id,

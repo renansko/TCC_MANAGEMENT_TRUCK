@@ -16,6 +16,7 @@ describe('Create Items', () => {
       amount: 49.2,
       description: 'Madeira exportada e condensada',
       quantity: 100,
+      weight: 29,
     })
 
     expect(result.value?.item.quantity).toEqual(100)
