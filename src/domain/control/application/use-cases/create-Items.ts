@@ -19,7 +19,7 @@ type ItemsToLoadResposne = Either<
 >
 
 @Injectable()
-export class ItemsToLoadUseCase {
+export class CreateItemsUseCase {
   constructor(private itemsRepository: ItemRepository) {}
 
   async execute({

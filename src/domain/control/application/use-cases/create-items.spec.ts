@@ -1,13 +1,13 @@
-import { ItemsToLoadUseCase } from './create-Items'
+import { CreateItemsUseCase } from './create-Items'
 import { InMemoryItemRepository } from 'test/repositories/in-memory-item-respository'
 
 let inMemoryItemRepository: InMemoryItemRepository
-let sut: ItemsToLoadUseCase
+let sut: CreateItemsUseCase
 
 describe('Create Items', () => {
   beforeEach(() => {
     inMemoryItemRepository = new InMemoryItemRepository()
-    sut = new ItemsToLoadUseCase(inMemoryItemRepository)
+    sut = new CreateItemsUseCase(inMemoryItemRepository)
   })
 
   it('should be able to create items for load', async () => {
