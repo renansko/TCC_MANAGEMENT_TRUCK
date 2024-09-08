@@ -19,7 +19,7 @@ export interface ItemProps {
   amount: number
   weight: number
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
 export class Item extends Entity<ItemProps> {
@@ -39,6 +39,18 @@ export class Item extends Entity<ItemProps> {
     return this.props.amount
   }
 
+  get weight() {
+    return this.props.weight
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
+  }
+
+  get createdAt() {
+    return this.props.createdAt
+  }
+
   set description(description: string) {
     this.props.description = description
     this.touch()
@@ -56,6 +68,11 @@ export class Item extends Entity<ItemProps> {
 
   set amount(amount: number) {
     this.props.amount = amount
+    this.touch()
+  }
+
+  set weight(weight: number) {
+    this.props.weight = weight
     this.touch()
   }
 

@@ -9,12 +9,12 @@ export class PrismaUserMapper {
       {
         name: raw.name,
         cpf: UserCPF.create(raw.cpf),
-        email: raw.email,
-        phone: raw.phone,
-        password: raw.password,
-        cep: raw.cep,
         address: raw.address,
+        password: raw.password,
+        email: raw.email,
+        cep: raw.cep,
         birth: raw.birth,
+        phone: raw.phone,
         companyId: raw.companyId ? new UniqueEntityID(raw.companyId) : null,
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
@@ -30,8 +30,7 @@ export class PrismaUserMapper {
       phone: user.phone,
       cpf: user.cpf.value,
       birth: user.birth,
-      attachmentId: user.
-
+      password: user.password,
       cep: user.cep,
       address: user.address,
       createdAt: user.createdAt,

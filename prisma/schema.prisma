@@ -35,8 +35,6 @@ model User {
     cep      String
     address  String
 
-    attachmentId String @map("attachment_id")
-
     role      UserRole @default(CLIENT)
     companyId String?  @map("company_id")
 

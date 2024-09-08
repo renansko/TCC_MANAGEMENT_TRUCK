@@ -24,7 +24,7 @@ export interface OrderProps {
   deliveryAddress: string
   status: string
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
 export class Order extends Entity<OrderProps> {
@@ -50,6 +50,14 @@ export class Order extends Entity<OrderProps> {
 
   get status() {
     return this.props.status
+  }
+
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
   }
 
   private touch() {

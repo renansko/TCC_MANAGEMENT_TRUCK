@@ -4,6 +4,8 @@ import { TransferRepository } from '@/domain/control/application/repositories/tr
 import { PrismaTransferRepository } from './prisma/repositories/prisma-transfer-repository'
 import { CompanyRepository } from '@/domain/control/application/repositories/company-repository'
 import { PrismaCompanyRepository } from './prisma/repositories/prisma-company-repository'
+import { UserRepository } from '@/domain/control/application/repositories/user-repository'
+import { PrismaUserRepository } from './prisma/repositories/prisma-user-repository'
 
 @Module({
   imports: [],
@@ -17,7 +19,16 @@ import { PrismaCompanyRepository } from './prisma/repositories/prisma-company-re
       provide: CompanyRepository,
       useClass: PrismaCompanyRepository,
     },
+    {
+      provide: UserRepository,
+      useClass: PrismaUserRepository,
+    },
   ],
-  exports: [PrismaService, TransferRepository, CompanyRepository],
+  exports: [
+    PrismaService,
+    TransferRepository,
+    CompanyRepository,
+    UserRepository,
+  ],
 })
 export class DatabaseModule {}

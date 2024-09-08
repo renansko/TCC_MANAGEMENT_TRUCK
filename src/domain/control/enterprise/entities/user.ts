@@ -19,8 +19,8 @@ import { TransferAttachmentList } from './transfer-attachment-list'
  */
 
 export interface userProps {
-  cpf: UserCPF
   name: string
+  cpf: UserCPF
   address: string
   password: string
   email: string
@@ -62,6 +62,10 @@ export class User extends Entity<userProps> {
     return this.props.email
   }
 
+  get password() {
+    return this.props.password
+  }
+
   get phone() {
     return this.props.phone
   }
@@ -70,8 +74,21 @@ export class User extends Entity<userProps> {
     return this.props.attachments
   }
 
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
+  }
+
   set name(name: string) {
     this.props.name = name
+    this.touch()
+  }
+
+  set password(password: string) {
+    this.props.password = password
     this.touch()
   }
 
