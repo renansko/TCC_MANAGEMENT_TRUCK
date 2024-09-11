@@ -1,7 +1,16 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common'
+import {
+  BadRequestException,
+  Body,
+  ConflictException,
+  Controller,
+  NotFoundException,
+  Post,
+} from '@nestjs/common'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { CreateTransferUseCase } from '@/domain/control/application/use-cases/create-transfer'
+import { PlateAlreadyExistsError } from '@/domain/control/application/use-cases/errors/plate-already-exists-error'
+import { CompanyNotExistsError } from '@/domain/control/application/use-cases/errors/company-not-exists-error'
 
 const createTransferBodySchema = z.object({
   name: z.string(),
@@ -35,7 +44,16 @@ export class CreateTransferController {
     })
 
     if (result.isLeft()) {
-      throw new BadRequestException()
+      const error = result.value
+
+      switch (error.constructor) {
+        case PlateAlreadyExistsError:
+          throw new ConflictException(error.message)
+        case CompanyNotExistsError:
+          throw new NotFoundException(error.message)
+        default:
+          throw new BadRequestException(error.message)
+      }
     }
   }
 }

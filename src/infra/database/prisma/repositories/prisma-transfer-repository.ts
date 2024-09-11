@@ -12,6 +12,20 @@ export class PrismaTransferRepository implements TransferRepository {
     // private cache: CacheRepository,
   ) {}
 
+  async findByPlate(plate: string): Promise<Transfer | null> {
+    const transfer = await this.prisma.transfer.findUnique({
+      where: {
+        plate,
+      },
+    })
+
+    if (!transfer) {
+      return null
+    }
+
+    return PrismaTransferMapper.toDomain(transfer)
+  }
+
   async findById(id: string): Promise<Transfer | null> {
     const transfer = await this.prisma.transfer.findUnique({
       where: {

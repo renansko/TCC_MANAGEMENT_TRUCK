@@ -1,8 +1,16 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common'
+import {
+  BadRequestException,
+  Body,
+  ConflictException,
+  Controller,
+  Post,
+} from '@nestjs/common'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { CreateUserUseCase } from '@/domain/control/application/use-cases/create-user'
 import { UserCPF } from '@/domain/control/enterprise/entities/value-objects/user-cpf'
+import { EmailAlreadyExistsError } from '@/domain/control/application/use-cases/errors/email-already-exists'
+import { UserCPFAlreadyExistsError } from '@/domain/control/application/use-cases/errors/cpf-already-exists-error'
 
 const createUserBodySchema = z.object({
   name: z.string(),
@@ -42,7 +50,16 @@ export class CreateUserController {
     })
 
     if (result.isLeft()) {
-      throw new BadRequestException()
+      const error = result.value
+
+      switch (error.constructor) {
+        case EmailAlreadyExistsError:
+          throw new ConflictException(error.message)
+        case UserCPFAlreadyExistsError:
+          throw new ConflictException(error.message)
+        default:
+          throw new BadRequestException(error.message)
+      }
     }
   }
 }

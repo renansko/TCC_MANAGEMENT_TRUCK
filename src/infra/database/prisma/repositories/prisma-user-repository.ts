@@ -12,6 +12,34 @@ export class PrismaUserRepository implements UserRepository {
     // private cache: CacheRepository,
   ) {}
 
+  async findByCPF(cpf: string): Promise<User | null> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        cpf,
+      },
+    })
+
+    if (!user) {
+      return null
+    }
+
+    return PrismaUserMapper.toDomain(user)
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    })
+
+    if (!user) {
+      return null
+    }
+
+    return PrismaUserMapper.toDomain(user)
+  }
+
   async findById(id: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: {

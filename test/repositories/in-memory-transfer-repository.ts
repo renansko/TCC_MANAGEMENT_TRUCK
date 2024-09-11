@@ -10,6 +10,16 @@ export class InMemoryTransferRepository implements TransferRepository {
     private transferAttachmentsRepository: TransferAttachmentRepository,
   ) {}
 
+  async findByPlate(plate: string): Promise<Transfer | null> {
+    const transfer = this.items.find((item) => item.plate === plate)
+
+    if (!transfer) {
+      return null
+    }
+
+    return transfer
+  }
+
   async create(transfer: Transfer) {
     this.items.push(transfer)
 
