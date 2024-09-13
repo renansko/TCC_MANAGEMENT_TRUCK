@@ -1,7 +1,14 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common'
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  ForbiddenException,
+  Post,
+} from '@nestjs/common'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { CreateOrderUseCase } from '@/domain/control/application/use-cases/create-order'
+import { NotFoundError } from '@/domain/control/application/use-cases/errors/not-found-error'
 
 const createOrderBodySchema = z.object({
   itemId: z.string().uuid(),
@@ -44,7 +51,14 @@ export class CreateOrderController {
     })
 
     if (result.isLeft()) {
-      throw new BadRequestException()
+      const error = result.value
+
+      switch (error.constructor) {
+        case NotFoundError:
+          throw new ForbiddenException(error.message)
+        default:
+          throw new BadRequestException(error.message)
+      }
     }
   }
 }

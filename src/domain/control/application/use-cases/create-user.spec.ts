@@ -1,8 +1,7 @@
 import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository'
 import { CreateUserUseCase } from './create-user'
 import { UserCPF } from '../../enterprise/entities/value-objects/user-cpf'
-import { UserCPFAlreadyExistsError } from './errors/cpf-already-exists-error'
-import { EmailAlreadyExistsError } from './errors/email-already-exists'
+import { AlreadyExistsError } from './errors/already-exist-error'
 
 let inMemoryUserRepository: InMemoryUserRepository
 let sut: CreateUserUseCase
@@ -52,7 +51,7 @@ describe('Create a user', () => {
       phone: '419902324525',
     })
     expect(result.isLeft()).toBe(true)
-    expect(result.value).toBeInstanceOf(UserCPFAlreadyExistsError)
+    expect(result.value).toBeInstanceOf(AlreadyExistsError)
   })
 
   it('not should be able create a user with a email that already exists', async () => {
@@ -78,6 +77,6 @@ describe('Create a user', () => {
       phone: '419902324525',
     })
     expect(result.isLeft()).toBe(true)
-    expect(result.value).toBeInstanceOf(EmailAlreadyExistsError)
+    expect(result.value).toBeInstanceOf(AlreadyExistsError)
   })
 })

@@ -9,8 +9,8 @@ import {
 import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { CreateTransferUseCase } from '@/domain/control/application/use-cases/create-transfer'
-import { PlateAlreadyExistsError } from '@/domain/control/application/use-cases/errors/plate-already-exists-error'
 import { CompanyNotExistsError } from '@/domain/control/application/use-cases/errors/company-not-exists-error'
+import { AlreadyExistsError } from '@/domain/control/application/use-cases/errors/already-exist-error'
 
 const createTransferBodySchema = z.object({
   name: z.string(),
@@ -47,7 +47,7 @@ export class CreateTransferController {
       const error = result.value
 
       switch (error.constructor) {
-        case PlateAlreadyExistsError:
+        case AlreadyExistsError:
           throw new ConflictException(error.message)
         case CompanyNotExistsError:
           throw new NotFoundException(error.message)

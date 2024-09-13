@@ -9,8 +9,7 @@ import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { CreateUserUseCase } from '@/domain/control/application/use-cases/create-user'
 import { UserCPF } from '@/domain/control/enterprise/entities/value-objects/user-cpf'
-import { EmailAlreadyExistsError } from '@/domain/control/application/use-cases/errors/email-already-exists'
-import { UserCPFAlreadyExistsError } from '@/domain/control/application/use-cases/errors/cpf-already-exists-error'
+import { AlreadyExistsError } from '@/domain/control/application/use-cases/errors/already-exist-error'
 
 const createUserBodySchema = z.object({
   name: z.string(),
@@ -53,9 +52,7 @@ export class CreateUserController {
       const error = result.value
 
       switch (error.constructor) {
-        case EmailAlreadyExistsError:
-          throw new ConflictException(error.message)
-        case UserCPFAlreadyExistsError:
+        case AlreadyExistsError:
           throw new ConflictException(error.message)
         default:
           throw new BadRequestException(error.message)

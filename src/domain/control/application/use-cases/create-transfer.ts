@@ -5,9 +5,9 @@ import { Injectable } from '@nestjs/common'
 import { TransferRepository } from '../repositories/transfer-repository'
 import { TransferAttachment } from '../../enterprise/entities/transfer-attachment'
 import { TransferAttachmentList } from '../../enterprise/entities/transfer-attachment-list'
-import { PlateAlreadyExistsError } from './errors/plate-already-exists-error'
-import { CompanyNotExistsError } from './errors/company-not-exists-error'
 import { CompanyRepository } from '../repositories/company-repository'
+import { AlreadyExistsError } from './errors/already-exist-error'
+import { CompanyNotExistsError } from './errors/company-not-exists-error'
 
 interface TransferAvaiableRequest {
   name: string
@@ -18,7 +18,7 @@ interface TransferAvaiableRequest {
 }
 
 type TransferAvaiableResponse = Either<
-  PlateAlreadyExistsError | CompanyNotExistsError,
+  AlreadyExistsError | CompanyNotExistsError,
   {
     transfer: Transfer
   }
@@ -41,15 +41,15 @@ export class CreateTransferUseCase {
     const transferWithSamePlate =
       await this.transferRepository.findByPlate(plate)
 
-    if (transferWithSamePlate) {
-      return left(new PlateAlreadyExistsError(plate))
+    if (transferWithSamePlate !== null) {
+      return left(new AlreadyExistsError(plate))
     }
-
     const company = await this.companyRepository.findById(companyId)
 
     if (!company) {
       return left(new CompanyNotExistsError(companyId))
     }
+    console.log(company)
 
     const transfer = Transfer.create({
       name,

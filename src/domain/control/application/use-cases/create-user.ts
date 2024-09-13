@@ -4,8 +4,7 @@ import { UserRepository } from '../repositories/user-repository'
 import { UserCPF } from '../../enterprise/entities/value-objects/user-cpf'
 import { Injectable } from '@nestjs/common'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { UserCPFAlreadyExistsError } from './errors/cpf-already-exists-error'
-import { EmailAlreadyExistsError } from './errors/email-already-exists'
+import { AlreadyExistsError } from './errors/already-exist-error'
 
 interface CreateUserRequest {
   cpf: UserCPF
@@ -20,7 +19,7 @@ interface CreateUserRequest {
 }
 
 type CreateUserResponse = Either<
-  EmailAlreadyExistsError | UserCPFAlreadyExistsError,
+  AlreadyExistsError,
   {
     user: User
   }
@@ -44,13 +43,13 @@ export class CreateUserUseCase {
     const cpfAlreadyExists = await this.userRepository.findByCPF(cpf.value)
 
     if (cpfAlreadyExists) {
-      return left(new UserCPFAlreadyExistsError(cpf.value))
+      return left(new AlreadyExistsError(cpf.value))
     }
 
     const emailAlreadyExists = await this.userRepository.findByEmail(email)
 
     if (emailAlreadyExists) {
-      return left(new EmailAlreadyExistsError(email))
+      return left(new AlreadyExistsError(email))
     }
 
     const user = User.create({
