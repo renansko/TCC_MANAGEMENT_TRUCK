@@ -7,9 +7,11 @@ import { PrismaCompanyRepository } from './prisma/repositories/prisma-company-re
 import { UserRepository } from '@/domain/control/application/repositories/user-repository'
 import { PrismaUserRepository } from './prisma/repositories/prisma-user-repository'
 import { ItemRepository } from '@/domain/control/application/repositories/item-repository'
-import { PrismaItemRepository } from './prisma/repositories/repository-items-repository'
+import { PrismaItemRepository } from './prisma/repositories/prisma-items-repository'
 import { OrderRepository } from '@/domain/control/application/repositories/order-repository'
 import { PrismaOrderRepository } from './prisma/repositories/prisma-order-repository'
+import { AttachmentRepository } from '@/domain/control/application/repositories/attachment-repository'
+import { PrismaAttachmentRepository } from './prisma/repositories/prisma-attachments-repository'
 
 @Module({
   imports: [],
@@ -35,6 +37,10 @@ import { PrismaOrderRepository } from './prisma/repositories/prisma-order-reposi
       provide: OrderRepository,
       useClass: PrismaOrderRepository,
     },
+    {
+      provide: AttachmentRepository,
+      useClass: PrismaAttachmentRepository,
+    },
   ],
   exports: [
     PrismaService,
@@ -43,6 +49,7 @@ import { PrismaOrderRepository } from './prisma/repositories/prisma-order-reposi
     UserRepository,
     ItemRepository,
     OrderRepository,
+    AttachmentRepository,
   ],
 })
 export class DatabaseModule {}

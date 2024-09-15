@@ -25,6 +25,7 @@ describe('Edit Item by id', () => {
       description: 'Madeirinha',
       name: 'madeira',
       quantity: 10,
+      weight: 10,
     })
 
     expect(inMemoryItemRepository.items[0]).toMatchObject({
@@ -46,6 +47,7 @@ describe('Edit Item by id', () => {
       description: 'Madeira',
       name: 'Mesa',
       quantity: 12,
+      weight: 10,
     })
 
     expect(result.isLeft()).toBe(true)

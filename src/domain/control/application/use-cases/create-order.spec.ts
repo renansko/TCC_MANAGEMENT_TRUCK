@@ -5,7 +5,7 @@ import { InMemoryUserRepository } from 'test/repositories/in-memory-user-reposit
 import { Item } from '../../enterprise/entities/item'
 import { User } from '../../enterprise/entities/user'
 import { UserCPF } from '../../enterprise/entities/value-objects/user-cpf'
-import { ItemNotFoundError } from './errors/not-found-error'
+import { NotFoundError } from './errors/not-found-error'
 
 let inMemoryOrderRepository: InMemoryOrderRepository
 let inMemoryItemRepository: InMemoryItemRepository
@@ -85,7 +85,7 @@ describe('Create Order', () => {
       status: 'Caminhão está pronto',
     })
 
-    expect(result.value).toBeInstanceOf(ItemNotFoundError)
+    expect(result.value).toBeInstanceOf(NotFoundError)
   })
 
   it('Not should be able create an order with an invalid user', async () => {
@@ -108,6 +108,6 @@ describe('Create Order', () => {
       status: 'Caminhão está pronto',
     })
 
-    expect(result.value).toBeInstanceOf(ItemNotFoundError)
+    expect(result.value).toBeInstanceOf(NotFoundError)
   })
 })

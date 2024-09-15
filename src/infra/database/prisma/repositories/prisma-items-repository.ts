@@ -15,7 +15,7 @@ export class PrismaItemRepository implements ItemRepository {
 
   async save(item: Item): Promise<void> {
     const data = PrismaItemMapper.toPrisma(item)
-
+    console.log(data)
     this.prisma.item.update({
       where: {
         id: data.id,

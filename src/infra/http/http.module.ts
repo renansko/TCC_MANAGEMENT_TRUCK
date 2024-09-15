@@ -10,15 +10,25 @@ import { CreateItemController } from './controllers/items/create-items.controlle
 import { CreateItemsUseCase } from '@/domain/control/application/use-cases/create-Items'
 import { CreateOrderController } from './controllers/orders/create-order.controller'
 import { CreateOrderUseCase } from '@/domain/control/application/use-cases/create-order'
+import { EditItemController } from './controllers/items/edit-items.controller'
+import { EditItemUseCase } from '@/domain/control/application/use-cases/edit-item'
+import { FetchItemsController } from './controllers/items/fetch-items.controller'
+import { FetchItemsUseCase } from '@/domain/control/application/use-cases/fetch-items'
+import { UploadedAttachmentController } from './controllers/attachment/upload-attachment.controller'
+import { UploadAndCreateAttachmentUseCase } from '@/domain/control/application/use-cases/upload-and-create-attachment'
+import { StorageModule } from '../storage/storage.module'
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, StorageModule],
   controllers: [
     CreateTransferController,
     CreateCompanyController,
     CreateUserController,
     CreateItemController,
     CreateOrderController,
+    EditItemController,
+    FetchItemsController,
+    UploadedAttachmentController,
   ],
   providers: [
     CreateTransferUseCase,
@@ -26,6 +36,9 @@ import { CreateOrderUseCase } from '@/domain/control/application/use-cases/creat
     CreateUserUseCase,
     CreateItemsUseCase,
     CreateOrderUseCase,
+    EditItemUseCase,
+    FetchItemsUseCase,
+    UploadAndCreateAttachmentUseCase,
   ],
 })
 export class HttpModule {}

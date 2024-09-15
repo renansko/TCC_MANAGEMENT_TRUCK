@@ -11,6 +11,7 @@ interface EditItemUseCaseRequest {
   description: string
   quantity: number
   amount: number
+  weight: number
 }
 
 type EditItemUseCaseResponse = Either<
@@ -25,11 +26,12 @@ export class EditItemUseCase {
   constructor(private itemRepository: ItemRepository) {}
 
   async execute({
+    itemId,
     name,
     description,
     quantity,
-    itemId,
     amount,
+    weight,
   }: EditItemUseCaseRequest): Promise<EditItemUseCaseResponse> {
     const item = await this.itemRepository.findById(itemId)
 
@@ -41,7 +43,9 @@ export class EditItemUseCase {
     item.description = description
     item.name = name
     item.quantity = quantity
+    item.weight = weight
 
+    console.log(item)
     await this.itemRepository.save(item)
 
     return right({
