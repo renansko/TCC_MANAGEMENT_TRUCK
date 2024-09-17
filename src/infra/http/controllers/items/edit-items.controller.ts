@@ -34,9 +34,7 @@ export class EditItemController {
     itemId: string,
     body: EditItemBodySchema,
   ) {
-    console.log(body)
     const { name, description, quantity, amount, weight } = body
-    console.log(name)
     const result = await this.editItem.execute({
       itemId,
       name,

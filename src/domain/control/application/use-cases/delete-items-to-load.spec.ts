@@ -18,7 +18,7 @@ describe('Create Item', () => {
     await inMemoryItemRepository.create(newItem)
 
     await sut.execute({
-      itemsId: newItem.id.toString(),
+      itemId: newItem.id.toString(),
     })
 
     expect(inMemoryItemRepository.items).toHaveLength(0)
@@ -30,7 +30,7 @@ describe('Create Item', () => {
     await inMemoryItemRepository.create(newItem)
 
     const result = await sut.execute({
-      itemsId: '1',
+      itemId: '1',
     })
 
     expect(result.isLeft()).toBe(true)

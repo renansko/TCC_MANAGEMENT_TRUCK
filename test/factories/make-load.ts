@@ -1,19 +1,26 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { Load, LoadProps } from '@/domain/control/enterprise/entities/load'
+import {
+  Transfer,
+  TransferProps,
+} from '@/domain/control/enterprise/entities/transfer'
 
-export function makeLoad(
-  override: Partial<LoadProps> = {},
+import { faker } from '@faker-js/faker'
+
+export function makeTransfer(
+  override: Partial<TransferProps> = {},
   id?: UniqueEntityID,
 ) {
-  const load = Load.create(
+  const transfer = Transfer.create(
     {
-      itemsId: new UniqueEntityID(), // Lista de items
-      type: 'dangerous',
-      weight: 120,
+      name: faker.vehicle.manufacturer(),
+      model: faker.vehicle.model(),
+      plate: faker.vehicle.vrm(),
+      driverId: new UniqueEntityID(),
+      companyId: new UniqueEntityID(),
       ...override,
     },
     id,
   )
 
-  return load
+  return transfer
 }

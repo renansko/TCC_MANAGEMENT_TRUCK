@@ -17,6 +17,16 @@ import { FetchItemsUseCase } from '@/domain/control/application/use-cases/fetch-
 import { UploadedAttachmentController } from './controllers/attachment/upload-attachment.controller'
 import { UploadAndCreateAttachmentUseCase } from '@/domain/control/application/use-cases/upload-and-create-attachment'
 import { StorageModule } from '../storage/storage.module'
+import { DeleteCompanyController } from './controllers/company/delete-company'
+import { DeleteUserController } from './controllers/users/delete-users.controller'
+import { DeleteItemController } from './controllers/items/delete-items.controller'
+import { DeleteOrderController } from './controllers/orders/delete-order.controller'
+import { DeleteTransferController } from './controllers/transfer/delete-transfer.controller'
+import { DeleteCompanyUseCase } from '@/domain/control/application/use-cases/delete-company'
+import { DeleteUserUseCase } from '@/domain/control/application/use-cases/delete-user'
+import { DeleteItemsUseCase } from '@/domain/control/application/use-cases/delete-items-to-load'
+import { DeleteOrderUseCase } from '@/domain/control/application/use-cases/delete-order'
+import { DeleteTransferUseCase } from '@/domain/control/application/use-cases/delete-transfer'
 
 @Module({
   imports: [DatabaseModule, StorageModule],
@@ -29,6 +39,11 @@ import { StorageModule } from '../storage/storage.module'
     EditItemController,
     FetchItemsController,
     UploadedAttachmentController,
+    DeleteCompanyController,
+    DeleteUserController,
+    DeleteItemController,
+    DeleteOrderController,
+    DeleteTransferController,
   ],
   providers: [
     CreateTransferUseCase,
@@ -39,6 +54,11 @@ import { StorageModule } from '../storage/storage.module'
     EditItemUseCase,
     FetchItemsUseCase,
     UploadAndCreateAttachmentUseCase,
+    DeleteCompanyUseCase,
+    DeleteUserUseCase,
+    DeleteItemsUseCase,
+    DeleteOrderUseCase,
+    DeleteTransferUseCase,
   ],
 })
 export class HttpModule {}

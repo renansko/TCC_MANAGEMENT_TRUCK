@@ -1,6 +1,8 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Order, OrderProps } from '@/domain/control/enterprise/entities/order'
 
+import { faker } from '@faker-js/faker'
+
 export function makeOrder(
   override: Partial<OrderProps> = {},
   id?: UniqueEntityID,
@@ -9,10 +11,10 @@ export function makeOrder(
     {
       userId: new UniqueEntityID(),
       itemId: new UniqueEntityID(),
-      dateDelivery: new Date(),
-      dateRequested: new Date(),
-      deliveryAddress: 'Lodianopolis',
-      status: 'Pronto',
+      dateDelivery: faker.date.future(),
+      dateRequested: faker.date.recent(),
+      deliveryAddress: faker.location.streetAddress(),
+      status: faker.word.sample(),
       ...override,
     },
     id,

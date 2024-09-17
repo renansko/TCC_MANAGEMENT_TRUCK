@@ -4,7 +4,7 @@ import { ItemRepository } from '../repositories/item-repository'
 import { Injectable } from '@nestjs/common'
 
 interface DeleteItemsRequest {
-  itemsId: string
+  itemId: string
 }
 
 type DeleteItemsResponse = Either<ResourceNotFoundError, null>
@@ -13,8 +13,8 @@ type DeleteItemsResponse = Either<ResourceNotFoundError, null>
 export class DeleteItemsUseCase {
   constructor(private itemRepository: ItemRepository) {}
 
-  async execute({ itemsId }: DeleteItemsRequest): Promise<DeleteItemsResponse> {
-    const items = await this.itemRepository.findById(itemsId)
+  async execute({ itemId }: DeleteItemsRequest): Promise<DeleteItemsResponse> {
+    const items = await this.itemRepository.findById(itemId)
 
     if (!items) {
       return left(new ResourceNotFoundError())

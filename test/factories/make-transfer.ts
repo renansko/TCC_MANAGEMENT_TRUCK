@@ -4,19 +4,19 @@ import {
   TransferProps,
 } from '@/domain/control/enterprise/entities/transfer'
 
+import { faker } from '@faker-js/faker'
+
 export function makeTransfer(
   override: Partial<TransferProps> = {},
   id?: UniqueEntityID,
 ) {
   const transfer = Transfer.create(
     {
-      name: 'Pegout',
-      attachment: 'url:img',
-      model: 'Ratch',
-      plate: 'ABC-CDB',
-      driverId: new UniqueEntityID('2'),
-      telemetryId: new UniqueEntityID('1'),
-      companyId: new UniqueEntityID('1'),
+      name: faker.vehicle.manufacturer(),
+      model: faker.vehicle.model(),
+      plate: faker.vehicle.vrm(),
+      driverId: new UniqueEntityID(),
+      companyId: new UniqueEntityID(),
       ...override,
     },
     id,

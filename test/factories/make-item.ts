@@ -8,11 +8,11 @@ export function makeItem(
 ) {
   const item = Item.create(
     {
-      amount: 50.5,
+      amount: faker.number.float({ min: 1, max: 1000, precision: 0.01 }),
       description: faker.lorem.sentence(5),
-      name: 'Tabua',
-      quantity: 1000,
-      type: 'wood',
+      name: faker.commerce.productName(),
+      quantity: faker.number.int({ min: 1, max: 10000 }),
+      weight: faker.number.float({ min: 0.1, max: 1000, precision: 0.1 }),
       ...override,
     },
     id,

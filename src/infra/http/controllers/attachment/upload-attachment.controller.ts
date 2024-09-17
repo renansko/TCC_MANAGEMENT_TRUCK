@@ -5,6 +5,7 @@ import {
   Controller,
   FileTypeValidator,
   MaxFileSizeValidator,
+  NotAcceptableException,
   ParseFilePipe,
   Post,
   UploadedFile,
@@ -46,7 +47,7 @@ export class UploadedAttachmentController {
 
       switch (error.constructor) {
         case InvalidAttachmentType:
-          throw new BadRequestException(error.message)
+          throw new NotAcceptableException(error.message)
         default:
           throw new BadRequestException(error.message)
       }

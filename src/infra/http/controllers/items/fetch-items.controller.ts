@@ -34,6 +34,7 @@ export class FetchItemsController {
       name,
       page,
     })
+
     if (result.isLeft()) {
       throw new BadRequestException()
     }
