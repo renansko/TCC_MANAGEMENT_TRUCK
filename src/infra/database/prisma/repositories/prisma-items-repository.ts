@@ -15,12 +15,15 @@ export class PrismaItemRepository implements ItemRepository {
 
   async save(item: Item): Promise<void> {
     const data = PrismaItemMapper.toPrisma(item)
-    this.prisma.item.update({
-      where: {
-        id: data.id,
-      },
-      data,
-    })
+
+    await Promise.all([
+      this.prisma.item.update({
+        where: {
+          id: data.id,
+        },
+        data,
+      }),
+    ])
   }
 
   async findManyByName(

@@ -7,7 +7,7 @@ import request from 'supertest'
 import { CompanyFactory } from 'test/factories/make-company'
 import { TransferFactory } from 'test/factories/make-transfer'
 import { UserFactory } from 'test/factories/make-user'
-describe('Create Transfer', () => {
+describe('Delete Transfer', () => {
   let app: INestApplication
   let prisma: PrismaService
   let userFactory: UserFactory

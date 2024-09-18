@@ -6,7 +6,7 @@ import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { CompanyFactory } from 'test/factories/make-company'
 import { UserFactory } from 'test/factories/make-user'
-describe('Create User', () => {
+describe('Delete User', () => {
   let app: INestApplication
   let prisma: PrismaService
   let userFactory: UserFactory

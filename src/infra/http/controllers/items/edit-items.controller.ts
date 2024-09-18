@@ -29,10 +29,8 @@ export class EditItemController {
   @Put()
   @HttpCode(204)
   async handle(
-    @Body(bodyValidationPipe)
-    @Param('id')
-    itemId: string,
-    body: EditItemBodySchema,
+    @Body(bodyValidationPipe) body: EditItemBodySchema,
+    @Param('id') itemId: string,
   ) {
     const { name, description, quantity, amount, weight } = body
     const result = await this.editItem.execute({

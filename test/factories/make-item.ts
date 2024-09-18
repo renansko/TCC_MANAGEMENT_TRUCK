@@ -11,9 +11,9 @@ export function makeItem(
 ) {
   const item = Item.create(
     {
+      name: faker.commerce.productName(),
       amount: faker.number.float({ min: 1, max: 1000, multipleOf: 0.01 }),
       description: faker.lorem.sentence(5),
-      name: faker.commerce.productName(),
       quantity: faker.number.int({ min: 1, max: 10000 }),
       weight: faker.number.float({ min: 0.1, max: 1000, multipleOf: 0.1 }),
       ...override,
