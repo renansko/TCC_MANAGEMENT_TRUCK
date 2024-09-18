@@ -5,42 +5,54 @@ import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { CompanyFactory } from 'test/factories/make-company'
-describe('Create Company', () => {
+import { TransferFactory } from 'test/factories/make-transfer'
+import { UserFactory } from 'test/factories/make-user'
+describe('Create Transfer', () => {
   let app: INestApplication
   let prisma: PrismaService
+  let userFactory: UserFactory
+  let transferFactory: TransferFactory
   let companyFactory: CompanyFactory
+
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [CompanyFactory],
+      providers: [TransferFactory, UserFactory, CompanyFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
 
     prisma = moduleRef.get(PrismaService)
 
+    userFactory = moduleRef.get(UserFactory)
+
+    transferFactory = moduleRef.get(TransferFactory)
     companyFactory = moduleRef.get(CompanyFactory)
 
     await app.init()
   })
-  it('[DELETE] /company/{id}', async () => {
-    const company = await companyFactory.makePrismaCompany({
-      name: 'Company Joe Doe',
+  it('[DELETE] /transfer/{id}', async () => {
+    const user = await userFactory.makePrismaUser()
+    const company = await companyFactory.makePrismaCompany()
+
+    const transfer = await transferFactory.makePrismaTransfer({
+      driverId: user.id,
+      companyId: company.id,
     })
 
-    const companyId = company.id.toString()
+    const transferId = transfer.id.toString()
 
     const response = await request(app.getHttpServer())
-      .delete(`/company/${companyId}`)
+      .delete(`/transfer/${transferId}`)
       .send()
     expect(response.statusCode).toBe(204)
 
-    const companyOnDatabase = await prisma.company.findUnique({
+    const transferOnDatabase = await prisma.transfer.findMany({
       where: {
-        email: 'company@example.com',
+        driverId: user.id.toString(),
       },
     })
 
-    expect(companyOnDatabase).toBeNull()
+    expect(transferOnDatabase).toHaveLength(0)
   })
 })

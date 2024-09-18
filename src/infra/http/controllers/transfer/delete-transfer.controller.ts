@@ -14,7 +14,7 @@ export class DeleteTransferController {
   constructor(private deleteTransfer: DeleteTransferUseCase) {}
 
   @Delete()
-  @HttpCode(200)
+  @HttpCode(204)
   async handle(
     @Param('id')
     transferId: string,

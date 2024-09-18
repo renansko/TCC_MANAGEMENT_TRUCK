@@ -21,6 +21,7 @@ export class PrismaOrderMapper {
 
   static toPrisma(order: Order): Prisma.OrderUncheckedCreateInput {
     return {
+      id: order.id.toString(),
       itemId: order.itemId.toValue(),
       userId: order.userId.toValue(),
       dateRequested: order.dateRequested,

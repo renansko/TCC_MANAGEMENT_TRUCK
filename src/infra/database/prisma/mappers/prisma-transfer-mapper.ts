@@ -19,6 +19,7 @@ export class PrismaTransferMapper {
 
   static toPrisma(transfer: Transfer): Prisma.TransferUncheckedCreateInput {
     return {
+      id: transfer.id.toString(),
       name: transfer.name,
       model: transfer.model,
       companyId: transfer.companyId.toString(),

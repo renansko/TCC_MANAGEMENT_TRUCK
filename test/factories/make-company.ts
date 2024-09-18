@@ -5,6 +5,9 @@ import {
   companyProps,
 } from '@/domain/control/enterprise/entities/company'
 import { CompanyCNPJ } from '@/domain/control/enterprise/entities/value-objects/company-cnpj'
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { PrismaCompanyMapper } from '@/infra/database/prisma/mappers/prisma-company-mapper'
 
 export function makeCompany(
   override: Partial<companyProps> = {},
@@ -25,4 +28,19 @@ export function makeCompany(
   )
 
   return company
+}
+
+@Injectable()
+export class CompanyFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaCompany(data: Partial<companyProps> = {}): Promise<Company> {
+    const company = makeCompany(data)
+
+    await this.prisma.company.create({
+      data: PrismaCompanyMapper.toPrisma(company),
+    })
+
+    return company
+  }
 }

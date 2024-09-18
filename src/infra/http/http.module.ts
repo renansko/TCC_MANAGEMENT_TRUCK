@@ -54,11 +54,11 @@ import { DeleteTransferUseCase } from '@/domain/control/application/use-cases/de
     EditItemUseCase,
     FetchItemsUseCase,
     UploadAndCreateAttachmentUseCase,
-    DeleteCompanyUseCase,
     DeleteUserUseCase,
     DeleteItemsUseCase,
     DeleteOrderUseCase,
     DeleteTransferUseCase,
+    DeleteCompanyUseCase,
   ],
 })
 export class HttpModule {}

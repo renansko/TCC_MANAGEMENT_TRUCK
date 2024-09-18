@@ -23,6 +23,7 @@ export class PrismaCompanyMapper {
 
   static toPrisma(company: Company): Prisma.CompanyUncheckedCreateInput {
     return {
+      id: company.id.toString(),
       name: company.name,
       email: company.email,
       phone: company.phone,

@@ -20,6 +20,7 @@ export class PrismaItemMapper {
 
   static toPrisma(item: Item): Prisma.ItemUncheckedCreateInput {
     return {
+      id: item.id.toString(),
       name: item.name,
       description: item.description,
       quantity: item.quantity,

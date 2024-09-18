@@ -4,43 +4,43 @@ import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
-import { CompanyFactory } from 'test/factories/make-company'
-describe('Create Company', () => {
+import { ItemFactory } from 'test/factories/make-item'
+describe('Create Item', () => {
   let app: INestApplication
   let prisma: PrismaService
-  let companyFactory: CompanyFactory
+  let itemFactory: ItemFactory
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [CompanyFactory],
+      providers: [ItemFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
 
     prisma = moduleRef.get(PrismaService)
 
-    companyFactory = moduleRef.get(CompanyFactory)
+    itemFactory = moduleRef.get(ItemFactory)
 
     await app.init()
   })
-  it('[DELETE] /company/{id}', async () => {
-    const company = await companyFactory.makePrismaCompany({
-      name: 'Company Joe Doe',
+  it('[DELETE] /item/{id}', async () => {
+    const item = await itemFactory.makePrismaItem({
+      name: 'Madeira',
     })
 
-    const companyId = company.id.toString()
+    const itemId = item.id.toString()
 
     const response = await request(app.getHttpServer())
-      .delete(`/company/${companyId}`)
+      .delete(`/item/${itemId}`)
       .send()
     expect(response.statusCode).toBe(204)
 
-    const companyOnDatabase = await prisma.company.findUnique({
+    const itemOnDatabase = await prisma.item.findMany({
       where: {
-        email: 'company@example.com',
+        name: 'Madeira',
       },
     })
 
-    expect(companyOnDatabase).toBeNull()
+    expect(itemOnDatabase).toHaveLength(0)
   })
 })

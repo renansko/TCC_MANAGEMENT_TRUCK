@@ -3,8 +3,11 @@ import {
   Transfer,
   TransferProps,
 } from '@/domain/control/enterprise/entities/transfer'
+import { PrismaTransferMapper } from '@/infra/database/prisma/mappers/prisma-transfer-mapper'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 
 import { faker } from '@faker-js/faker'
+import { Injectable } from '@nestjs/common'
 
 export function makeTransfer(
   override: Partial<TransferProps> = {},
@@ -23,4 +26,21 @@ export function makeTransfer(
   )
 
   return transfer
+}
+
+@Injectable()
+export class TransferFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaTransfer(
+    data: Partial<TransferProps> = {},
+  ): Promise<Transfer> {
+    const transfer = makeTransfer(data)
+
+    await this.prisma.transfer.create({
+      data: PrismaTransferMapper.toPrisma(transfer),
+    })
+
+    return transfer
+  }
 }

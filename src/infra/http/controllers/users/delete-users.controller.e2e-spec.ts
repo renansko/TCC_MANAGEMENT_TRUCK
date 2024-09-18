@@ -5,42 +5,50 @@ import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { CompanyFactory } from 'test/factories/make-company'
-describe('Create Company', () => {
+import { UserFactory } from 'test/factories/make-user'
+describe('Create User', () => {
   let app: INestApplication
   let prisma: PrismaService
+  let userFactory: UserFactory
   let companyFactory: CompanyFactory
+
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [CompanyFactory],
+      providers: [UserFactory, CompanyFactory, PrismaService],
     }).compile()
 
     app = moduleRef.createNestApplication()
 
     prisma = moduleRef.get(PrismaService)
 
+    userFactory = moduleRef.get(UserFactory)
+
+    userFactory = moduleRef.get(UserFactory)
     companyFactory = moduleRef.get(CompanyFactory)
 
     await app.init()
   })
-  it('[DELETE] /company/{id}', async () => {
-    const company = await companyFactory.makePrismaCompany({
-      name: 'Company Joe Doe',
+  it('[DELETE] /user/{id}', async () => {
+    const company = await companyFactory.makePrismaCompany()
+
+    const user = await userFactory.makePrismaUser({
+      companyId: company.id,
     })
 
-    const companyId = company.id.toString()
+    const userId = user.id.toString()
 
     const response = await request(app.getHttpServer())
-      .delete(`/company/${companyId}`)
+      .delete(`/user/${userId}`)
       .send()
     expect(response.statusCode).toBe(204)
 
-    const companyOnDatabase = await prisma.company.findUnique({
+    const userOnDatabase = await prisma.user.findUnique({
       where: {
-        email: 'company@example.com',
+        email: user.email,
       },
     })
 
-    expect(companyOnDatabase).toBeNull()
+    expect(userOnDatabase).toBeNull()
   })
 })

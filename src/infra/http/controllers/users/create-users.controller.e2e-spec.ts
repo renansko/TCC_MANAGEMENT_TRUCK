@@ -3,13 +3,15 @@ import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
-describe('Create Company', () => {
+import { CompanyFactory } from 'test/factories/make-company'
+describe('Create Users', () => {
   let app: INestApplication
   let prisma: PrismaService
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
+      providers: [CompanyFactory, PrismaService],
     }).compile()
 
     app = moduleRef.createNestApplication()
@@ -18,25 +20,26 @@ describe('Create Company', () => {
 
     await app.init()
   })
-  it('[POST] /company', async () => {
-    const response = await request(app.getHttpServer()).post('/company').send({
-      name: 'Company Name',
-      email: 'company@example.com',
+  it('[POST] /user', async () => {
+    const response = await request(app.getHttpServer()).post('/user').send({
+      name: 'João da Silva',
+      cpf: '123.456.789-00',
+      address: 'Rua Exemplo, 123',
+      password: 'senha123',
+      email: 'joao@exemplo.com',
       cep: '12345-678',
-      address: 'Company Address',
-      cnpj: '12345678901234',
-      phone: '1234567890',
-      password: 'password',
+      birth: '1990-01-01',
+      phone: '(11) 98765-4321',
     })
 
     expect(response.statusCode).toBe(201)
 
-    const companyOnDatabase = await prisma.company.findUnique({
+    const usersOnDatabase = await prisma.user.findUnique({
       where: {
-        email: 'company@example.com',
+        email: 'joao@exemplo.com',
       },
     })
 
-    expect(companyOnDatabase).toBeTruthy()
+    expect(usersOnDatabase).toBeTruthy()
   })
 })

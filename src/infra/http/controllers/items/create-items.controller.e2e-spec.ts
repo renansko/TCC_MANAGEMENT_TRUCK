@@ -3,7 +3,7 @@ import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
-describe('Create Company', () => {
+describe('Create Items', () => {
   let app: INestApplication
   let prisma: PrismaService
 
@@ -18,25 +18,23 @@ describe('Create Company', () => {
 
     await app.init()
   })
-  it('[POST] /company', async () => {
-    const response = await request(app.getHttpServer()).post('/company').send({
-      name: 'Company Name',
-      email: 'company@example.com',
-      cep: '12345-678',
-      address: 'Company Address',
-      cnpj: '12345678901234',
-      phone: '1234567890',
-      password: 'password',
+  it('[POST] /item', async () => {
+    const response = await request(app.getHttpServer()).post('/item').send({
+      name: 'Nome do Item',
+      description: 'Descrição do item',
+      quantity: 10,
+      amount: 100.5,
+      weight: 5.5,
     })
 
     expect(response.statusCode).toBe(201)
 
-    const companyOnDatabase = await prisma.company.findUnique({
+    const itemsOnDatabase = await prisma.item.findMany({
       where: {
-        email: 'company@example.com',
+        name: 'Nome do Item',
       },
     })
 
-    expect(companyOnDatabase).toBeTruthy()
+    expect(itemsOnDatabase).toBeTruthy()
   })
 })

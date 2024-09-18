@@ -35,7 +35,6 @@ export class PrismaCompanyRepository implements CompanyRepository {
 
   async delete(company: Company): Promise<void> {
     const data = PrismaCompanyMapper.toPrisma(company)
-
     await this.prisma.company.delete({
       where: {
         id: data.id,

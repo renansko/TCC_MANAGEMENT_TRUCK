@@ -3,7 +3,6 @@ import {
   Transfer,
   TransferProps,
 } from '@/domain/control/enterprise/entities/transfer'
-
 import { faker } from '@faker-js/faker'
 
 export function makeTransfer(

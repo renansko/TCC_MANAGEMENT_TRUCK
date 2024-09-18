@@ -14,7 +14,7 @@ export class DeleteItemController {
   constructor(private deleteItem: DeleteItemsUseCase) {}
 
   @Delete()
-  @HttpCode(200)
+  @HttpCode(204)
   async handle(
     @Param('id')
     itemId: string,
