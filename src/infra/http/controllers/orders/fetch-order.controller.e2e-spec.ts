@@ -1,20 +1,18 @@
-import { AppModule } from '@/infra/app.module'
-import { DatabaseModule } from '@/infra/database/database.module'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
-import { ItemFactory } from 'test/factories/make-item'
+import { AppModule } from '@/infra/app.module'
 import { OrderFactory } from 'test/factories/make-order'
+import { DatabaseModule } from '@/infra/database/database.module'
 import { UserFactory } from 'test/factories/make-user'
-describe('Delete Order', () => {
+import { ItemFactory } from 'test/factories/make-item'
+describe('Fetch order per name (E2E)', () => {
   let app: INestApplication
-  let prisma: PrismaService
+  let orderFactory: OrderFactory
   let userFactory: UserFactory
   let itemFactory: ItemFactory
-  let orderFactory: OrderFactory
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
       providers: [OrderFactory, UserFactory, ItemFactory],
@@ -22,39 +20,35 @@ describe('Delete Order', () => {
 
     app = moduleRef.createNestApplication()
 
-    prisma = moduleRef.get(PrismaService)
-
-    userFactory = moduleRef.get(UserFactory)
-
-    itemFactory = moduleRef.get(ItemFactory)
-
     orderFactory = moduleRef.get(OrderFactory)
+    userFactory = moduleRef.get(UserFactory)
+    itemFactory = moduleRef.get(ItemFactory)
 
     await app.init()
   })
-  it('[DELETE] /order/{id}', async () => {
-    const user = await userFactory.makePrismaUser()
 
+  test('[GET] /order/name', async () => {
+    const user = await userFactory.makePrismaUser()
     const item = await itemFactory.makePrismaItem()
 
     const order = await orderFactory.makePrismaOrder({
-      userId: user.id,
       itemId: item.id,
+      userId: user.id,
+      name: 'Pedido de madeira',
     })
 
-    const orderId = order.id.toString()
-
+    const nameOrder = order.name
     const response = await request(app.getHttpServer())
-      .delete(`/order/${orderId}`)
+      .get(`/order/${nameOrder}`)
       .send()
-    expect(response.statusCode).toBe(204)
-
-    const orderOnDatabase = await prisma.order.findMany({
-      where: {
-        status: 'PENDING',
-      },
+    // console.log(response)
+    expect(response.statusCode).toBe(200)
+    expect(response.body).toEqual({
+      orders: expect.arrayContaining([
+        expect.objectContaining({
+          name: 'Pedido de madeira',
+        }),
+      ]),
     })
-
-    expect(orderOnDatabase).toHaveLength(0)
   })
 })

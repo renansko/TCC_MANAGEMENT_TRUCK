@@ -11,6 +11,7 @@ import { CreateOrderUseCase } from '@/domain/control/application/use-cases/creat
 import { NotFoundError } from '@/domain/control/application/use-cases/errors/not-found-error'
 
 const createOrderBodySchema = z.object({
+  name: z.string(),
   itemId: z.string().uuid(),
   userId: z.string().uuid(),
   dateRequested: z.coerce.date(),
@@ -34,6 +35,7 @@ export class CreateOrderController {
   ) {
     const {
       itemId,
+      name,
       userId,
       dateRequested,
       dateDelivery,
@@ -44,6 +46,7 @@ export class CreateOrderController {
     const result = await this.createOrder.execute({
       itemId,
       userId,
+      name,
       dateRequested,
       dateDelivery,
       deliveryAddress,

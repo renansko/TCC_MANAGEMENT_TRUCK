@@ -49,7 +49,6 @@ export class CreateTransferUseCase {
     if (!company) {
       return left(new CompanyNotExistsError(companyId))
     }
-    console.log(company)
 
     const transfer = Transfer.create({
       name,

@@ -8,6 +8,7 @@ import { ItemRepository } from '../repositories/item-repository'
 import { NotFoundError } from './errors/not-found-error'
 
 interface CreateOrderRequest {
+  name: string
   itemId: string
   userId: string
   dateRequested: Date
@@ -34,6 +35,7 @@ export class CreateOrderUseCase {
   async execute({
     itemId,
     userId,
+    name,
     dateDelivery,
     dateRequested,
     deliveryAddress,
@@ -57,6 +59,7 @@ export class CreateOrderUseCase {
       dateDelivery,
       deliveryAddress,
       status,
+      name,
     })
 
     this.orderRepository.create(order)

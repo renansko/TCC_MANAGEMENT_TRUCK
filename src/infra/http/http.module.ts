@@ -27,6 +27,16 @@ import { DeleteUserUseCase } from '@/domain/control/application/use-cases/delete
 import { DeleteItemsUseCase } from '@/domain/control/application/use-cases/delete-items-to-load'
 import { DeleteOrderUseCase } from '@/domain/control/application/use-cases/delete-order'
 import { DeleteTransferUseCase } from '@/domain/control/application/use-cases/delete-transfer'
+import { EditTransferController } from './controllers/transfer/edit.transfer.controller'
+import { EditTransferUseCase } from '@/domain/control/application/use-cases/edit-transfer'
+import { EditCompanyController } from './controllers/company/edit-company.controller'
+import { EditCompanyUseCase } from '@/domain/control/application/use-cases/edit-company'
+import { FetchCompanysUseCase } from '@/domain/control/application/use-cases/fetch-company'
+import { FetchCompanysController } from './controllers/company/fetch-company.controller'
+import { FetchOrdersController } from './controllers/orders/fetch-order.controller'
+import { FetchOrdersUseCase } from '@/domain/control/application/use-cases/fetch-order'
+import { EditOrderUseCase } from '@/domain/control/application/use-cases/edit-order'
+import { EditOrderController } from './controllers/orders/edit-order.controller'
 
 @Module({
   imports: [DatabaseModule, StorageModule],
@@ -44,6 +54,11 @@ import { DeleteTransferUseCase } from '@/domain/control/application/use-cases/de
     DeleteItemController,
     DeleteOrderController,
     DeleteTransferController,
+    EditTransferController,
+    EditCompanyController,
+    EditOrderController,
+    FetchCompanysController,
+    FetchOrdersController,
   ],
   providers: [
     CreateTransferUseCase,
@@ -59,6 +74,11 @@ import { DeleteTransferUseCase } from '@/domain/control/application/use-cases/de
     DeleteOrderUseCase,
     DeleteTransferUseCase,
     DeleteCompanyUseCase,
+    EditTransferUseCase,
+    EditCompanyUseCase,
+    EditOrderUseCase,
+    FetchCompanysUseCase,
+    FetchOrdersUseCase,
   ],
 })
 export class HttpModule {}

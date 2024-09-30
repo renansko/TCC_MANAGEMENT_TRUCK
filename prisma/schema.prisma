@@ -8,11 +8,6 @@ datasource db {
     url = env("DATABASE_URL")
 }
 
-generator erd {
-    provider = "prisma-erd-generator"
-    output   = "png"
-}
-
 enum UserRole {
     ADMIN
     CLIENT
@@ -125,6 +120,7 @@ model Item {
 
 model Order {
     id              String    @id @default(uuid())
+    name            String
     dateRequested   DateTime  @default(now()) @map("date_requested")
     dateDelivery    DateTime  @map("date_delivery")
     deliveryAddress String    @map("delivery_address")

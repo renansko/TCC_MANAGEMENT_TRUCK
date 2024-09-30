@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaOrderMapper } from '../mappers/prisma-order-mapper'
 import { Order } from '@/domain/control/enterprise/entities/order'
+import { PaginationParams } from '@/core/repositories/pagination-params'
 
 @Injectable()
 export class PrismaOrderRepository implements OrderRepository {
@@ -42,5 +43,38 @@ export class PrismaOrderRepository implements OrderRepository {
         id: data.id,
       },
     })
+  }
+
+  async save(order: Order): Promise<void> {
+    const data = PrismaOrderMapper.toPrisma(order)
+
+    await Promise.all([
+      this.prisma.order.update({
+        where: {
+          id: data.id,
+        },
+        data,
+      }),
+    ])
+  }
+
+  async findManyByName(
+    name: string,
+    { page }: PaginationParams,
+  ): Promise<Order[]> {
+    const orders = await this.prisma.order.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+      where: {
+        name: {
+          startsWith: name,
+        },
+      },
+    })
+
+    return orders.map(PrismaOrderMapper.toDomain)
   }
 }

@@ -49,6 +49,7 @@ describe('Create Order', () => {
     inMemoryUserRepository.items.push(user)
 
     const result = await sut.execute({
+      name: 'Empresa Teste',
       userId: user.id.toString(),
       dateDelivery: new Date(),
       dateRequested: new Date(),
@@ -77,6 +78,7 @@ describe('Create Order', () => {
     inMemoryUserRepository.items.push(user)
 
     const result = await sut.execute({
+      name: 'Empresa Teste',
       userId: '1',
       dateDelivery: new Date(),
       dateRequested: new Date(),
@@ -100,6 +102,7 @@ describe('Create Order', () => {
     inMemoryItemRepository.items.push(item)
 
     const result = await sut.execute({
+      name: 'Empresa Teste',
       userId: '1',
       dateDelivery: new Date(),
       dateRequested: new Date(),

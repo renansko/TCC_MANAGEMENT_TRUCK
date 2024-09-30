@@ -2,15 +2,13 @@ import {
   BadRequestException,
   Controller,
   Get,
-  NotFoundException,
   Param,
   Query,
 } from '@nestjs/common'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
-import { FetchItemsUseCase } from '@/domain/control/application/use-cases/fetch-items'
-import { ItemPresenter } from '../../presenter/item-pressenter'
-import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
+import { FetchCompanysUseCase } from '@/domain/control/application/use-cases/fetch-company'
+import { CompanyPresenter } from '../../presenter/company-pressenter'
 
 const pageQueryParamSchema = z
   .string()
@@ -23,9 +21,9 @@ const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema)
 
 type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 
-@Controller('/item/:name')
-export class FetchItemsController {
-  constructor(private fetchRecentQuestion: FetchItemsUseCase) {}
+@Controller('/company/:name')
+export class FetchCompanysController {
+  constructor(private fetchRecentQuestion: FetchCompanysUseCase) {}
 
   @Get()
   async handle(
@@ -38,18 +36,11 @@ export class FetchItemsController {
     })
 
     if (result.isLeft()) {
-      const error = result.value
-
-      switch (result.value.constructor) {
-        case ResourceNotFoundError:
-          throw new NotFoundException(error.message)
-        default:
-          throw new BadRequestException(error.message)
-      }
+      throw new BadRequestException()
     }
 
-    const items = result.value.items
+    const companys = result.value.companys
 
-    return { items: items.map(ItemPresenter.toHTTP) }
+    return { companys: companys.map(CompanyPresenter.toHTTP) }
   }
 }

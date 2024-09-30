@@ -65,6 +65,36 @@ export class Company extends Entity<companyProps> {
     return this.props.updatedAt
   }
 
+  set name(name: string) {
+    this.props.name = name
+    this.touch()
+  }
+
+  set cep(cep: string) {
+    this.props.cep = cep
+    this.touch()
+  }
+
+  set email(email: string) {
+    this.props.email = email
+    this.touch()
+  }
+
+  set cnpj(cnpj: CompanyCNPJ) {
+    this.props.cnpj = cnpj
+    this.touch()
+  }
+
+  set address(address: string) {
+    this.props.address = address
+    this.touch()
+  }
+
+  set phone(phone: string) {
+    this.props.phone = phone
+    this.touch()
+  }
+
   private touch() {
     this.props.updatedAt = new Date()
   }

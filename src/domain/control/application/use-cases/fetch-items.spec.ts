@@ -32,8 +32,9 @@ describe('Fetch Items recent ', () => {
       name: 'Madeira',
       page: 1,
     })
-
-    expect(result.value?.items).toHaveLength(3)
+    if (result.isRight()) {
+      expect(result.value?.items).toHaveLength(3)
+    }
   })
 
   it('Should be able to fetch paginated recents answers', async () => {
@@ -49,7 +50,8 @@ describe('Fetch Items recent ', () => {
       name: 'Madeira',
       page: 2,
     })
-
-    expect(result.value?.items).toHaveLength(2)
+    if (result.isRight()) {
+      expect(result.value?.items).toHaveLength(2)
+    }
   })
 })

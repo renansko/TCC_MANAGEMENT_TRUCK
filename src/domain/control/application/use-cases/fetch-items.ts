@@ -1,7 +1,8 @@
-import { Either, right } from '@/core/either'
+import { Either, left, right } from '@/core/either'
 import { Item } from '../../enterprise/entities/item'
 import { ItemRepository } from '../repositories/item-repository'
 import { Injectable } from '@nestjs/common'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
 
 interface FetchItemsUseCaseRequest {
   name: string
@@ -9,7 +10,7 @@ interface FetchItemsUseCaseRequest {
 }
 
 type FetchItemsUseCaseResponse = Either<
-  null,
+  ResourceNotFoundError,
   {
     items: Item[]
   }
@@ -26,6 +27,10 @@ export class FetchItemsUseCase {
     const items = await this.itemRepository.findManyByName(name, {
       page,
     })
+
+    if (!items) {
+      throw left(new ResourceNotFoundError())
+    }
 
     return right({
       items,

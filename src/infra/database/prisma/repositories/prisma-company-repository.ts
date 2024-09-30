@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaCompanyMapper } from '../mappers/prisma-company-mapper'
 import { Company } from '@/domain/control/enterprise/entities/company'
+import { PaginationParams } from '@/core/repositories/pagination-params'
 
 @Injectable()
 export class PrismaCompanyRepository implements CompanyRepository {
@@ -40,5 +41,36 @@ export class PrismaCompanyRepository implements CompanyRepository {
         id: data.id,
       },
     })
+  }
+
+  async save(company: Company): Promise<void> {
+    const data = PrismaCompanyMapper.toPrisma(company)
+
+    await Promise.all([
+      this.prisma.company.update({
+        where: {
+          id: data.id,
+        },
+        data,
+      }),
+    ])
+  }
+
+  async findManyByName(
+    name: string,
+    { page }: PaginationParams,
+  ): Promise<Company[]> {
+    const companys = await this.prisma.company.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+      where: {
+        name,
+      },
+    })
+
+    return companys.map(PrismaCompanyMapper.toDomain)
   }
 }

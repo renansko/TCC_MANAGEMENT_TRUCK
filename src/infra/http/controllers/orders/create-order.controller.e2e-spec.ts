@@ -34,6 +34,7 @@ describe('Create Orders', () => {
     const response = await request(app.getHttpServer()).post('/order').send({
       itemId: item.id.toString(),
       userId: user.id.toString(),
+      name: 'Name',
       dateRequested: new Date(),
       dateDelivery: new Date(),
       deliveryAddress: 'Rua Exemplo, 123',

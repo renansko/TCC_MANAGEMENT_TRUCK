@@ -40,16 +40,16 @@ export class Transfer extends AggregateRoot<TransferProps> {
     return this.props.plate
   }
 
-  get companyId() {
-    return this.props.companyId
-  }
-
   get attachments() {
     return this.props.attachments
   }
 
   get driverId() {
     return this.props.driverId
+  }
+
+  get companyId() {
+    return this.props.companyId
   }
 
   get createdAt() {
@@ -65,6 +65,12 @@ export class Transfer extends AggregateRoot<TransferProps> {
       return
     }
     this.props.driverId = driverId
+
+    this.touch()
+  }
+
+  set companyId(companyId: UniqueEntityID) {
+    this.props.companyId = companyId
 
     this.touch()
   }

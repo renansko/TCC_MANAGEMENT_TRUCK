@@ -46,5 +46,25 @@ export class InMemoryTransferRepository implements TransferRepository {
     )
 
     this.items.splice(transferIndex, 1)
+
+    this.transferAttachmentsRepository.deleteManyByTransferId(
+      transfer.id.toString(),
+    )
+  }
+
+  async save(transfer: Transfer) {
+    const itemIndex = this.items.findIndex((item) => item.id === transfer.id)
+
+    this.items[itemIndex] = transfer
+
+    await this.transferAttachmentsRepository.createMany(
+      transfer.attachments.getNewItems(),
+    )
+
+    await this.transferAttachmentsRepository.deleteMany(
+      transfer.attachments.getRemovedItems(),
+    )
+
+    DomainEvents.dispatchEventsForAggregate(transfer.id)
   }
 }

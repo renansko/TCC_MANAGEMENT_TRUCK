@@ -8,9 +8,9 @@ import {
 } from '@nestjs/common'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
-import { FetchItemsUseCase } from '@/domain/control/application/use-cases/fetch-items'
-import { ItemPresenter } from '../../presenter/item-pressenter'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
+import { FetchOrdersUseCase } from '@/domain/control/application/use-cases/fetch-order'
+import { OrderPresenter } from '../../presenter/order-pressenter'
 
 const pageQueryParamSchema = z
   .string()
@@ -23,19 +23,21 @@ const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema)
 
 type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 
-@Controller('/item/:name')
-export class FetchItemsController {
-  constructor(private fetchRecentQuestion: FetchItemsUseCase) {}
+@Controller('/order/:name')
+export class FetchOrdersController {
+  constructor(private fetchRecentOrder: FetchOrdersUseCase) {}
 
   @Get()
   async handle(
     @Query('page', queryValidationPipe) page: PageQueryParamSchema,
     @Param('name') name: string,
   ) {
-    const result = await this.fetchRecentQuestion.execute({
+    const result = await this.fetchRecentOrder.execute({
       name,
       page,
     })
+
+    console.log(result)
 
     if (result.isLeft()) {
       const error = result.value
@@ -48,8 +50,8 @@ export class FetchItemsController {
       }
     }
 
-    const items = result.value.items
+    const orders = result.value.orders
 
-    return { items: items.map(ItemPresenter.toHTTP) }
+    return { orders: orders.map(OrderPresenter.toHTTP) }
   }
 }

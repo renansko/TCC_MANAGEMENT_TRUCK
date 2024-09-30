@@ -19,6 +19,7 @@ import { Optional } from '@/core/types/optionals'
 export interface OrderProps {
   itemId: UniqueEntityID
   userId: UniqueEntityID
+  name: string
   dateRequested: Date
   dateDelivery: Date
   deliveryAddress: string
@@ -58,6 +59,40 @@ export class Order extends Entity<OrderProps> {
 
   get updatedAt() {
     return this.props.updatedAt
+  }
+
+  get name() {
+    return this.props.name
+  }
+
+  set itemId(itemId: UniqueEntityID) {
+    this.props.itemId = itemId
+    this.touch()
+  }
+
+  set userId(userId: UniqueEntityID) {
+    this.props.userId = userId
+    this.touch()
+  }
+
+  set dateDelivery(dateDelivery: Date) {
+    this.props.dateDelivery = dateDelivery
+    this.touch()
+  }
+
+  set dateRequested(dateRequested: Date) {
+    this.props.dateRequested = dateRequested
+    this.touch()
+  }
+
+  set status(status: string) {
+    this.props.status = status
+    this.touch()
+  }
+
+  set name(name: string) {
+    this.props.name = name
+    this.touch()
   }
 
   private touch() {

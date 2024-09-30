@@ -12,6 +12,7 @@ export function makeOrder(
 ) {
   const order = Order.create(
     {
+      name: faker.commerce.productName(),
       userId: new UniqueEntityID(),
       itemId: new UniqueEntityID(),
       dateDelivery: faker.date.future(),

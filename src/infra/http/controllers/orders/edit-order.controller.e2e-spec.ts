@@ -7,12 +7,12 @@ import request from 'supertest'
 import { ItemFactory } from 'test/factories/make-item'
 import { OrderFactory } from 'test/factories/make-order'
 import { UserFactory } from 'test/factories/make-user'
-describe('Delete Order', () => {
+describe('Edit Order', () => {
   let app: INestApplication
   let prisma: PrismaService
+  let orderFactory: OrderFactory
   let userFactory: UserFactory
   let itemFactory: ItemFactory
-  let orderFactory: OrderFactory
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -24,17 +24,14 @@ describe('Delete Order', () => {
 
     prisma = moduleRef.get(PrismaService)
 
-    userFactory = moduleRef.get(UserFactory)
-
-    itemFactory = moduleRef.get(ItemFactory)
-
     orderFactory = moduleRef.get(OrderFactory)
+    userFactory = moduleRef.get(UserFactory)
+    itemFactory = moduleRef.get(ItemFactory)
 
     await app.init()
   })
-  it('[DELETE] /order/{id}', async () => {
+  it('[UPDATE] /order/{id}', async () => {
     const user = await userFactory.makePrismaUser()
-
     const item = await itemFactory.makePrismaItem()
 
     const order = await orderFactory.makePrismaOrder({
@@ -45,16 +42,29 @@ describe('Delete Order', () => {
     const orderId = order.id.toString()
 
     const response = await request(app.getHttpServer())
-      .delete(`/order/${orderId}`)
-      .send()
+      .put(`/order/${orderId}`)
+      .send({
+        userId: user.id.toString(),
+        itemId: item.id.toString(),
+        deliveryAddress: 'Novo endereco',
+        name: 'Novo nome',
+        dateDelivery: new Date(),
+        dateRequested: new Date(),
+        status: 'status',
+      })
+    console.log(response)
     expect(response.statusCode).toBe(204)
 
-    const orderOnDatabase = await prisma.order.findMany({
+    const orderOnDatabase = await prisma.order.findFirst({
       where: {
-        status: 'PENDING',
+        id: orderId,
       },
     })
 
-    expect(orderOnDatabase).toHaveLength(0)
+    expect(orderOnDatabase).toEqual(
+      expect.objectContaining({
+        name: 'Novo nome',
+      }),
+    )
   })
 })

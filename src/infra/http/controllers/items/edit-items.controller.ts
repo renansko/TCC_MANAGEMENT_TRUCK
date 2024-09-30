@@ -3,12 +3,14 @@ import {
   Body,
   Controller,
   HttpCode,
+  NotFoundException,
   Param,
   Put,
 } from '@nestjs/common'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { EditItemUseCase } from '@/domain/control/application/use-cases/edit-item'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
 
 const editItemBodySchema = z.object({
   name: z.string(),
@@ -43,7 +45,14 @@ export class EditItemController {
     })
 
     if (result.isLeft()) {
-      throw new BadRequestException()
+      const error = result.value
+
+      switch (result.value.constructor) {
+        case ResourceNotFoundError:
+          throw new NotFoundException(error.message)
+        default:
+          throw new BadRequestException(error.message)
+      }
     }
   }
 }

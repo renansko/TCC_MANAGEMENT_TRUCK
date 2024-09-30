@@ -5,7 +5,7 @@ import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { ItemFactory } from 'test/factories/make-item'
-describe('Create Item', () => {
+describe('Delete Item', () => {
   let app: INestApplication
   let prisma: PrismaService
   let itemFactory: ItemFactory

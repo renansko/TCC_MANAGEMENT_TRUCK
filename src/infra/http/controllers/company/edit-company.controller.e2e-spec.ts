@@ -5,10 +5,11 @@ import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { CompanyFactory } from 'test/factories/make-company'
-describe('Delete Company', () => {
+describe('Edit Company', () => {
   let app: INestApplication
   let prisma: PrismaService
   let companyFactory: CompanyFactory
+
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
@@ -23,24 +24,32 @@ describe('Delete Company', () => {
 
     await app.init()
   })
-  it('[DELETE] /company/{id}', async () => {
-    const company = await companyFactory.makePrismaCompany({
-      name: 'Company Joe Doe',
-    })
+  it('[UPDATE] /company/{id}', async () => {
+    const company = await companyFactory.makePrismaCompany()
 
     const companyId = company.id.toString()
 
     const response = await request(app.getHttpServer())
-      .delete(`/company/${companyId}`)
-      .send()
+      .put(`/company/${companyId}`)
+      .send({
+        name: 'New name',
+        email: 'new@email.com',
+        cep: '12333-493',
+        cnpj: '12345678901234',
+        address: 'Novo endereco',
+        phone: '99902-2029',
+      })
     expect(response.statusCode).toBe(204)
-
-    const companyOnDatabase = await prisma.company.findUnique({
+    const companyOnDatabase = await prisma.company.findFirst({
       where: {
-        email: 'company@example.com',
+        id: companyId,
       },
     })
 
-    expect(companyOnDatabase).toBeNull()
+    expect(companyOnDatabase).toEqual(
+      expect.objectContaining({
+        name: 'New name',
+      }),
+    )
   })
 })

@@ -1,7 +1,6 @@
 import { Either, left, right } from '@/core/either'
 import { Item } from '../../enterprise/entities/item'
 import { ItemRepository } from '../repositories/item-repository'
-import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
 import { Injectable } from '@nestjs/common'
 
@@ -15,7 +14,7 @@ interface EditItemUseCaseRequest {
 }
 
 type EditItemUseCaseResponse = Either<
-  ResourceNotFoundError | NotAllowedError,
+  ResourceNotFoundError,
   {
     item: Item
   }
@@ -45,7 +44,6 @@ export class EditItemUseCase {
     item.quantity = quantity
     item.weight = weight
 
-    console.log(item)
     await this.itemRepository.save(item)
 
     return right({

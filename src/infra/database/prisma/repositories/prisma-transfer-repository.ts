@@ -3,12 +3,14 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaTransferMapper } from '../mappers/prisma-transfer-mapper'
 import { Transfer } from '@/domain/control/enterprise/entities/transfer'
+import { TransferAttachmentRepository } from '@/domain/control/application/repositories/transfer-attachment-repository'
+import { DomainEvents } from '@/core/events/domain-events'
 
 @Injectable()
 export class PrismaTransferRepository implements TransferRepository {
   constructor(
     private prisma: PrismaService,
-    // private transferAttachmentsRepository: TransferAttachmentRepository,
+    private transferAttachmentsRepository: TransferAttachmentRepository,
     // private cache: CacheRepository,
   ) {}
 
@@ -46,6 +48,12 @@ export class PrismaTransferRepository implements TransferRepository {
     await this.prisma.transfer.create({
       data,
     })
+
+    await this.transferAttachmentsRepository.createMany(
+      transfer.attachments.getItems(),
+    )
+
+    DomainEvents.dispatchEventsForAggregate(transfer.id)
   }
 
   async delete(transfer: Transfer): Promise<void> {
@@ -56,5 +64,28 @@ export class PrismaTransferRepository implements TransferRepository {
         id: data.id,
       },
     })
+  }
+
+  async save(transfer: Transfer): Promise<void> {
+    const data = PrismaTransferMapper.toPrisma(transfer)
+
+    await Promise.all([
+      this.prisma.transfer.update({
+        where: {
+          id: data.id,
+        },
+        data,
+      }),
+
+      this.transferAttachmentsRepository.createMany(
+        transfer.attachments.getItems(),
+      ),
+
+      this.transferAttachmentsRepository.deleteMany(
+        transfer.attachments.getRemovedItems(),
+      ),
+    ])
+
+    DomainEvents.dispatchEventsForAggregate(transfer.id)
   }
 }
