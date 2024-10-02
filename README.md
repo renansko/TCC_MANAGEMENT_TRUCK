@@ -157,10 +157,3 @@ Este documento descreve as rotas disponíveis na aplicação, organizadas por en
   - **200 OK**: Item deletado com sucesso
   - **404 Not Found**: Item não encontrado
 """
-
-# Salvando o conteúdo em um arquivo .md
-file_path = "/mnt/data/README.md"
-with open(file_path, "w") as file:
-    file.write(conteudo_readme)
-
-file_path
