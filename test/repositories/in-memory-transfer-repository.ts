@@ -1,4 +1,5 @@
 import { DomainEvents } from '@/core/events/domain-events'
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { TransferAttachmentRepository } from '@/domain/control/application/repositories/transfer-attachment-repository'
 import { TransferRepository } from '@/domain/control/application/repositories/transfer-repository'
 import { Transfer } from '@/domain/control/enterprise/entities/transfer'
@@ -9,6 +10,17 @@ export class InMemoryTransferRepository implements TransferRepository {
   constructor(
     private transferAttachmentsRepository: TransferAttachmentRepository,
   ) {}
+
+  async findManyByName(
+    name: string,
+    { page }: PaginationParams,
+  ): Promise<Transfer[]> {
+    const transfer = this.items
+      .filter((transfer) => transfer.name.toString() === name)
+      .splice((page - 1) * 20, page * 20)
+
+    return transfer
+  }
 
   async findByPlate(plate: string): Promise<Transfer | null> {
     const transfer = this.items.find((item) => item.plate === plate)

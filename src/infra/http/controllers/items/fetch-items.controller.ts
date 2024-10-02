@@ -25,14 +25,14 @@ type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 
 @Controller('/item/:name')
 export class FetchItemsController {
-  constructor(private fetchRecentQuestion: FetchItemsUseCase) {}
+  constructor(private fetchRecentItem: FetchItemsUseCase) {}
 
   @Get()
   async handle(
     @Query('page', queryValidationPipe) page: PageQueryParamSchema,
     @Param('name') name: string,
   ) {
-    const result = await this.fetchRecentQuestion.execute({
+    const result = await this.fetchRecentItem.execute({
       name,
       page,
     })

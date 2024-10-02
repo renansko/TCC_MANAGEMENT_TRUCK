@@ -2,13 +2,18 @@ import { InMemoryUserRepository } from 'test/repositories/in-memory-user-reposit
 import { CreateUserUseCase } from './create-user'
 import { UserCPF } from '../../enterprise/entities/value-objects/user-cpf'
 import { AlreadyExistsError } from './errors/already-exist-error'
+import { InMemoryUserAttachmentRepository } from 'test/repositories/in-memory-user-attachment-repository'
 
 let inMemoryUserRepository: InMemoryUserRepository
+let inMemoryUserAttachmentRepository: InMemoryUserAttachmentRepository
 let sut: CreateUserUseCase
 
 describe('Create a user', () => {
   beforeEach(() => {
-    inMemoryUserRepository = new InMemoryUserRepository()
+    inMemoryUserAttachmentRepository = new InMemoryUserAttachmentRepository()
+    inMemoryUserRepository = new InMemoryUserRepository(
+      inMemoryUserAttachmentRepository,
+    )
     sut = new CreateUserUseCase(inMemoryUserRepository)
   })
 
@@ -22,6 +27,7 @@ describe('Create a user', () => {
       email: 'user@Madeira.com',
       name: 'Madeira Madeira',
       phone: '419902324525',
+      attachments: ['1'],
     })
     if (result.isRight()) {
       expect(result.value?.user.phone).toEqual('419902324525')
@@ -38,6 +44,7 @@ describe('Create a user', () => {
       email: 'user@Madeira.com',
       name: 'Madeira Madeira',
       phone: '419902324525',
+      attachments: ['1', '3'],
     })
 
     const result = await sut.execute({
@@ -49,6 +56,7 @@ describe('Create a user', () => {
       email: 'user@Madeira.com',
       name: 'Madeira Madeira',
       phone: '419902324525',
+      attachments: ['1', '3'],
     })
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(AlreadyExistsError)
@@ -64,6 +72,7 @@ describe('Create a user', () => {
       email: 'user@Madeira.com',
       name: 'Madeira Madeira',
       phone: '419902324525',
+      attachments: ['1', '3'],
     })
 
     const result = await sut.execute({
@@ -75,6 +84,7 @@ describe('Create a user', () => {
       email: 'user@Madeira.com',
       name: 'Madeira Madeira',
       phone: '419902324525',
+      attachments: ['1', '3'],
     })
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(AlreadyExistsError)

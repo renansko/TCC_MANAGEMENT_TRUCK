@@ -104,5 +104,3 @@ describe('Create avaiable transfer', () => {
     expect(result.value).toBeInstanceOf(AlreadyExistsError)
   })
 })
-
-test('create a transfer', async () => {})

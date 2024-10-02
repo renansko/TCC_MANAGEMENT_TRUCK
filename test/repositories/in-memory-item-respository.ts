@@ -28,11 +28,11 @@ export class InMemoryItemRepository implements ItemRepository {
   }
 
   async findManyByName(name: string, { page }: PaginationParams) {
-    const itemComment = this.items
+    const item = this.items
       .filter((item) => item.name.toString() === name)
       .splice((page - 1) * 20, page * 20)
 
-    return itemComment
+    return item
   }
 
   async save(item: Item) {

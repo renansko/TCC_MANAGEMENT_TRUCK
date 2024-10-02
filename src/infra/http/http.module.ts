@@ -37,48 +37,56 @@ import { FetchOrdersController } from './controllers/orders/fetch-order.controll
 import { FetchOrdersUseCase } from '@/domain/control/application/use-cases/fetch-order'
 import { EditOrderUseCase } from '@/domain/control/application/use-cases/edit-order'
 import { EditOrderController } from './controllers/orders/edit-order.controller'
+import { EditUserController } from './controllers/users/edit-users.controller'
+import { EditUserUseCase } from '@/domain/control/application/use-cases/edit-user'
+import { FetchUsersUseCase } from '@/domain/control/application/use-cases/fetch-user'
+import { FetchUsersController } from './controllers/users/fetch-users.controller'
 
 @Module({
   imports: [DatabaseModule, StorageModule],
   controllers: [
+    UploadedAttachmentController,
     CreateTransferController,
     CreateCompanyController,
     CreateUserController,
     CreateItemController,
     CreateOrderController,
-    EditItemController,
-    FetchItemsController,
-    UploadedAttachmentController,
     DeleteCompanyController,
     DeleteUserController,
     DeleteItemController,
     DeleteOrderController,
     DeleteTransferController,
+    EditItemController,
     EditTransferController,
     EditCompanyController,
     EditOrderController,
+    EditUserController,
+    FetchItemsController,
     FetchCompanysController,
     FetchOrdersController,
+    FetchUsersController,
   ],
   providers: [
+    UploadAndCreateAttachmentUseCase,
     CreateTransferUseCase,
     CreateCompanyUseCase,
     CreateUserUseCase,
     CreateItemsUseCase,
     CreateOrderUseCase,
-    EditItemUseCase,
-    FetchItemsUseCase,
-    UploadAndCreateAttachmentUseCase,
     DeleteUserUseCase,
     DeleteItemsUseCase,
     DeleteOrderUseCase,
     DeleteTransferUseCase,
     DeleteCompanyUseCase,
+    EditItemUseCase,
     EditTransferUseCase,
     EditCompanyUseCase,
     EditOrderUseCase,
+    EditUserUseCase,
+    FetchItemsUseCase,
     FetchCompanysUseCase,
     FetchOrdersUseCase,
+    FetchUsersUseCase,
   ],
 })
 export class HttpModule {}

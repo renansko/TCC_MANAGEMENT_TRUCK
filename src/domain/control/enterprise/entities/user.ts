@@ -2,7 +2,7 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optionals'
 import { UserCPF } from './value-objects/user-cpf'
-import { TransferAttachmentList } from './transfer-attachment-list'
+import { UserAttachmentList } from './user-attachmenmt-list'
 
 /**
  * Interface explicação de suas propiedades.
@@ -27,7 +27,7 @@ export interface userProps {
   cep: string
   birth: string
   phone: string
-  attachments: TransferAttachmentList
+  attachments: UserAttachmentList
   companyId?: UniqueEntityID | null
   createdAt: Date
   updatedAt?: Date | null
@@ -131,7 +131,7 @@ export class User extends Entity<userProps> {
     this.touch()
   }
 
-  set attachments(attachments: TransferAttachmentList) {
+  set attachments(attachments: UserAttachmentList) {
     this.props.attachments = attachments
     this.touch()
   }
@@ -147,7 +147,7 @@ export class User extends Entity<userProps> {
     const user = new User(
       {
         ...props,
-        attachments: props.attachments ?? new TransferAttachmentList(),
+        attachments: props.attachments ?? new UserAttachmentList(),
         createdAt: new Date(),
       },
       id,

@@ -5,6 +5,8 @@ import { UserCPF } from '../../enterprise/entities/value-objects/user-cpf'
 import { Injectable } from '@nestjs/common'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { AlreadyExistsError } from './errors/already-exist-error'
+import { UserAttachment } from '../../enterprise/entities/user-attachment'
+import { UserAttachmentList } from '../../enterprise/entities/user-attachmenmt-list'
 
 interface CreateUserRequest {
   cpf: UserCPF
@@ -16,6 +18,7 @@ interface CreateUserRequest {
   phone: string
   password: string
   companyId?: string
+  attachments: string[]
 }
 
 type CreateUserResponse = Either<
@@ -39,6 +42,7 @@ export class CreateUserUseCase {
     email, // unique
     phone,
     companyId,
+    attachments,
   }: CreateUserRequest): Promise<CreateUserResponse> {
     const cpfAlreadyExists = await this.userRepository.findByCPF(cpf.value)
 
@@ -63,6 +67,15 @@ export class CreateUserUseCase {
       phone,
       companyId: new UniqueEntityID(companyId),
     })
+
+    const userAttachment = attachments.map((attachmentId) => {
+      return UserAttachment.create({
+        attachmentId: new UniqueEntityID(attachmentId),
+        userId: user.id,
+      })
+    })
+
+    user.attachments = new UserAttachmentList(userAttachment)
 
     await this.userRepository.create(user)
 
