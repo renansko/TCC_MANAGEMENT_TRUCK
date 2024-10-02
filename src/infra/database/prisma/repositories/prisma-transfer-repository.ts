@@ -5,6 +5,7 @@ import { PrismaTransferMapper } from '../mappers/prisma-transfer-mapper'
 import { Transfer } from '@/domain/control/enterprise/entities/transfer'
 import { TransferAttachmentRepository } from '@/domain/control/application/repositories/transfer-attachment-repository'
 import { DomainEvents } from '@/core/events/domain-events'
+import { PaginationParams } from '@/core/repositories/pagination-params'
 
 @Injectable()
 export class PrismaTransferRepository implements TransferRepository {
@@ -87,5 +88,25 @@ export class PrismaTransferRepository implements TransferRepository {
     ])
 
     DomainEvents.dispatchEventsForAggregate(transfer.id)
+  }
+
+  async findManyByName(
+    name: string,
+    { page }: PaginationParams,
+  ): Promise<Transfer[]> {
+    const transfers = await this.prisma.transfer.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+      where: {
+        name: {
+          startsWith: name,
+        },
+      },
+    })
+
+    return transfers.map(PrismaTransferMapper.toDomain)
   }
 }

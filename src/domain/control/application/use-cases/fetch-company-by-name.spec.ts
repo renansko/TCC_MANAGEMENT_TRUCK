@@ -1,6 +1,6 @@
 import { makeCompany } from 'test/factories/make-company'
 import { InMemoryCompanyRepository } from 'test/repositories/in-memory-company-repository'
-import { FetchCompanysUseCase } from './fetch-company'
+import { FetchCompanysUseCase } from './fetch-company-by-name'
 
 let inMemoryCompanyRepository: InMemoryCompanyRepository
 let sut: FetchCompanysUseCase

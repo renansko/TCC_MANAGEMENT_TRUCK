@@ -13,7 +13,7 @@ import { CreateOrderUseCase } from '@/domain/control/application/use-cases/creat
 import { EditItemController } from './controllers/items/edit-items.controller'
 import { EditItemUseCase } from '@/domain/control/application/use-cases/edit-item'
 import { FetchItemsController } from './controllers/items/fetch-items.controller'
-import { FetchItemsUseCase } from '@/domain/control/application/use-cases/fetch-items'
+import { FetchItemsUseCase } from '@/domain/control/application/use-cases/fetch-items-by-name'
 import { UploadedAttachmentController } from './controllers/attachment/upload-attachment.controller'
 import { UploadAndCreateAttachmentUseCase } from '@/domain/control/application/use-cases/upload-and-create-attachment'
 import { StorageModule } from '../storage/storage.module'
@@ -31,16 +31,18 @@ import { EditTransferController } from './controllers/transfer/edit.transfer.con
 import { EditTransferUseCase } from '@/domain/control/application/use-cases/edit-transfer'
 import { EditCompanyController } from './controllers/company/edit-company.controller'
 import { EditCompanyUseCase } from '@/domain/control/application/use-cases/edit-company'
-import { FetchCompanysUseCase } from '@/domain/control/application/use-cases/fetch-company'
+import { FetchCompanysUseCase } from '@/domain/control/application/use-cases/fetch-company-by-name'
 import { FetchCompanysController } from './controllers/company/fetch-company.controller'
 import { FetchOrdersController } from './controllers/orders/fetch-order.controller'
-import { FetchOrdersUseCase } from '@/domain/control/application/use-cases/fetch-order'
+import { FetchOrdersUseCase } from '@/domain/control/application/use-cases/fetch-order-by-name'
 import { EditOrderUseCase } from '@/domain/control/application/use-cases/edit-order'
 import { EditOrderController } from './controllers/orders/edit-order.controller'
 import { EditUserController } from './controllers/users/edit-users.controller'
 import { EditUserUseCase } from '@/domain/control/application/use-cases/edit-user'
-import { FetchUsersUseCase } from '@/domain/control/application/use-cases/fetch-user'
+import { FetchUsersUseCase } from '@/domain/control/application/use-cases/fetch-user-by-name'
 import { FetchUsersController } from './controllers/users/fetch-users.controller'
+import { FetchTransfersController } from './controllers/transfer/fetch-transfer-by-name.controller'
+import { FetchTransfersUseCase } from '@/domain/control/application/use-cases/fetch-transfer-by-name'
 
 @Module({
   imports: [DatabaseModule, StorageModule],
@@ -65,6 +67,7 @@ import { FetchUsersController } from './controllers/users/fetch-users.controller
     FetchCompanysController,
     FetchOrdersController,
     FetchUsersController,
+    FetchTransfersController,
   ],
   providers: [
     UploadAndCreateAttachmentUseCase,
@@ -87,6 +90,7 @@ import { FetchUsersController } from './controllers/users/fetch-users.controller
     FetchCompanysUseCase,
     FetchOrdersUseCase,
     FetchUsersUseCase,
+    FetchTransfersUseCase,
   ],
 })
 export class HttpModule {}

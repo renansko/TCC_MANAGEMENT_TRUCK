@@ -1,6 +1,6 @@
 import { makeUser } from 'test/factories/make-user'
 import { InMemoryUserAttachmentRepository } from 'test/repositories/in-memory-user-attachment-repository'
-import { FetchUsersUseCase } from './fetch-user'
+import { FetchUsersUseCase } from './fetch-user-by-name'
 import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository'
 
 let inMemoryUserAttachmentRepository: InMemoryUserAttachmentRepository

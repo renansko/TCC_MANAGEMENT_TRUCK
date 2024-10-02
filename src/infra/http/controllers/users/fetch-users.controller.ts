@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
-import { FetchUsersUseCase } from '@/domain/control/application/use-cases/fetch-user'
+import { FetchUsersUseCase } from '@/domain/control/application/use-cases/fetch-user-by-name'
 import { UserPresenter } from '../../presenter/user-pressenter'
 
 const pageQueryParamSchema = z

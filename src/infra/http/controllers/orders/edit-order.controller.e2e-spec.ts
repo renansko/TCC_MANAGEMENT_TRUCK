@@ -52,7 +52,6 @@ describe('Edit Order', () => {
         dateRequested: new Date(),
         status: 'status',
       })
-    console.log(response)
     expect(response.statusCode).toBe(204)
 
     const orderOnDatabase = await prisma.order.findFirst({

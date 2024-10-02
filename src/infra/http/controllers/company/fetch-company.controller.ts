@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
-import { FetchCompanysUseCase } from '@/domain/control/application/use-cases/fetch-company'
+import { FetchCompanysUseCase } from '@/domain/control/application/use-cases/fetch-company-by-name'
 import { CompanyPresenter } from '../../presenter/company-pressenter'
 
 const pageQueryParamSchema = z

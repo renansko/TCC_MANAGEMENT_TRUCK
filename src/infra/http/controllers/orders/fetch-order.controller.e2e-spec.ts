@@ -41,7 +41,6 @@ describe('Fetch order per name (E2E)', () => {
     const response = await request(app.getHttpServer())
       .get(`/order/${nameOrder}`)
       .send()
-    // console.log(response)
     expect(response.statusCode).toBe(200)
     expect(response.body).toEqual({
       orders: expect.arrayContaining([

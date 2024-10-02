@@ -9,8 +9,8 @@ import {
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
-import { FetchOrdersUseCase } from '@/domain/control/application/use-cases/fetch-order-by-name'
-import { OrderPresenter } from '../../presenter/order-pressenter'
+import { FetchTransfersUseCase } from '@/domain/control/application/use-cases/fetch-transfer-by-name'
+import { TransferPresenter } from '../../presenter/transfer-pressenter'
 
 const pageQueryParamSchema = z
   .string()
@@ -23,16 +23,16 @@ const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema)
 
 type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 
-@Controller('/order/:name')
-export class FetchOrdersController {
-  constructor(private fetchRecentOrder: FetchOrdersUseCase) {}
+@Controller('/transfer/:name')
+export class FetchTransfersController {
+  constructor(private fetchRecentTransfer: FetchTransfersUseCase) {}
 
   @Get()
   async handle(
     @Query('page', queryValidationPipe) page: PageQueryParamSchema,
     @Param('name') name: string,
   ) {
-    const result = await this.fetchRecentOrder.execute({
+    const result = await this.fetchRecentTransfer.execute({
       name,
       page,
     })
@@ -48,8 +48,8 @@ export class FetchOrdersController {
       }
     }
 
-    const orders = result.value.orders
+    const transfers = result.value.transfers
 
-    return { orders: orders.map(OrderPresenter.toHTTP) }
+    return { transfers: transfers.map(TransferPresenter.toHTTP) }
   }
 }

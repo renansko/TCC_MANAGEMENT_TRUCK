@@ -1,6 +1,6 @@
 import { makeOrder } from 'test/factories/make-order'
 import { InMemoryOrderRepository } from 'test/repositories/in-memory-order-repository'
-import { FetchOrdersUseCase } from './fetch-order'
+import { FetchOrdersUseCase } from './fetch-order-by-name'
 let inMemoryOrderRepository: InMemoryOrderRepository
 let sut: FetchOrdersUseCase
 

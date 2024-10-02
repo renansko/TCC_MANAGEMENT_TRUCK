@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
-import { FetchItemsUseCase } from '@/domain/control/application/use-cases/fetch-items'
+import { FetchItemsUseCase } from '@/domain/control/application/use-cases/fetch-items-by-name'
 import { ItemPresenter } from '../../presenter/item-pressenter'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
 
