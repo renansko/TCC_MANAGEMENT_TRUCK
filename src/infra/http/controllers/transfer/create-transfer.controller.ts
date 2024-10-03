@@ -3,6 +3,7 @@ import {
   Body,
   ConflictException,
   Controller,
+  HttpCode,
   NotFoundException,
   Post,
 } from '@nestjs/common'
@@ -29,6 +30,7 @@ export class CreateTransferController {
   constructor(private createTransfer: CreateTransferUseCase) {}
 
   @Post()
+  @HttpCode(201)
   async handle(
     @Body(bodyValidationPipe)
     body: CreateTransferBodySchema,

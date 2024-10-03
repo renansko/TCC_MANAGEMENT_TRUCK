@@ -33,7 +33,7 @@ export class EditOrderController {
   constructor(private editOrder: EditOrderUseCase) {}
 
   @Put()
-  @HttpCode(204)
+  @HttpCode(200)
   async handle(
     @Body(bodyValidationPipe) body: EditOrderBodySchema,
     @Param('id') orderId: string,

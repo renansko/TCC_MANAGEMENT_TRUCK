@@ -14,7 +14,7 @@ export class DeleteUserController {
   constructor(private deleteUser: DeleteUserUseCase) {}
 
   @Delete()
-  @HttpCode(204)
+  @HttpCode(200)
   async handle(
     @Param('id')
     userId: string,

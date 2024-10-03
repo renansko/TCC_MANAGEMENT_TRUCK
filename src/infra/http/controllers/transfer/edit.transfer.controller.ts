@@ -32,7 +32,7 @@ export class EditTransferController {
   constructor(private editTransfer: EditTransferUseCase) {}
 
   @Put()
-  @HttpCode(204)
+  @HttpCode(200)
   async handle(
     @Body(bodyValidationPipe) body: EditTransferBodySchema,
     @Param('id') transferId: string,

@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Controller,
   Get,
+  HttpCode,
   NotFoundException,
   Param,
   Query,
@@ -28,6 +29,7 @@ export class FetchOrdersController {
   constructor(private fetchRecentOrder: FetchOrdersUseCase) {}
 
   @Get()
+  @HttpCode(200)
   async handle(
     @Query('page', queryValidationPipe) page: PageQueryParamSchema,
     @Param('name') name: string,

@@ -3,6 +3,7 @@ import {
   Body,
   ConflictException,
   Controller,
+  HttpCode,
   Post,
 } from '@nestjs/common'
 import { z } from 'zod'
@@ -32,6 +33,7 @@ export class CreateUserController {
   constructor(private createUser: CreateUserUseCase) {}
   // receber company Id
   @Post()
+  @HttpCode(201)
   async handle(
     @Body(bodyValidationPipe)
     body: CreateUserBodySchema,

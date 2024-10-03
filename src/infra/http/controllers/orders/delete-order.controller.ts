@@ -14,7 +14,7 @@ export class DeleteOrderController {
   constructor(private deleteOrder: DeleteOrderUseCase) {}
 
   @Delete()
-  @HttpCode(204)
+  @HttpCode(200)
   async handle(
     @Param('id')
     orderId: string,

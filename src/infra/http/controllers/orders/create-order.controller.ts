@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   ForbiddenException,
+  HttpCode,
   Post,
 } from '@nestjs/common'
 import { z } from 'zod'
@@ -29,6 +30,7 @@ export class CreateOrderController {
   constructor(private createOrder: CreateOrderUseCase) {}
 
   @Post()
+  @HttpCode(201)
   async handle(
     @Body(bodyValidationPipe)
     body: CreateOrderBodySchema,

@@ -37,7 +37,9 @@ export class PrismaItemRepository implements ItemRepository {
       take: 20,
       skip: (page - 1) * 20,
       where: {
-        name,
+        name: {
+          startsWith: name,
+        },
       },
     })
 

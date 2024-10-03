@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Controller,
   Get,
+  HttpCode,
   Param,
   Query,
 } from '@nestjs/common'
@@ -26,6 +27,7 @@ export class FetchCompanysController {
   constructor(private fetchRecentQuestion: FetchCompanysUseCase) {}
 
   @Get()
+  @HttpCode(200)
   async handle(
     @Query('page', queryValidationPipe) page: PageQueryParamSchema,
     @Param('name') name: string,

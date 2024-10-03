@@ -29,7 +29,7 @@ export class EditItemController {
   constructor(private editItem: EditItemUseCase) {}
 
   @Put()
-  @HttpCode(204)
+  @HttpCode(200)
   async handle(
     @Body(bodyValidationPipe) body: EditItemBodySchema,
     @Param('id') itemId: string,

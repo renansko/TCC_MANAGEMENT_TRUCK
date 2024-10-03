@@ -31,7 +31,7 @@ export class EditCompanyController {
   constructor(private editCompany: EditCompanyUseCase) {}
 
   @Put()
-  @HttpCode(204)
+  @HttpCode(200)
   async handle(
     @Body(bodyValidationPipe) body: EditCompanyBodySchema,
     @Param('id') companyId: string,

@@ -67,7 +67,9 @@ export class PrismaCompanyRepository implements CompanyRepository {
       take: 20,
       skip: (page - 1) * 20,
       where: {
-        name,
+        name: {
+          startsWith: name,
+        },
       },
     })
 

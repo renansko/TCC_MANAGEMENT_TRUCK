@@ -1,4 +1,10 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common'
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+} from '@nestjs/common'
 import { z } from 'zod'
 import { CreateCompanyUseCase } from '@/domain/control/application/use-cases/create-company'
 import { CompanyCNPJ } from '@/domain/control/enterprise/entities/value-objects/company-cnpj'
@@ -23,6 +29,7 @@ export class CreateCompanyController {
   constructor(private createCompany: CreateCompanyUseCase) {}
 
   @Post()
+  @HttpCode(201)
   async handle(
     @Body(bodyValidationPipe)
     body: CreateCompanyBodySchema,

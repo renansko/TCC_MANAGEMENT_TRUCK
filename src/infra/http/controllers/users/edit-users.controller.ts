@@ -35,7 +35,7 @@ export class EditUserController {
   constructor(private editUser: EditUserUseCase) {}
 
   @Put()
-  @HttpCode(204)
+  @HttpCode(200)
   async handle(
     @Body(bodyValidationPipe) body: EditUserBodySchema,
     @Param('id') userId: string,
