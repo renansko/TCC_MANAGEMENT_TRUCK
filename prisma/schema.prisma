@@ -81,6 +81,7 @@ model Transfer {
 
     telemetry  Telemetry[]
     Attachment Attachment[]
+    Order      Order[]
 
     @@map("transfers")
 }
@@ -109,7 +110,6 @@ model Item {
     quantity    Decimal
     amount      Decimal
     weight      Decimal
-    loadId      String? @map("load_id")
 
     createdAt DateTime  @default(now()) @map("created_at")
     updatedAt DateTime? @updatedAt @map("updated_at")
@@ -129,9 +129,11 @@ model Order {
     updatedAt       DateTime? @updatedAt @map("updated_at")
     itemId          String    @map("item_id")
     userId          String    @map("user_id")
+    transferId      String    @map("transfer_id")
 
-    item Item @relation(fields: [itemId], references: [id])
-    user User @relation(fields: [userId], references: [id])
+    item     Item     @relation(fields: [itemId], references: [id])
+    user     User     @relation(fields: [userId], references: [id])
+    transfer Transfer @relation(fields: [transferId], references: [id])
 
     @@map("orders")
 }
