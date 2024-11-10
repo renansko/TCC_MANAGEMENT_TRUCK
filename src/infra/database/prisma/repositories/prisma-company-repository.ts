@@ -27,6 +27,20 @@ export class PrismaCompanyRepository implements CompanyRepository {
     return PrismaCompanyMapper.toDomain(company)
   }
 
+  async findByEmail(email: string): Promise<Company | null> {
+    const company = await this.prisma.company.findUnique({
+      where: {
+        email,
+      },
+    })
+
+    if (!company) {
+      return null
+    }
+
+    return PrismaCompanyMapper.toDomain(company)
+  }
+
   async create(company: Company): Promise<void> {
     const data = PrismaCompanyMapper.toPrisma(company)
     await this.prisma.company.create({

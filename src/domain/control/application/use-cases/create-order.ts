@@ -11,9 +11,11 @@ interface CreateOrderRequest {
   name: string
   itemId: string
   userId: string
+  transferId: string
   dateRequested: Date
   dateDelivery: Date
   deliveryAddress: string
+  outgoingAddress: string
   status: string
 }
 
@@ -35,8 +37,10 @@ export class CreateOrderUseCase {
   async execute({
     itemId,
     userId,
+    transferId,
     name,
     dateDelivery,
+    outgoingAddress,
     dateRequested,
     deliveryAddress,
     status,
@@ -55,9 +59,11 @@ export class CreateOrderUseCase {
     const order = Order.create({
       itemId: new UniqueEntityID(itemId),
       userId: new UniqueEntityID(userId),
+      transferId: new UniqueEntityID(transferId),
       dateRequested,
       dateDelivery,
       deliveryAddress,
+      outgoingAddress,
       status,
       name,
     })

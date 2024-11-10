@@ -20,15 +20,15 @@ enum TransferStatus {
 }
 
 model User {
-    id       String @id @default(uuid())
-    cpf      String @unique
-    name     String
-    email    String @unique
-    password String
-    phone    String
-    birth    String
-    cep      String
-    address  String
+    id            String @id @default(uuid())
+    cpf           String @unique
+    name          String
+    email         String @unique
+    password_hash String
+    phone         String
+    birth         String
+    cep           String
+    address       String
 
     role      UserRole @default(CLIENT)
     companyId String?  @map("company_id")

@@ -7,6 +7,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { AlreadyExistsError } from './errors/already-exist-error'
 import { UserAttachment } from '../../enterprise/entities/user-attachment'
 import { UserAttachmentList } from '../../enterprise/entities/user-attachmenmt-list'
+import { hash } from 'bcryptjs'
 
 interface CreateUserRequest {
   cpf: UserCPF
@@ -56,12 +57,14 @@ export class CreateUserUseCase {
       return left(new AlreadyExistsError(email))
     }
 
+    const password_hash = await hash(password, 6)
+
     const user = User.create({
       cpf,
       name,
       cep,
       birth,
-      password,
+      password_hash,
       address,
       email,
       phone,

@@ -19,11 +19,13 @@ import { Optional } from '@/core/types/optionals'
 export interface OrderProps {
   itemId: UniqueEntityID
   userId: UniqueEntityID
+  transferId: UniqueEntityID
   name: string
   dateRequested: Date
   dateDelivery: Date
   deliveryAddress: string
   status: string
+  outgoingAddress: string
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -31,6 +33,10 @@ export interface OrderProps {
 export class Order extends Entity<OrderProps> {
   get itemId() {
     return this.props.itemId
+  }
+
+  get transferId() {
+    return this.props.transferId
   }
 
   get userId() {
@@ -65,8 +71,17 @@ export class Order extends Entity<OrderProps> {
     return this.props.name
   }
 
+  get outgoingAddress() {
+    return this.props.outgoingAddress
+  }
+
   set itemId(itemId: UniqueEntityID) {
     this.props.itemId = itemId
+    this.touch()
+  }
+
+  set transferId(transferId: UniqueEntityID) {
+    this.props.transferId = transferId
     this.touch()
   }
 
@@ -92,6 +107,11 @@ export class Order extends Entity<OrderProps> {
 
   set name(name: string) {
     this.props.name = name
+    this.touch()
+  }
+
+  set outgoingAddress(outgoingAddress: string) {
+    this.props.outgoingAddress = outgoingAddress
     this.touch()
   }
 

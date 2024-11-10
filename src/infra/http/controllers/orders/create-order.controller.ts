@@ -15,9 +15,11 @@ const createOrderBodySchema = z.object({
   name: z.string(),
   itemId: z.string().uuid(),
   userId: z.string().uuid(),
+  transferId: z.string().uuid(),
   dateRequested: z.coerce.date(),
   dateDelivery: z.coerce.date(),
   deliveryAddress: z.string(),
+  outgoingAddress: z.string(),
   status: z.string(),
 })
 
@@ -42,7 +44,9 @@ export class CreateOrderController {
       dateRequested,
       dateDelivery,
       deliveryAddress,
+      outgoingAddress,
       status,
+      transferId,
     } = body
 
     const result = await this.createOrder.execute({
@@ -52,7 +56,9 @@ export class CreateOrderController {
       dateRequested,
       dateDelivery,
       deliveryAddress,
+      outgoingAddress,
       status,
+      transferId,
     })
 
     if (result.isLeft()) {
