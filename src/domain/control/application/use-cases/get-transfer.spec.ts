@@ -37,7 +37,6 @@ describe('Get all transfer', () => {
     const result = await sut.execute({
       page: 1,
     })
-    console.log(result.value)
     if (result.isRight()) {
       expect(result.value?.transfers).toHaveLength(1)
     }

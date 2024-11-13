@@ -47,6 +47,8 @@ import { GetTransfersController } from './controllers/transfer/get-all-transfer.
 import { GetTransfersUseCase } from '@/domain/control/application/use-cases/get-transfer'
 import { FetchByIdOrderUseCase } from '@/domain/control/application/use-cases/fetch-order-by-id'
 import { FetchOrdersByIdController } from './controllers/orders/fetch-order-by-id.controller'
+import { GetOrdersController } from './controllers/orders/get-all-order.controller'
+import { GetOrdersUseCase } from '@/domain/control/application/use-cases/get-order'
 
 @Module({
   imports: [DatabaseModule, StorageModule],
@@ -74,6 +76,7 @@ import { FetchOrdersByIdController } from './controllers/orders/fetch-order-by-i
     FetchTransfersController,
     GetTransfersController,
     FetchOrdersByIdController,
+    GetOrdersController,
   ],
   providers: [
     UploadAndCreateAttachmentUseCase,
@@ -99,6 +102,7 @@ import { FetchOrdersByIdController } from './controllers/orders/fetch-order-by-i
     FetchTransfersUseCase,
     GetTransfersUseCase,
     FetchByIdOrderUseCase,
+    GetOrdersUseCase,
   ],
 })
 export class HttpModule {}

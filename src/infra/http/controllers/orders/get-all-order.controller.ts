@@ -4,22 +4,34 @@ import {
   Get,
   HttpCode,
   NotFoundException,
-  Param,
+  Query,
 } from '@nestjs/common'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
+import { z } from 'zod'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
-import { FetchByIdOrderUseCase } from '@/domain/control/application/use-cases/fetch-order-by-id'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { GetOrdersUseCase } from '@/domain/control/application/use-cases/get-order'
 import { OrderWithRelationPresenter } from '../../presenter/order-with-relation-pressenter'
 
-@Controller('/order-by-id/:id')
-export class FetchOrdersByIdController {
-  constructor(private fetchByIdOrder: FetchByIdOrderUseCase) {}
+const pageQueryParamSchema = z
+  .string()
+  .optional()
+  .default('1')
+  .transform(Number)
+  .pipe(z.number().min(1))
+
+const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema)
+
+type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
+
+@Controller('/order')
+export class GetOrdersController {
+  constructor(private getOrders: GetOrdersUseCase) {}
 
   @Get()
   @HttpCode(200)
-  async handle(@Param('id') orderId: string) {
-    const result = await this.fetchByIdOrder.execute({
-      orderId: new UniqueEntityID(orderId),
+  async handle(@Query('page', queryValidationPipe) page: PageQueryParamSchema) {
+    const result = await this.getOrders.execute({
+      page,
     })
 
     if (result.isLeft()) {

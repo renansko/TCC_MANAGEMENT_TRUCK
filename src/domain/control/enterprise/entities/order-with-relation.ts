@@ -30,40 +30,27 @@ export interface OrderWithRelationProps {
   createdAt: Date
   updatedAt?: Date | null
   item?: {
-    id: string
     name: string
     description: string
     quantity: number
     amount: number
     weight: number
     createdAt: Date
-    updatedAt: Date
   }
   user?: {
-    id: string
-    cpf: string
     name: string
     email: string
-    password: string
     phone: string
     birth: Date
-    cep: string
-    address: string
     role: string
-    companyId: string
-    createdAt: Date
-    updatedAt: Date
   }
   transfer?: {
-    id: string
     name: string
     model: string
     plate: string
     status: string
     companyId: string
     driverId: string
-    createdAt: Date
-    updatedAt: Date
   }
 }
 
@@ -116,23 +103,20 @@ export class OrderWithRelation extends Entity<OrderWithRelationProps> {
     return this.props.outgoingAddress
   }
 
-  set itemId(itemId: UniqueEntityID) {
-    this.props.itemId = itemId
-    this.touch()
+  get item() {
+    return this.props.item
+  }
+
+  get user() {
+    return this.props.user
+  }
+
+  get transfer() {
+    return this.props.transfer
   }
 
   set orderNumber(orderNumber: string) {
     this.props.orderNumber = orderNumber
-    this.touch()
-  }
-
-  set transferId(transferId: UniqueEntityID) {
-    this.props.transferId = transferId
-    this.touch()
-  }
-
-  set userId(userId: UniqueEntityID) {
-    this.props.userId = userId
     this.touch()
   }
 

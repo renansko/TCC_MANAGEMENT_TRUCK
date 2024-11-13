@@ -8,8 +8,13 @@ export abstract class OrderRepository {
   abstract delete(item: Order): Promise<void>
   abstract save(item: Order): Promise<void>
   abstract findByIdWithRelation(id: string): Promise<OrderWithRelation | null>
+
   abstract findManyByName(
     name: string,
     params: PaginationParams,
   ): Promise<Order[]>
+
+  abstract GetOrdersUseCase(
+    params: PaginationParams,
+  ): Promise<OrderWithRelation | OrderWithRelation[] | null>
 }

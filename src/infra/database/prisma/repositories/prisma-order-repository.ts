@@ -13,6 +13,24 @@ export class PrismaOrderRepository implements OrderRepository {
     // private cache: CacheRepository,
   ) {}
 
+  async GetOrdersUseCase(
+    params: PaginationParams,
+  ): Promise<OrderWithRelation[] | null> {
+    const orders = await this.prisma.order.findMany({
+      skip: (params.page - 1) * 20,
+      take: 20,
+      include: {
+        item: true,
+        user: true,
+        transfer: true,
+      },
+    })
+    const orderList = orders.map((order) =>
+      PrismaOrderMapper.toDomainWithRelation(order),
+    )
+    return orderList.length > 0 ? orderList : null
+  }
+
   async findById(id: string): Promise<Order | null> {
     // Alterado de OrderWithRelation para Order
     const order = await this.prisma.order.findUnique({
