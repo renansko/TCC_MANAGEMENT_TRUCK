@@ -54,5 +54,6 @@ export class EditItemController {
           throw new BadRequestException(error.message)
       }
     }
+    return { item: result.value.item }
   }
 }

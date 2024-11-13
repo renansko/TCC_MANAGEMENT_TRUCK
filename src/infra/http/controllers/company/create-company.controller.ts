@@ -49,5 +49,6 @@ export class CreateCompanyController {
     if (result.isLeft()) {
       throw new BadRequestException()
     }
+    return { company: result.value.company }
   }
 }

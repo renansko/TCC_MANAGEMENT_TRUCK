@@ -11,6 +11,7 @@ interface CreateOrderRequest {
   name: string
   itemId: string
   userId: string
+  orderNumber: string
   transferId: string
   dateRequested: Date
   dateDelivery: Date
@@ -40,6 +41,7 @@ export class CreateOrderUseCase {
     transferId,
     name,
     dateDelivery,
+    orderNumber,
     outgoingAddress,
     dateRequested,
     deliveryAddress,
@@ -60,6 +62,7 @@ export class CreateOrderUseCase {
       itemId: new UniqueEntityID(itemId),
       userId: new UniqueEntityID(userId),
       transferId: new UniqueEntityID(transferId),
+      orderNumber,
       dateRequested,
       dateDelivery,
       deliveryAddress,

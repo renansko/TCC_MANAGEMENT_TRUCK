@@ -20,15 +20,15 @@ enum TransferStatus {
 }
 
 model User {
-    id            String @id @default(uuid())
-    cpf           String @unique
-    name          String
-    email         String @unique
-    password_hash String
-    phone         String
-    birth         String
-    cep           String
-    address       String
+    id       String @id @default(uuid())
+    cpf      String @unique
+    name     String
+    email    String @unique
+    password String
+    phone    String
+    birth    String
+    cep      String
+    address  String
 
     role      UserRole @default(CLIENT)
     companyId String?  @map("company_id")
@@ -121,9 +121,11 @@ model Item {
 model Order {
     id              String    @id @default(uuid())
     name            String
+    orderNumber     String    @map("order_number")
     dateRequested   DateTime  @default(now()) @map("date_requested")
     dateDelivery    DateTime  @map("date_delivery")
     deliveryAddress String    @map("delivery_address")
+    outgoingAddress String    @map("outgoing_address")
     status          String
     createdAt       DateTime  @default(now()) @map("created_at")
     updatedAt       DateTime? @updatedAt @map("updated_at")

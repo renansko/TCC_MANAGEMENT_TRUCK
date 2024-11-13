@@ -57,14 +57,14 @@ export class CreateUserUseCase {
       return left(new AlreadyExistsError(email))
     }
 
-    const password_hash = await hash(password, 6)
+    const passwordHash = await hash(password, 6)
 
     const user = User.create({
       cpf,
       name,
       cep,
       birth,
-      password_hash,
+      password: passwordHash,
       address,
       email,
       phone,

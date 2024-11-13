@@ -29,7 +29,7 @@ export class FetchItemsUseCase {
     })
 
     if (!items) {
-      throw left(new ResourceNotFoundError())
+      return left(new ResourceNotFoundError())
     }
 
     return right({

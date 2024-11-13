@@ -29,5 +29,6 @@ export class DeleteCompanyController {
           throw new BadRequestException(error.message)
       }
     }
+    return result.value
   }
 }

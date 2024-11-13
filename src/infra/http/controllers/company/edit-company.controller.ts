@@ -57,5 +57,6 @@ export class EditCompanyController {
           throw new BadRequestException(error.message)
       }
     }
+    return { company: result.value.company }
   }
 }

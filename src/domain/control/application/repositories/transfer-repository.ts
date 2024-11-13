@@ -11,4 +11,8 @@ export abstract class TransferRepository {
     name: string,
     params: PaginationParams,
   ): Promise<Transfer[]>
+
+  abstract GetTransfersUseCase(
+    params: PaginationParams,
+  ): Promise<Transfer | null>
 }

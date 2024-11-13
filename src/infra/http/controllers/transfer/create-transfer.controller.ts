@@ -57,5 +57,8 @@ export class CreateTransferController {
           throw new BadRequestException(error.message)
       }
     }
+    return {
+      transer: result.value.transfer,
+    }
   }
 }

@@ -58,5 +58,9 @@ export class EditTransferController {
           throw new BadRequestException()
       }
     }
+
+    return {
+      transfer: result.value.transfer,
+    }
   }
 }

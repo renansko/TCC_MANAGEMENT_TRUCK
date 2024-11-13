@@ -15,6 +15,19 @@ export class PrismaTransferRepository implements TransferRepository {
     // private cache: CacheRepository,
   ) {}
 
+  async GetTransfersUseCase(
+    params: PaginationParams,
+  ): Promise<Transfer | null> {
+    const transfers = await this.prisma.transfer.findMany({
+      skip: (params.page - 1) * 20,
+      take: 20,
+    })
+
+    return transfers.length > 0
+      ? PrismaTransferMapper.toDomain(transfers[0])
+      : null
+  }
+
   async findByPlate(plate: string): Promise<Transfer | null> {
     const transfer = await this.prisma.transfer.findUnique({
       where: {

@@ -32,5 +32,7 @@ export class DeleteUserController {
           throw new BadRequestException(error.message)
       }
     }
+
+    return result.value
   }
 }

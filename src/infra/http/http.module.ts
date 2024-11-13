@@ -43,6 +43,10 @@ import { FetchUsersUseCase } from '@/domain/control/application/use-cases/fetch-
 import { FetchUsersController } from './controllers/users/fetch-users.controller'
 import { FetchTransfersController } from './controllers/transfer/fetch-transfer-by-name.controller'
 import { FetchTransfersUseCase } from '@/domain/control/application/use-cases/fetch-transfer-by-name'
+import { GetTransfersController } from './controllers/transfer/get-all-transfer.controller'
+import { GetTransfersUseCase } from '@/domain/control/application/use-cases/get-transfer'
+import { FetchByIdOrderUseCase } from '@/domain/control/application/use-cases/fetch-order-by-id'
+import { FetchOrdersByIdController } from './controllers/orders/fetch-order-by-id.controller'
 
 @Module({
   imports: [DatabaseModule, StorageModule],
@@ -68,6 +72,8 @@ import { FetchTransfersUseCase } from '@/domain/control/application/use-cases/fe
     FetchOrdersController,
     FetchUsersController,
     FetchTransfersController,
+    GetTransfersController,
+    FetchOrdersByIdController,
   ],
   providers: [
     UploadAndCreateAttachmentUseCase,
@@ -91,6 +97,8 @@ import { FetchTransfersUseCase } from '@/domain/control/application/use-cases/fe
     FetchOrdersUseCase,
     FetchUsersUseCase,
     FetchTransfersUseCase,
+    GetTransfersUseCase,
+    FetchByIdOrderUseCase,
   ],
 })
 export class HttpModule {}

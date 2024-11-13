@@ -68,5 +68,6 @@ export class EditOrderController {
           throw new BadRequestException()
       }
     }
+    return { order: result.value.order }
   }
 }

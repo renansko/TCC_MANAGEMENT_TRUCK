@@ -74,5 +74,7 @@ export class EditUserController {
           throw new BadRequestException()
       }
     }
+
+    return result.value.user
   }
 }

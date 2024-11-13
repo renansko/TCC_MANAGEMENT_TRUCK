@@ -11,6 +11,11 @@ export class InMemoryTransferRepository implements TransferRepository {
     private transferAttachmentsRepository: TransferAttachmentRepository,
   ) {}
 
+  async GetTransfersUseCase({ page }: PaginationParams): Promise<any | null> {
+    const transfers = this.items.splice((page - 1) * 20, 20)
+    return transfers.length > 0 ? transfers[0].props : null
+  }
+
   async findManyByName(
     name: string,
     { page }: PaginationParams,

@@ -32,5 +32,6 @@ export class DeleteItemController {
           throw new BadRequestException(error.message)
       }
     }
+    return result.value
   }
 }

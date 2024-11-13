@@ -16,7 +16,7 @@ import { Optional } from '@/core/types/optionals'
  * @param updatedAt (Date) "Mudança de informação do objeto"
  */
 
-export interface OrderProps {
+export interface OrderWithRelationProps {
   itemId: UniqueEntityID
   userId: UniqueEntityID
   transferId: UniqueEntityID
@@ -29,9 +29,45 @@ export interface OrderProps {
   outgoingAddress: string
   createdAt: Date
   updatedAt?: Date | null
+  item?: {
+    id: string
+    name: string
+    description: string
+    quantity: number
+    amount: number
+    weight: number
+    createdAt: Date
+    updatedAt: Date
+  }
+  user?: {
+    id: string
+    cpf: string
+    name: string
+    email: string
+    password: string
+    phone: string
+    birth: Date
+    cep: string
+    address: string
+    role: string
+    companyId: string
+    createdAt: Date
+    updatedAt: Date
+  }
+  transfer?: {
+    id: string
+    name: string
+    model: string
+    plate: string
+    status: string
+    companyId: string
+    driverId: string
+    createdAt: Date
+    updatedAt: Date
+  }
 }
 
-export class Order extends Entity<OrderProps> {
+export class OrderWithRelation extends Entity<OrderWithRelationProps> {
   get itemId() {
     return this.props.itemId
   }
@@ -129,8 +165,11 @@ export class Order extends Entity<OrderProps> {
     this.props.updatedAt = new Date()
   }
 
-  static create(props: Optional<OrderProps, 'createdAt'>, id?: UniqueEntityID) {
-    const order = new Order(
+  static create(
+    props: Optional<OrderWithRelationProps, 'createdAt'>,
+    id?: UniqueEntityID,
+  ) {
+    const orderWithRelation = new OrderWithRelation(
       {
         ...props,
         createdAt: new Date(),
@@ -138,6 +177,6 @@ export class Order extends Entity<OrderProps> {
       id,
     )
 
-    return order
+    return orderWithRelation
   }
 }

@@ -4,27 +4,50 @@ import { PrismaService } from '../prisma.service'
 import { PrismaOrderMapper } from '../mappers/prisma-order-mapper'
 import { Order } from '@/domain/control/enterprise/entities/order'
 import { PaginationParams } from '@/core/repositories/pagination-params'
+import { OrderWithRelation } from '@/domain/control/enterprise/entities/order-with-relation'
 
 @Injectable()
 export class PrismaOrderRepository implements OrderRepository {
   constructor(
     private prisma: PrismaService,
-    // private orderAttachmentsRepository: OrderAttachmentRepository,
     // private cache: CacheRepository,
   ) {}
 
   async findById(id: string): Promise<Order | null> {
+    // Alterado de OrderWithRelation para Order
     const order = await this.prisma.order.findUnique({
       where: {
         id,
       },
+      include: {
+        item: true,
+        user: true,
+        transfer: true,
+      },
     })
-
     if (!order) {
       return null
     }
 
-    return PrismaOrderMapper.toDomain(order)
+    return PrismaOrderMapper.toDomain(order) // Alterado para retornar um Order
+  }
+
+  async findByIdWithRelation(id: string): Promise<OrderWithRelation | null> {
+    const order = await this.prisma.order.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        item: true,
+        user: true,
+        transfer: true,
+      },
+    })
+    if (!order) {
+      return null
+    }
+
+    return PrismaOrderMapper.toDomainWithRelation(order)
   }
 
   async create(order: Order): Promise<void> {

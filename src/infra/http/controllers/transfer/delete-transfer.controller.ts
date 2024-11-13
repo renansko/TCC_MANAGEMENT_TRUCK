@@ -32,5 +32,7 @@ export class DeleteTransferController {
           throw new BadRequestException(error.message)
       }
     }
+
+    return result.value
   }
 }

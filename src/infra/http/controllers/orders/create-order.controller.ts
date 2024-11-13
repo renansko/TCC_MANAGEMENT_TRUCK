@@ -12,10 +12,11 @@ import { CreateOrderUseCase } from '@/domain/control/application/use-cases/creat
 import { NotFoundError } from '@/domain/control/application/use-cases/errors/not-found-error'
 
 const createOrderBodySchema = z.object({
-  name: z.string(),
   itemId: z.string().uuid(),
   userId: z.string().uuid(),
   transferId: z.string().uuid(),
+  name: z.string(),
+  orderNumber: z.string(),
   dateRequested: z.coerce.date(),
   dateDelivery: z.coerce.date(),
   deliveryAddress: z.string(),
@@ -46,6 +47,7 @@ export class CreateOrderController {
       deliveryAddress,
       outgoingAddress,
       status,
+      orderNumber,
       transferId,
     } = body
 
@@ -58,6 +60,7 @@ export class CreateOrderController {
       deliveryAddress,
       outgoingAddress,
       status,
+      orderNumber,
       transferId,
     })
 
@@ -71,5 +74,7 @@ export class CreateOrderController {
           throw new BadRequestException(error.message)
       }
     }
+
+    return { order: result.value.order }
   }
 }

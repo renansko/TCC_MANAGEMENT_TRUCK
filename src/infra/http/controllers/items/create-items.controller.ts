@@ -44,5 +44,6 @@ export class CreateItemController {
     if (result.isLeft()) {
       throw new BadRequestException()
     }
+    return { item: result.value.item }
   }
 }
