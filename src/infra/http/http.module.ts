@@ -49,9 +49,12 @@ import { FetchByIdOrderUseCase } from '@/domain/control/application/use-cases/fe
 import { FetchOrdersByIdController } from './controllers/orders/fetch-order-by-id.controller'
 import { GetOrdersController } from './controllers/orders/get-all-order.controller'
 import { GetOrdersUseCase } from '@/domain/control/application/use-cases/get-order'
+import { AuthenticateController } from './controllers/authenticate.controller'
+import { AuthenticateClientUseCase } from '@/domain/control/application/use-cases/authenticate-client'
+import { CryptographyModule } from '../cryptography/cryptography.module'
 
 @Module({
-  imports: [DatabaseModule, StorageModule],
+  imports: [DatabaseModule, StorageModule, CryptographyModule],
   controllers: [
     UploadedAttachmentController,
     CreateTransferController,
@@ -77,6 +80,7 @@ import { GetOrdersUseCase } from '@/domain/control/application/use-cases/get-ord
     GetTransfersController,
     FetchOrdersByIdController,
     GetOrdersController,
+    AuthenticateController,
   ],
   providers: [
     UploadAndCreateAttachmentUseCase,
@@ -103,6 +107,7 @@ import { GetOrdersUseCase } from '@/domain/control/application/use-cases/get-ord
     GetTransfersUseCase,
     FetchByIdOrderUseCase,
     GetOrdersUseCase,
+    AuthenticateClientUseCase,
   ],
 })
 export class HttpModule {}
