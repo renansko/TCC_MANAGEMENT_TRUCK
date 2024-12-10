@@ -88,7 +88,6 @@ model Transfer {
 
 model Telemetry {
     id         String    @id @default(uuid())
-    location   String
     speed      Decimal
     braking    Int
     bends      Int

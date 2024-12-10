@@ -7,7 +7,7 @@ async function bootstrap() {
     // logger: false
   })
   app.enableCors({
-    origin: 'http://localhost:3000', // Permitir apenas o frontend em localhost:3000
+    origin: 'http://localhost:3001', // Permitir apenas o frontend em localhost:3000
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
     credentials: true, // Permitir cookies e cabeçalhos de autenticação
   })

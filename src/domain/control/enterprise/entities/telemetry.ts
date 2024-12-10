@@ -1,14 +1,12 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optionals'
-import { LocationTruck } from './value-objects/locationTruck'
 
 /**
  * Interface explicação de suas propiedades.
  *
  *
  * @param engineTemperature (string) Temperatura motor
- * @param location (string) localização em tempo real - Value object @param distanceTraveled (string) distancia percorrida
  * @param speed (number) velocidade em tempo real @param averageSpeed (number) Velocidade média @param speedExceed (string) velocidade exedita
  * @param braking (number) frenagem brusca pesquisar
  * @param bends (number) curvas perigosa pesquisar
@@ -18,29 +16,19 @@ import { LocationTruck } from './value-objects/locationTruck'
  * @param updatedAt (Date) "Mudança de informação do objeto"
  */
 export interface telemetryProps {
-  truckId: UniqueEntityID
-  engineTemperature: number
-  location: LocationTruck
+  transferId: UniqueEntityID
   speed: number
   braking: number
   bends: number
   fuel: number
   ignition: boolean
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
 export class Telemetry extends Entity<telemetryProps> {
-  get truckId() {
-    return this.props.truckId
-  }
-
-  get engineTemperature() {
-    return this.props.engineTemperature
-  }
-
-  get location() {
-    return this.props.location
+  get transferId() {
+    return this.props.transferId
   }
 
   get speed() {
@@ -65,6 +53,10 @@ export class Telemetry extends Entity<telemetryProps> {
 
   get createdAt() {
     return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
   }
 
   set fuel(fuel: number) {

@@ -52,6 +52,10 @@ import { GetOrdersUseCase } from '@/domain/control/application/use-cases/get-ord
 import { AuthenticateController } from './controllers/authenticate.controller'
 import { AuthenticateClientUseCase } from '@/domain/control/application/use-cases/authenticate-client'
 import { CryptographyModule } from '../cryptography/cryptography.module'
+import { CreateTelemetryController } from './controllers/telemetry/create-telemetry.controller'
+import { CreateTelemetryUseCase } from '@/domain/control/application/use-cases/create-telemetry'
+import { FetchTelemetryByTransferIdController } from './controllers/telemetry/fetch-telemetry-by-transferId.controller'
+import { FetchTelemetryByTransferIdUseCase } from '@/domain/control/application/use-cases/fetch-telemetry-by-transferId'
 
 @Module({
   imports: [DatabaseModule, StorageModule, CryptographyModule],
@@ -81,6 +85,8 @@ import { CryptographyModule } from '../cryptography/cryptography.module'
     FetchOrdersByIdController,
     GetOrdersController,
     AuthenticateController,
+    CreateTelemetryController,
+    FetchTelemetryByTransferIdController,
   ],
   providers: [
     UploadAndCreateAttachmentUseCase,
@@ -108,6 +114,8 @@ import { CryptographyModule } from '../cryptography/cryptography.module'
     FetchByIdOrderUseCase,
     GetOrdersUseCase,
     AuthenticateClientUseCase,
+    CreateTelemetryUseCase,
+    FetchTelemetryByTransferIdUseCase,
   ],
 })
 export class HttpModule {}

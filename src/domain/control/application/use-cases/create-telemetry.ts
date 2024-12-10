@@ -1,14 +1,13 @@
-import { Either, right } from '@/core/either'
-import { LocationTruck } from '../../enterprise/entities/value-objects/locationTruck'
+import { Either, left, right } from '@/core/either'
 import { Telemetry } from '../../enterprise/entities/telemetry'
-import { TruckTelemetryRepository } from '../repositories/telemetry-repository'
 import { Injectable } from '@nestjs/common'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { TelemetryRepository } from '../repositories/telemetry-repository'
+import { TransferRepository } from '../repositories/transfer-repository'
+import { NotFoundError } from './errors/not-found-error'
 
 interface CreateTelemetryRequest {
-  truckId: string
-  engineTemperature: number
-  location: LocationTruck
+  transferId: string
   speed: number
   braking: number
   bends: number
@@ -17,7 +16,7 @@ interface CreateTelemetryRequest {
 }
 
 type CreateTelemetryResponse = Either<
-  null,
+  NotFoundError,
   {
     telemetry: Telemetry
   }
@@ -25,22 +24,26 @@ type CreateTelemetryResponse = Either<
 
 @Injectable()
 export class CreateTelemetryUseCase {
-  constructor(private truckTelemetry: TruckTelemetryRepository) {}
+  constructor(
+    private telemetryRepository: TelemetryRepository,
+    private transferRepositoy: TransferRepository,
+  ) {}
 
   async execute({
-    truckId,
-    engineTemperature,
-    location,
+    transferId,
     speed,
     braking,
     bends,
     fuel,
     ignition,
   }: CreateTelemetryRequest): Promise<CreateTelemetryResponse> {
+    const transfer = await this.transferRepositoy.findById(transferId)
+
+    if (!transfer) {
+      return left(new NotFoundError(transferId))
+    }
     const telemetry = Telemetry.create({
-      truckId: new UniqueEntityID(truckId),
-      engineTemperature,
-      location,
+      transferId: new UniqueEntityID(transferId),
       speed,
       braking,
       bends,
@@ -48,7 +51,7 @@ export class CreateTelemetryUseCase {
       ignition,
     })
 
-    this.truckTelemetry.create(telemetry)
+    this.telemetryRepository.create(telemetry)
 
     return right({
       telemetry,

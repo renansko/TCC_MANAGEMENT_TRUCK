@@ -14,10 +14,8 @@ describe('Create telemetry for a truck', () => {
     const result = await sut.execute({
       bends: 28,
       braking: 3,
-      engineTemperature: 12,
       fuel: 50,
       ignition: true,
-      location: LocationTruck.create('3'),
       speed: 79,
     })
 

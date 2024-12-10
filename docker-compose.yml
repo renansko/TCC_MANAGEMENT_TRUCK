@@ -9,6 +9,7 @@ services:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: truck-control
       PGDATA: /data/postgres
+      TZ: America/Sao_Paulo
     volumes:
       - ./data/pg:/data/postgres
 
@@ -19,3 +20,5 @@ services:
       - 6379:6379
     volumes:
       - ./data/redis:/data
+    environment:
+      TZ: America/Sao_Paulo

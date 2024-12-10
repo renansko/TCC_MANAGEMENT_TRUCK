@@ -11,6 +11,7 @@ import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { CreateUserUseCase } from '@/domain/control/application/use-cases/create-user'
 import { UserCPF } from '@/domain/control/enterprise/entities/value-objects/user-cpf'
 import { AlreadyExistsError } from '@/domain/control/application/use-cases/errors/already-exist-error'
+import { Public } from '@/infra/auth/public'
 
 const createUserBodySchema = z.object({
   name: z.string(),
@@ -32,6 +33,7 @@ type CreateUserBodySchema = z.infer<typeof createUserBodySchema>
 export class CreateUserController {
   constructor(private createUser: CreateUserUseCase) {}
   // receber company Id
+  @Public()
   @Post()
   @HttpCode(201)
   async handle(
