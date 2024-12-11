@@ -11,6 +11,7 @@ import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { EditItemUseCase } from '@/domain/control/application/use-cases/edit-item'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
+import { Public } from '@/infra/auth/public'
 
 const editItemBodySchema = z.object({
   name: z.string(),
@@ -28,6 +29,7 @@ type EditItemBodySchema = z.infer<typeof editItemBodySchema>
 export class EditItemController {
   constructor(private editItem: EditItemUseCase) {}
 
+  @Public()
   @Put()
   @HttpCode(200)
   async handle(

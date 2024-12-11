@@ -12,6 +12,7 @@ import { z } from 'zod'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
 import { FetchTransfersUseCase } from '@/domain/control/application/use-cases/fetch-transfer-by-name'
 import { TransferPresenter } from '../../presenter/transfer-pressenter'
+import { Public } from '@/infra/auth/public'
 
 const pageQueryParamSchema = z
   .string()
@@ -28,6 +29,7 @@ type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 export class FetchTransfersController {
   constructor(private fetchRecentTransfer: FetchTransfersUseCase) {}
 
+  @Public()
   @Get()
   @HttpCode(200)
   async handle(

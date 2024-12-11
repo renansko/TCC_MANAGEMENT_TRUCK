@@ -8,6 +8,7 @@ import {
 import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { CreateItemsUseCase } from '@/domain/control/application/use-cases/create-Items'
+import { Public } from '@/infra/auth/public'
 
 const createItemBodySchema = z.object({
   name: z.string(),
@@ -25,6 +26,7 @@ type CreateItemBodySchema = z.infer<typeof createItemBodySchema>
 export class CreateItemController {
   constructor(private createItem: CreateItemsUseCase) {}
 
+  @Public()
   @Post()
   @HttpCode(201)
   async handle(

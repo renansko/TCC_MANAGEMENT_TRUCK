@@ -12,6 +12,7 @@ import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { EditUserUseCase } from '@/domain/control/application/use-cases/edit-user'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
 import { UserCPF } from '@/domain/control/enterprise/entities/value-objects/user-cpf'
+import { Public } from '@/infra/auth/public'
 
 const editUserBodySchema = z.object({
   name: z.string(),
@@ -33,7 +34,7 @@ type EditUserBodySchema = z.infer<typeof editUserBodySchema>
 @Controller('/user/:id')
 export class EditUserController {
   constructor(private editUser: EditUserUseCase) {}
-
+  @Public()
   @Put()
   @HttpCode(200)
   async handle(

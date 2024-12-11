@@ -10,6 +10,7 @@ import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { CreateOrderUseCase } from '@/domain/control/application/use-cases/create-order'
 import { NotFoundError } from '@/domain/control/application/use-cases/errors/not-found-error'
+import { Public } from '@/infra/auth/public'
 
 const createOrderBodySchema = z.object({
   itemId: z.string().uuid(),
@@ -32,6 +33,7 @@ type CreateOrderBodySchema = z.infer<typeof createOrderBodySchema>
 export class CreateOrderController {
   constructor(private createOrder: CreateOrderUseCase) {}
 
+  @Public()
   @Post()
   @HttpCode(201)
   async handle(

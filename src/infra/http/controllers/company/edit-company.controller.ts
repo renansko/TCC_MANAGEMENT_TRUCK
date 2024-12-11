@@ -12,6 +12,7 @@ import { EditCompanyUseCase } from '@/domain/control/application/use-cases/edit-
 import { CompanyCNPJ } from '@/domain/control/enterprise/entities/value-objects/company-cnpj'
 import { z } from 'zod'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
+import { Public } from '@/infra/auth/public'
 
 const editCompanyBodySchema = z.object({
   name: z.string(),
@@ -30,6 +31,7 @@ type EditCompanyBodySchema = z.infer<typeof editCompanyBodySchema>
 export class EditCompanyController {
   constructor(private editCompany: EditCompanyUseCase) {}
 
+  @Public()
   @Put()
   @HttpCode(200)
   async handle(

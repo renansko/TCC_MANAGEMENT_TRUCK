@@ -12,6 +12,7 @@ import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { CreateTransferUseCase } from '@/domain/control/application/use-cases/create-transfer'
 import { CompanyNotExistsError } from '@/domain/control/application/use-cases/errors/company-not-exists-error'
 import { AlreadyExistsError } from '@/domain/control/application/use-cases/errors/already-exist-error'
+import { Public } from '@/infra/auth/public'
 
 const createTransferBodySchema = z.object({
   name: z.string(),
@@ -28,7 +29,8 @@ type CreateTransferBodySchema = z.infer<typeof createTransferBodySchema>
 @Controller('/transfer')
 export class CreateTransferController {
   constructor(private createTransfer: CreateTransferUseCase) {}
-
+  
+  @Public()
   @Post()
   @HttpCode(201)
   async handle(

@@ -8,11 +8,13 @@ import {
 } from '@nestjs/common'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
 import { DeleteCompanyUseCase } from '@/domain/control/application/use-cases/delete-company'
+import { Public } from '@/infra/auth/public'
 
 @Controller('/company/:id')
 export class DeleteCompanyController {
   constructor(private deleteCompany: DeleteCompanyUseCase) {}
 
+  @Public()
   @Delete()
   @HttpCode(200)
   async handle(@Param('id') companyId: string) {

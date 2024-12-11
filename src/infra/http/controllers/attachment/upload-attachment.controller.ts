@@ -1,5 +1,6 @@
 import { InvalidAttachmentType } from '@/domain/control/application/use-cases/errors/invalid-attachment-type'
 import { UploadAndCreateAttachmentUseCase } from '@/domain/control/application/use-cases/upload-and-create-attachment'
+import { Public } from '@/infra/auth/public'
 import {
   BadRequestException,
   Controller,
@@ -19,6 +20,7 @@ export class UploadedAttachmentController {
     private uploadAndCreateAttachment: UploadAndCreateAttachmentUseCase,
   ) {}
 
+  @Public()
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   async handle(

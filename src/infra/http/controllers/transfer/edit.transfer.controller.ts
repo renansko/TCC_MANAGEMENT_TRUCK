@@ -13,6 +13,7 @@ import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { EditTransferUseCase } from '@/domain/control/application/use-cases/edit-transfer'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
+import { Public } from '@/infra/auth/public'
 
 const editTransferBodySchema = z.object({
   name: z.string(),
@@ -31,6 +32,7 @@ type EditTransferBodySchema = z.infer<typeof editTransferBodySchema>
 export class EditTransferController {
   constructor(private editTransfer: EditTransferUseCase) {}
 
+  @Public()
   @Put()
   @HttpCode(200)
   async handle(

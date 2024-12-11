@@ -8,11 +8,13 @@ import {
 } from '@nestjs/common'
 import { DeleteItemsUseCase } from '@/domain/control/application/use-cases/delete-items-to-load'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
+import { Public } from '@/infra/auth/public'
 
 @Controller('/item/:id')
 export class DeleteItemController {
   constructor(private deleteItem: DeleteItemsUseCase) {}
 
+  @Public()
   @Delete()
   @HttpCode(200)
   async handle(

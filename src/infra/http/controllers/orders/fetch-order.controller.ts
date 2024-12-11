@@ -12,6 +12,7 @@ import { z } from 'zod'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
 import { FetchOrdersUseCase } from '@/domain/control/application/use-cases/fetch-order-by-name'
 import { OrderPresenter } from '../../presenter/order-pressenter'
+import { Public } from '@/infra/auth/public'
 
 const pageQueryParamSchema = z
   .string()
@@ -28,6 +29,7 @@ type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 export class FetchOrdersController {
   constructor(private fetchRecentOrder: FetchOrdersUseCase) {}
 
+  @Public()
   @Get()
   @HttpCode(200)
   async handle(

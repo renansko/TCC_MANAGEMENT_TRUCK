@@ -8,11 +8,13 @@ import {
 } from '@nestjs/common'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
 import { DeleteUserUseCase } from '@/domain/control/application/use-cases/delete-user'
+import { Public } from '@/infra/auth/public'
 
 @Controller('/user/:id')
 export class DeleteUserController {
   constructor(private deleteUser: DeleteUserUseCase) {}
 
+  @Public()
   @Delete()
   @HttpCode(200)
   async handle(

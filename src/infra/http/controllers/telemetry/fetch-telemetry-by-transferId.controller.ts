@@ -10,6 +10,7 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-er
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { FetchTelemetryByTransferIdUseCase } from '@/domain/control/application/use-cases/fetch-telemetry-by-transferId'
 import { TelemetryPresenter } from '../../presenter/telemetry-pressenter'
+import { Public } from '@/infra/auth/public'
 
 @Controller('/telemetry-by-transfer-id/:id')
 export class FetchTelemetryByTransferIdController {
@@ -17,6 +18,7 @@ export class FetchTelemetryByTransferIdController {
     private fetchByTransferdTelemetry: FetchTelemetryByTransferIdUseCase,
   ) {}
 
+  @Public()
   @Get()
   @HttpCode(200)
   async handle(@Param('id') transferId: string) {

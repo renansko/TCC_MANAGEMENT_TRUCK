@@ -10,6 +10,7 @@ import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { CreateTelemetryUseCase } from '@/domain/control/application/use-cases/create-telemetry'
 import { NotFoundError } from '@/domain/control/application/use-cases/errors/not-found-error'
+import { Public } from '@/infra/auth/public'
 
 const createTelemetryBodySchema = z.object({
   transferId: z.string().uuid(),
@@ -28,6 +29,7 @@ type CreateTelemetryBodySchema = z.infer<typeof createTelemetryBodySchema>
 export class CreateTelemetryController {
   constructor(private createTelemetry: CreateTelemetryUseCase) {}
 
+  @Public()
   @Post()
   @HttpCode(201)
   async handle(

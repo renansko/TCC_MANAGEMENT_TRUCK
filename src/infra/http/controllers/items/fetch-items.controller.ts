@@ -12,6 +12,7 @@ import { z } from 'zod'
 import { FetchItemsUseCase } from '@/domain/control/application/use-cases/fetch-items-by-name'
 import { ItemPresenter } from '../../presenter/item-pressenter'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-foud-error'
+import { Public } from '@/infra/auth/public'
 
 const pageQueryParamSchema = z
   .string()
@@ -28,6 +29,7 @@ type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 export class FetchItemsController {
   constructor(private fetchRecentItem: FetchItemsUseCase) {}
 
+  @Public()
   @Get()
   @HttpCode(200)
   async handle(

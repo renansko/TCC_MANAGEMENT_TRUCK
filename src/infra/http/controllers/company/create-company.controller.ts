@@ -9,6 +9,7 @@ import { z } from 'zod'
 import { CreateCompanyUseCase } from '@/domain/control/application/use-cases/create-company'
 import { CompanyCNPJ } from '@/domain/control/enterprise/entities/value-objects/company-cnpj'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
+import { Public } from '@/infra/auth/public'
 
 const createCompanyBodySchema = z.object({
   name: z.string(),
@@ -28,6 +29,7 @@ type CreateCompanyBodySchema = z.infer<typeof createCompanyBodySchema>
 export class CreateCompanyController {
   constructor(private createCompany: CreateCompanyUseCase) {}
 
+  @Public()
   @Post()
   @HttpCode(201)
   async handle(

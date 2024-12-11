@@ -10,6 +10,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
 import { FetchCompanysUseCase } from '@/domain/control/application/use-cases/fetch-company-by-name'
 import { CompanyPresenter } from '../../presenter/company-pressenter'
+import { Public } from '@/infra/auth/public'
 
 const pageQueryParamSchema = z
   .string()
@@ -26,6 +27,7 @@ type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 export class FetchCompanysController {
   constructor(private fetchRecentQuestion: FetchCompanysUseCase) {}
 
+  @Public()
   @Get()
   @HttpCode(200)
   async handle(
